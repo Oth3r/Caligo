@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "caligo",
+  "version": "${version}",
+  "name": "Caligo",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/Oth3r/Caligo"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/caligo/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "one.oth3r.caligo.client.CaligoClient"
+    ],
+    "main": [
+      "one.oth3r.caligo.Caligo"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
