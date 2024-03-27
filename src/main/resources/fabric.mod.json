@@ -13,7 +13,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "one.oth3r.caligo.client.CaligoClient"
+      "one.oth3r.caligo.CaligoClient"
     ],
     "main": [
       "one.oth3r.caligo.Caligo"
@@ -23,5 +23,8 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}"
-  }
+  },
+  "mixins": [
+    "caligo.mixins.json"
+  ]
 }

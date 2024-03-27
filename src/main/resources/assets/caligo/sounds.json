@@ -1,0 +1,34 @@
+{
+  "strow_caw": {
+    "subtitle": "sound.strow_caw",
+    "sounds": [
+      "caligo:strow_caw_1"
+    ]
+  },
+  "strow_active": {
+    "subtitle": "sound.strow_active",
+    "sounds": [
+      "caligo:strow_active_1"
+    ]
+  },
+  "strow_damage": {
+    "subtitle": "sound.strow_damage",
+    "sounds": [
+      "caligo:strow_damage_1"
+    ]
+  },
+  "strow_death": {
+    "subtitle": "sound.strow_death",
+    "sounds": [
+      "caligo:strow_death_1"
+    ]
+  },
+  "petrified_damage": {
+    "subtitle": "sound.petrified",
+    "sounds": [
+      "caligo:petrified_damage_1",
+      "caligo:petrified_damage_2",
+      "caligo:petrified_damage_3"
+    ]
+  }
+}
