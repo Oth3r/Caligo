@@ -21,6 +21,5 @@ public class Caligo implements ModInitializer {
         ModBlocks.registerModBlocks();
         ModItems.register();
         ModEntityGeneration.addSpawns();
-        StrowEntity.strowHitLogic();
     }
 }

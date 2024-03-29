@@ -1,6 +1,7 @@
 package one.oth3r.caligo.entity.strow;
 
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.Goal;
@@ -15,8 +16,10 @@ import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -121,6 +124,28 @@ public class StrowEntity extends HostileEntity implements Angerable {
             for (PlayerEntity player : list) petrifyStaring(serverWorld,this, player);
         }
     }
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        if (this.isInvulnerableTo(source) || source.isIn(DamageTypeTags.IS_PROJECTILE)) {
+            return false;
+        }
+        Entity attacker = source.getAttacker();
+        if (attacker instanceof PlayerEntity player) {
+            ItemStack heldItem = player.getMainHandStack();
+            // Check if the held item is the specific item
+            if (!(heldItem.getItem() instanceof PickaxeItem)) {
+                // give knock back if close enough
+                if (player.isInRange(this,3)) {
+                    this.takeKnockback(0.1F, player.getX() - this.getX(), player.getZ() - this.getZ());
+                }
+                // cancel
+                return false;
+            }
+        }
+        return super.damage(source,amount);
+    }
+
     public void caw(ServerWorld world, Vec3d pos, @Nullable Entity entity, int range) {
         if (this.cawTime==0) {
             List<ServerPlayerEntity> list = world.getPlayers(player -> !(!player.interactionManager.isSurvivalLike() || entity != null && entity.isTeammate(player) || !pos.isInRange(player.getPos(), range)));
@@ -253,37 +278,6 @@ public class StrowEntity extends HostileEntity implements Angerable {
     }
     protected SoundEvent getActiveSound() {
         return ModSounds.STROW_ACTIVE;
-    }
-
-
-    /**
-     * strow hit detection, only makes pickaxes effective + small knock back to everything else IF charged up all the way
-     */
-    public static void strowHitLogic() {
-        AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            // Check if the attacking entity is a player
-            if (player instanceof PlayerEntity && entity instanceof StrowEntity) {
-                ItemStack heldItem = player.getStackInHand(hand);
-                // Check if the held item is the specific item
-                if (!(heldItem.getItem() instanceof PickaxeItem)) {
-                    // Cancel the damage event
-                    if (player.getAttackCooldownProgress(0.0f) == 1.0 && player.isInRange(entity,3)) {
-                        // kb
-                        ((StrowEntity) entity).takeKnockback(0.1F, player.getX() - entity.getX(), player.getZ() - entity.getZ());
-                        // take damage
-                        ItemStack handStack = player.getMainHandStack();
-                        if (!world.isClient && !handStack.isEmpty()) {
-                            handStack.postHit((LivingEntity) entity, player);
-                            if (handStack.isEmpty())
-                                player.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
-                        }
-                        player.resetLastAttackedTicks();
-                    }
-                    return ActionResult.SUCCESS;
-                }
-            }
-            return ActionResult.PASS;
-        });
     }
 
     /**
