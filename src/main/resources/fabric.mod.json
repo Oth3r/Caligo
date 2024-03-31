@@ -3,8 +3,11 @@
   "id": "caligo",
   "version": "${version}",
   "name": "Caligo",
-  "description": "",
-  "authors": [],
+  "description": "A cave expansion mod that add several new mobs and blocks!",
+  "authors": [
+    "Oth3r",
+    "ShanicMCA"
+  ],
   "contact": {
     "repo": "https://github.com/Oth3r/Caligo"
   },
