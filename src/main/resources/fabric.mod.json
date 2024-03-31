@@ -11,7 +11,7 @@
   "contact": {
     "repo": "https://github.com/Oth3r/Caligo"
   },
-  "license": "All-Rights-Reserved",
+  "license": "MIT",
   "icon": "assets/caligo/icon.png",
   "environment": "*",
   "entrypoints": {
