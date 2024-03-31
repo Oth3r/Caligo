@@ -117,7 +117,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (this.age % 2 == 0) {
             // get all players in a 25 block radius and check if they are staring
             List<ServerPlayerEntity> list = serverWorld.getPlayers(player ->
-                    (player.interactionManager.isSurvivalLike() && !this.isTeammate(player) || this.getPos().isInRange(player.getPos(), 25)));
+                    player.interactionManager.isSurvivalLike() && !this.isTeammate(player) && this.getPos().isInRange(player.getPos(), 25));
             for (PlayerEntity player : list) petrifyStaring(serverWorld,this, player);
         }
     }
