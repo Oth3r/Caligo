@@ -1,7 +1,5 @@
 package one.oth3r.caligo.entity.strow;
 
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.Goal;
@@ -16,15 +14,13 @@ import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -68,7 +64,8 @@ public class StrowEntity extends HostileEntity implements Angerable {
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 7)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, .3)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 4);
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 4)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,.7);
     }
     public static boolean canSpawn(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         return HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random) && world.getLightLevel(LightType.SKY, pos) == 0 &&
@@ -120,7 +117,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (this.age % 2 == 0) {
             // get all players in a 25 block radius and check if they are staring
             List<ServerPlayerEntity> list = serverWorld.getPlayers(player ->
-                    !(!player.interactionManager.isSurvivalLike() && this.isTeammate(player) || !this.getPos().isInRange(player.getPos(), 25)));
+                    (player.interactionManager.isSurvivalLike() && !this.isTeammate(player) || this.getPos().isInRange(player.getPos(), 25)));
             for (PlayerEntity player : list) petrifyStaring(serverWorld,this, player);
         }
     }
@@ -130,20 +127,29 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (this.isInvulnerableTo(source) || source.isIn(DamageTypeTags.IS_PROJECTILE)) {
             return false;
         }
+        if (isFullDamage(source)) {
+            Entity attacker = source.getAttacker();
+            if (attacker instanceof PlayerEntity player) {
+                this.takeKnockback(1.8F, player.getX() - this.getX(), player.getZ() - this.getZ());
+            }
+            return super.damage(source,amount);
+        }
+        return super.damage(source, (float) (amount*.01));
+    }
+
+    /**
+     * checks if the DamageSource will fully damage the Strow or not
+     * @param source the damagesource to check
+     * @return if full or not
+     */
+    private boolean isFullDamage(DamageSource source) {
         Entity attacker = source.getAttacker();
         if (attacker instanceof PlayerEntity player) {
             ItemStack heldItem = player.getMainHandStack();
-            // Check if the held item is the specific item
-            if (!(heldItem.getItem() instanceof PickaxeItem)) {
-                // give knock back if close enough
-                if (player.isInRange(this,3)) {
-                    this.takeKnockback(0.1F, player.getX() - this.getX(), player.getZ() - this.getZ());
-                }
-                // cancel
-                return false;
-            }
+            // full damage if pickaxe, else not
+            return heldItem.getItem() instanceof PickaxeItem;
         }
-        return super.damage(source,amount);
+        return false;
     }
 
     public void caw(ServerWorld world, Vec3d pos, @Nullable Entity entity, int range) {
@@ -163,7 +169,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
         // if not angry, back
         if (!this.isAngry()) return;
 
-        if (isPlayerStaring(target) && !entity.isTeammate(target)) {
+        if (isPlayerStaring(target)) {
             StatusEffectInstance statusEffectInstance = new StatusEffectInstance(ModEffects.PETRIFIED, 300, 0, false, false);
             target.addStatusEffect(statusEffectInstance);
             caw(world,entity.getPos(),this,25);
@@ -267,7 +273,8 @@ public class StrowEntity extends HostileEntity implements Angerable {
     // SOUNDS
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModSounds.STROW_DAMAGE;
+        if (isFullDamage(source)) return ModSounds.STROW_DAMAGE;
+        return SoundEvents.BLOCK_STONE_PLACE;
     }
     @Override
     protected SoundEvent getDeathSound() {
