@@ -40,11 +40,6 @@ public class StatueBlock extends BlockWithEntity implements BlockEntityProvider 
     public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
         return false;
     }
-    public static final MapCodec<? extends BlockWithEntity> CODEC = StatueBlock.createCodec(StatueBlock::new);
-    @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
-    }
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new StatueBlockEntity(pos, state);
@@ -127,17 +122,16 @@ public class StatueBlock extends BlockWithEntity implements BlockEntityProvider 
         world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER), Block.NOTIFY_ALL);
     }
     @Override
-    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
         StatueBlockEntity statueBlockEntity = (StatueBlockEntity) world.getBlockEntity(pos);
         // if upper then the statue is one block down
         if (state.get(HALF) == DoubleBlockHalf.UPPER) statueBlockEntity = (StatueBlockEntity) world.getBlockEntity(pos.down());
-        if (statueBlockEntity == null) return state;
+        if (statueBlockEntity == null) return;
         if (!statueBlockEntity.getInv().isEmpty())
             for (ItemStack item: statueBlockEntity.getInv())
                 Block.dropStack(world,pos,item);
         if (statueBlockEntity.getXp() != 0)
             this.dropExperience(world.getServer().getWorld(world.getRegistryKey()),pos,statueBlockEntity.getXp());
         super.onBreak(world, pos, state, player);
-        return state;
     }
 }
