@@ -36,16 +36,15 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
         flipQuaternion.normalize();
         matrices.multiply(flipQuaternion);
 
+        // get the model for rendering
+        EntityModel<StatueEntity> model ;
+        switch (blockState.get(StatueBlock.STATE)) {
+            default -> model = new StatueIdleModel(StatueIdleModel.getTexturedModelData().createModel());
+            case RUN -> model = new StatueRunModel(StatueRunModel.getTexturedModelData().createModel());
+            case CROUCH -> model = new StatueCrouchModel(StatueCrouchModel.getTexturedModelData().createModel());
+        }
 
-        EntityModel<StatueEntity> model;
-        if (blockState.get(StatueBlock.STATE)==2)
-            model = new StatueCrouchModel(StatueCrouchModel.getTexturedModelData().createModel());
-        else if (blockState.get(StatueBlock.STATE)==1)
-            model = new StatueRunModel(StatueRunModel.getTexturedModelData().createModel());
-        else
-            model = new StatueIdleModel(StatueIdleModel.getTexturedModelData().createModel());
-
-
+        // render the model
         model.render(matrices,vertexConsumers.getBuffer(RenderLayer.getEntityCutout(StatueEntity.TEXTURE)),light,overlay,1,1,1,1);
 //        MinecraftClient.getInstance().getItemRenderer().renderItem(new ItemStack(blockState.getBlock().asItem()), ModelTransformationMode.GROUND,light,overlay,matrices,vertexConsumers,entity.getWorld(),0);
         matrices.pop();
