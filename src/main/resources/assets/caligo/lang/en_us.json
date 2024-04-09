@@ -1,4 +1,20 @@
 {
+  "item.minecraft.potion.effect.petrified": "Potion of Petrification",
+  "item.minecraft.splash_potion.effect.petrified": "Splash Potion of Petrification",
+  "item.minecraft.lingering_potion.effect.petrified": "Lingering Potion of Petrification",
+  "item.minecraft.tipped_arrow.effect.petrified": "Arrow of Petrification",
+
+  "item.minecraft.potion.effect.petrified_extended": "Potion of Petrification",
+  "item.minecraft.splash_potion.effect.petrified_extended": "Splash Potion of Petrification",
+  "item.minecraft.lingering_potion.effect.petrified_extended": "Lingering Potion of Petrification",
+  "item.minecraft.tipped_arrow.effect.petrified_extended": "Arrow of Petrification",
+
+  "item.minecraft.potion.effect.petrified_amplified": "Potion of Petrification",
+  "item.minecraft.splash_potion.effect.petrified_amplified": "Splash Potion of Petrification",
+  "item.minecraft.lingering_potion.effect.petrified_amplified": "Lingering Potion of Petrification",
+  "item.minecraft.tipped_arrow.effect.petrified_amplified": "Arrow of Petrification",
+
+
   "death.attack.caligo_petrified": "%1$s turned into stone.",
   "death.attack.caligo_petrified.player": "%s got hard during a head-to-head with %s.",
 
