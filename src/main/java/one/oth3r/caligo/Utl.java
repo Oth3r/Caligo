@@ -5,13 +5,19 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import one.oth3r.caligo.block.statue.StatueState;
 
 public class Utl {
     public static class statue {
-        public static int getPlacementState(PlayerEntity player) {
-            if (player.isSneaking()) return 2;
-            if (player.isSprinting()) return 1;
-            return 0;
+        /**
+         * returns a StatueState based on the player's current action
+         * @param player the player
+         * @return the StatueState
+         */
+        public static StatueState getPlacementState(PlayerEntity player) {
+            if (player.isSneaking()) return StatueState.CROUCH;
+            if (player.isSprinting()) return StatueState.RUN;
+            return StatueState.WALK;
         }
         public static BlockPos getPlacement(World world, BlockPos deathPos) {
             if (checkPos(world,deathPos)) return deathPos;
