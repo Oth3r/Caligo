@@ -10,7 +10,7 @@ import one.oth3r.caligo.entity.strow.StrowEntity;
 
 public class ModEntityGeneration {
     public static void addSpawns() {
-        BiomeModifications.addSpawn(BiomeSelectors.all(), SpawnGroup.MONSTER,
+        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), SpawnGroup.MONSTER,
                 ModEntities.STROW, 35, 1, 2);
         SpawnRestriction.register(ModEntities.STROW, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, StrowEntity::canSpawn);
