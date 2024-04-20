@@ -8,8 +8,9 @@
     "PlayerInvoker"
   ],
   "client": [
+    "DrawHeartMixin",
     "GetHurtSoundMixin",
-    "DrawHeartMixin"
+    "HudOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1
