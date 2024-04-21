@@ -16,15 +16,19 @@ import one.oth3r.caligo.entity.statue.states.StatueRunModel;
 import org.joml.Quaternionf;
 
 public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBlockEntity> {
+
     public StatueBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {}
+
     @Override
     public void render(StatueBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         BlockState blockState = entity.getCachedState();
         matrices.push();
         matrices.translate(0.5, 1.5, 0.5);
+
         // renders double but oh well
-        if (blockState.get(StatueBlock.HALF) == DoubleBlockHalf.UPPER) matrices.translate(0, -1, 0);;
-        float angle = blockState.get(StatueBlock.ROTATION)*-22.5f;
+        if (blockState.get(StatueBlock.HALF) == DoubleBlockHalf.UPPER) matrices.translate(0, -1, 0);
+        ;
+        float angle = blockState.get(StatueBlock.ROTATION) * -22.5f;
         float angleRadians = (float) Math.toRadians(angle);
         Quaternionf rotation = new Quaternionf(0, MathHelper.sin(angleRadians / 2.0f), 0.0f, MathHelper.cos(angleRadians / 2.0f));
         rotation.normalize();
@@ -37,7 +41,7 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
         matrices.multiply(flipQuaternion);
 
         // get the model for rendering
-        EntityModel<StatueEntity> model ;
+        EntityModel<StatueEntity> model;
         switch (blockState.get(StatueBlock.STATE)) {
             default -> model = new StatueIdleModel(StatueIdleModel.getTexturedModelData().createModel());
             case RUN -> model = new StatueRunModel(StatueRunModel.getTexturedModelData().createModel());
@@ -45,8 +49,12 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
         }
 
         // render the model
-        model.render(matrices,vertexConsumers.getBuffer(RenderLayer.getEntityCutout(StatueEntity.TEXTURE)),light,overlay,1,1,1,1);
-//        MinecraftClient.getInstance().getItemRenderer().renderItem(new ItemStack(blockState.getBlock().asItem()), ModelTransformationMode.GROUND,light,overlay,matrices,vertexConsumers,entity.getWorld(),0);
+        RenderLayer renderLayer = RenderLayer.getEntityCutout(StatueEntity.TEXTURE);
+        // if top half, render transparent to stop z fighting
+        if (blockState.get(StatueBlock.HALF) == DoubleBlockHalf.UPPER) {
+            renderLayer = RenderLayer.getEntityTranslucent(StatueEntity.TEXTURE);
+        }
+        model.render(matrices,vertexConsumers.getBuffer(renderLayer),light,overlay,1,1,1,0);
         matrices.pop();
     }
 }
