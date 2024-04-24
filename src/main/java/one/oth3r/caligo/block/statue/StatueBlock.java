@@ -36,10 +36,12 @@ public class StatueBlock extends BlockWithEntity implements BlockEntityProvider 
     public StatueBlock(Settings settings) {
         super(settings);
     }
+
     @Override
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return false;
     }
+
     public static final MapCodec<? extends BlockWithEntity> CODEC = StatueBlock.createCodec(StatueBlock::new);
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() {

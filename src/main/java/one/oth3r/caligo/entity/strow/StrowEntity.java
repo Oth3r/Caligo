@@ -16,6 +16,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -170,7 +171,8 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (!this.isAngry()) return;
 
         if (isPlayerStaring(target)) {
-            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(ModEffects.PETRIFIED, 300, 0, false, false);
+            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(
+                    Registries.STATUS_EFFECT.getEntry(ModEffects.PETRIFIED), 300, 0, false, false);
             target.addStatusEffect(statusEffectInstance);
             caw(world,entity.getPos(),this,25);
         }
@@ -250,13 +252,15 @@ public class StrowEntity extends HostileEntity implements Angerable {
     public void chooseRandomAngerTime() {
         this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
     }
+
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(ANGRY, false);
-        this.dataTracker.startTracking(CHASING, false);
-        this.dataTracker.startTracking(ATTACKING, false);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(ANGRY,false)
+                .add(CHASING,false)
+                .add(ATTACKING,false);
     }
+
     public boolean isChasing() {
         return this.dataTracker.get(CHASING);
     }

@@ -8,6 +8,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import one.oth3r.caligo.block.ModBlocks;
@@ -29,30 +30,35 @@ public class StatueBlockEntity extends BlockEntity {
     public void setXp(int xp) {
         this.xp = xp;
     }
+
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        Inventories.writeNbt(nbt, this.inv);
-        super.writeNbt(nbt);
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        Inventories.writeNbt(nbt, this.inv, registryLookup);
+        super.writeNbt(nbt, registryLookup);
     }
+
     @Override
-    public void readNbt(NbtCompound nbt) {
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         this.inv = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        super.readNbt(nbt);
-        Inventories.readNbt(nbt, this.inv);
+        super.readNbt(nbt, registryLookup);
+        Inventories.readNbt(nbt, this.inv, registryLookup);
     }
     @Nullable
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);
     }
+
     @Override
-    public NbtCompound toInitialChunkDataNbt() {
-        return createNbt();
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        return createNbt(registryLookup);
     }
+
     @Override
     public boolean isRemoved() {
         return super.isRemoved();
     }
+
     public DefaultedList<ItemStack> getInv() {
         return this.inv;
     }
