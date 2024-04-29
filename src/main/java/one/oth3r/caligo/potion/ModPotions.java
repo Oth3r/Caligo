@@ -26,7 +26,7 @@ public class ModPotions {
         registerRecipes();
     }
     private static void registerRecipes() {
-        BrewingRecipeRegistry.registerPotionRecipe(Potions.THICK, ModItems.STONE_CRYSTAL, PETRIFIED_POTION);
+        BrewingRecipeRegistry.registerPotionRecipe(Potions.THICK, ModItems.STROW_ESSENCE, PETRIFIED_POTION);
         BrewingRecipeRegistry.registerPotionRecipe(PETRIFIED_POTION, Items.REDSTONE, PETRIFIED_POTION_LONG);
 //        BrewingRecipeRegistry.registerPotionRecipe(PETRIFIED_POTION, Items.GLOWSTONE, PETRIFIED_POTION_STRONG);
     }

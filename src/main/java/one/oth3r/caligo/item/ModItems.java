@@ -11,7 +11,8 @@ import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.entity.ModEntities;
 
 public class ModItems {
-    public static final Item STROW_SPAWN_EGG = registerSpawnEgg("strow_spawn_egg",
+    public static final Item STROW_ESSENCE = registerItem("strow_essence",
+            new Item(new FabricItemSettings()));
     public static final Item STROW_SPAWN_EGG = registerItem("strow_spawn_egg",
             new SpawnEggItem(ModEntities.STROW, 0x808080, 0xa0a0a0, new FabricItemSettings()));
     public static final Item STATUE = registerItem("statue",
