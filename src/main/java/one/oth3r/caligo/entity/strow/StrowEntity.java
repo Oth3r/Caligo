@@ -102,7 +102,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (world.isClient()) {
             setupAnimationStates();
         }
-        if (this.isAngry() && !this.isChasing()) {
+        if (this.isAngry()) {
             // every 4 second loop
             if (world.getTime() % 80L == 0L) {
                 this.playSound(getActiveSound(),.25f, (float) random.nextBetween(98, 102) / 100);
