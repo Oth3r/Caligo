@@ -175,8 +175,16 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (!this.isAngry()) return;
 
         if (isPlayerStaring(target)) {
-            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(ModEffects.PETRIFIED, 300, 0, false, false);
-            target.addStatusEffect(statusEffectInstance);
+            int duration = 300;
+            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(ModEffects.PETRIFIED, duration, 0, false, false);
+            StatusEffect statusEffect = statusEffectInstance.getEffectType();
+
+            // make sure the effect doesn't override a stronger effect
+            boolean canApply = !target.hasStatusEffect(statusEffect)
+                    || target.getStatusEffect(statusEffect).getAmplifier() <= statusEffectInstance.getAmplifier();
+
+            if (canApply) target.addStatusEffect(statusEffectInstance);
+
             caw(world,entity.getPos(),this,25);
         }
     }
