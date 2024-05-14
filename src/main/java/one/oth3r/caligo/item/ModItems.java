@@ -13,14 +13,20 @@ import one.oth3r.caligo.entity.ModEntities;
 public class ModItems {
     public static final Item STROW_ESSENCE = registerItem("strow_essence",
             new Item(new FabricItemSettings()));
+
     public static final Item STROW_SPAWN_EGG = registerItem("strow_spawn_egg",
             new SpawnEggItem(ModEntities.STROW, 0x808080, 0xa0a0a0, new FabricItemSettings()));
+
     public static final Item STATUE = registerItem("statue",
             new BlockItem(ModBlocks.STATUE_BLOCK, new FabricItemSettings()));
+
+    public static final Item DEEPSLATE_STATUE = registerItem("deepslate_statue",
+            new BlockItem(ModBlocks.DEEPSLATE_STATUE_BLOCK, new FabricItemSettings()));
 
     public static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(Caligo.MOD_ID,name),item);
     }
+
     public static void register() {
         // add the spawn eggs to the spawn eggs tab, make it alphabetical
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(content -> {

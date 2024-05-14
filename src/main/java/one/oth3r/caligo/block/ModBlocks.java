@@ -8,24 +8,31 @@ import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
+import one.oth3r.caligo.block.deepslate_statue.DeepslateStatueBlock;
 import one.oth3r.caligo.block.statue.StatueBlock;
 import one.oth3r.caligo.block.statue.StatueBlockEntity;
 import one.oth3r.caligo.block.statue.StatueBlockEntityRenderer;
 
 public class ModBlocks {
+
+    // STATUE
+
     public static final Block STATUE_BLOCK = registerBlock("statue",
             new StatueBlock(FabricBlockSettings.create()
                     .mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5f, 6.0f)));
+
+    public static final Block DEEPSLATE_STATUE_BLOCK = registerBlock("deepslate_statue",
+            new DeepslateStatueBlock(FabricBlockSettings.create()
+                    .mapColor(MapColor.DEEPSLATE_GRAY).requiresTool().strength(1.5f, 6.0f)));
+
     public static final BlockEntityType<StatueBlockEntity> STATUE_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             new Identifier(Caligo.MOD_ID,"statue_block_entity"),
-            FabricBlockEntityTypeBuilder.create(StatueBlockEntity::new,STATUE_BLOCK).build());
+            FabricBlockEntityTypeBuilder.create(StatueBlockEntity::new,STATUE_BLOCK,DEEPSLATE_STATUE_BLOCK).build());
 
     private static Block registerBlock(String name, Block block) {
         return Registry.register(Registries.BLOCK,new Identifier(Caligo.MOD_ID,name),block);
@@ -34,6 +41,6 @@ public class ModBlocks {
         
     }
     public static void registerClient() {
-        BlockEntityRendererFactories.register(ModBlocks.STATUE_BLOCK_ENTITY, StatueBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(STATUE_BLOCK_ENTITY, StatueBlockEntityRenderer::new);
     }
 }
