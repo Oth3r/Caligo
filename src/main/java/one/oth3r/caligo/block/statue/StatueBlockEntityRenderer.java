@@ -8,6 +8,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import one.oth3r.caligo.entity.statue.StatueEntity;
 import one.oth3r.caligo.entity.statue.states.StatueCrouchModel;
@@ -25,9 +26,8 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
         matrices.push();
         matrices.translate(0.5, 1.5, 0.5);
 
-        // renders double but oh well
         if (blockState.get(StatueBlock.HALF) == DoubleBlockHalf.UPPER) matrices.translate(0, -1, 0);
-        ;
+
         float angle = blockState.get(StatueBlock.ROTATION) * -22.5f;
         float angleRadians = (float) Math.toRadians(angle);
         Quaternionf rotation = new Quaternionf(0, MathHelper.sin(angleRadians / 2.0f), 0.0f, MathHelper.cos(angleRadians / 2.0f));
@@ -48,11 +48,12 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
             case CROUCH -> model = new StatueCrouchModel(StatueCrouchModel.getTexturedModelData().createModel());
         }
 
+        Identifier texture = StatueEntity.TEXTURE_NORMAL;
         // render the model
-        RenderLayer renderLayer = RenderLayer.getEntityCutout(StatueEntity.TEXTURE);
+        RenderLayer renderLayer = RenderLayer.getEntityCutout(texture);
         // if top half, render transparent to stop z fighting
         if (blockState.get(StatueBlock.HALF) == DoubleBlockHalf.UPPER) {
-            renderLayer = RenderLayer.getEntityTranslucent(StatueEntity.TEXTURE);
+            renderLayer = RenderLayer.getEntityTranslucent(texture);
         }
         model.render(matrices,vertexConsumers.getBuffer(renderLayer),light,overlay,1,1,1,0);
         matrices.pop();

@@ -12,6 +12,6 @@ public class StatueRunRenderer extends MobEntityRenderer<StatueEntity, StatueRun
     }
     @Override
     public Identifier getTexture(StatueEntity entity) {
-        return StatueEntity.TEXTURE;
+        return StatueEntity.TEXTURE_NORMAL;
     }
 }
