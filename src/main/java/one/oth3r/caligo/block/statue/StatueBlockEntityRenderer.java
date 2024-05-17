@@ -10,6 +10,7 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import one.oth3r.caligo.block.deepslate_statue.DeepslateStatueBlock;
 import one.oth3r.caligo.entity.statue.StatueEntity;
 import one.oth3r.caligo.entity.statue.states.StatueCrouchModel;
 import one.oth3r.caligo.entity.statue.states.StatueIdleModel;
@@ -48,7 +49,10 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
             case CROUCH -> model = new StatueCrouchModel(StatueCrouchModel.getTexturedModelData().createModel());
         }
 
+        // change textures based on statue type
         Identifier texture = StatueEntity.TEXTURE_NORMAL;
+        if (blockState.getBlock() instanceof DeepslateStatueBlock) texture = StatueEntity.TEXTURE_DEEP;
+
         // render the model
         RenderLayer renderLayer = RenderLayer.getEntityCutout(texture);
         // if top half, render transparent to stop z fighting
