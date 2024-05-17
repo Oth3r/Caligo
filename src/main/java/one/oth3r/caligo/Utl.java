@@ -2,8 +2,14 @@ package one.oth3r.caligo;
 
 import net.minecraft.block.AirBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import one.oth3r.caligo.block.statue.StatueState;
 
@@ -19,6 +25,7 @@ public class Utl {
             if (player.isSprinting()) return StatueState.RUN;
             return StatueState.WALK;
         }
+
         public static BlockPos getPlacement(World world, BlockPos deathPos) {
             if (checkPos(world,deathPos)) return deathPos;
             // 3x4x3 around deathpos
@@ -40,5 +47,23 @@ public class Utl {
             return world.getBlockState(block).getBlock() instanceof AirBlock &&
                     world.getBlockState(block.add(0, 1, 0)).getBlock() instanceof AirBlock;
         }
+    }
+
+    /**
+     * returns the block pos the player is looking at
+     * @param range the rance to scan
+     * @return the BlockPos
+     */
+    public static BlockPos getBlockPosPlayerIsLookingAt(ServerWorld world, PlayerEntity player, double range) {
+        Vec3d rayStart = player.getPos().add(0, player.getEyeHeight(player.getPose()), 0); // pos, adjusted to player eye level
+        Vec3d rayEnd = rayStart.add(player.getRotationVector().multiply(range)); // Extend ray by 5 blocks
+
+        BlockHitResult hitResult = world.raycast(new RaycastContext(rayStart, rayEnd, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, ShapeContext.absent()));
+
+        if (hitResult.getType() == HitResult.Type.BLOCK) {
+            return hitResult.getBlockPos();
+        }
+
+        return new BlockPos(player.getBlockPos());
     }
 }
