@@ -23,6 +23,9 @@ public class ModItems {
     public static final Item DEEPSLATE_STATUE = registerItem("deepslate_statue",
             new BlockItem(ModBlocks.DEEPSLATE_STATUE_BLOCK, new FabricItemSettings()));
 
+    public static final Item LUMIN_CRYSTAL = registerItem("lumin_crystal",
+            new BlockItem(ModBlocks.LUMIN_CRYSTAL_BLOCK, new FabricItemSettings()));
+
     public static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(Caligo.MOD_ID,name),item);
     }
