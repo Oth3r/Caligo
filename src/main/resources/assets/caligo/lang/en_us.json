@@ -28,5 +28,14 @@
 
   "entity.caligo.strow": "Strow",
   "item.caligo.strow_spawn_egg": "Strow Spawn Egg",
-  "block.caligo.statue": "Statue Block"
+
+  "entity.caligo.deep_strow": "Deep Strow",
+  "item.caligo.deep_strow_spawn_egg": "Deep Strow Spawn Egg",
+
+  "item.caligo.strow_essence": "Strow Essence",
+
+  "block.caligo.statue": "Statue Block",
+  "block.caligo.deepslate_statue": "Deepslate Statue Block",
+
+  "block.caligo.lumin_crystal": "Lumin Crystal"
 }
