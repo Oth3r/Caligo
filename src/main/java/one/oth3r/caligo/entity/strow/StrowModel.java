@@ -9,10 +9,12 @@ import net.minecraft.util.math.MathHelper;
 public class StrowModel<T extends StrowEntity> extends SinglePartEntityModel<T> {
 	private final ModelPart root;
 	private final ModelPart head;
+
 	public StrowModel(ModelPart root) {
 		this.root = root.getChild("root");
 		this.head = root.getChild("root").getChild("body").getChild("head");
 	}
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();
@@ -44,6 +46,7 @@ public class StrowModel<T extends StrowEntity> extends SinglePartEntityModel<T> 
 		ModelPartData leg1 = root.addChild("leg1", ModelPartBuilder.create().uv(4, 13).cuboid(-0.5F, 0.0F, -0.5F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F)), ModelTransform.pivot(-0.5F, -3.0F, 1.0F));
 		return TexturedModelData.of(modelData, 32, 32);
 	}
+
 	@Override
 	public void setAngles(StrowEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.getPart().traverse().forEach(ModelPart::resetTransform);
@@ -52,11 +55,12 @@ public class StrowModel<T extends StrowEntity> extends SinglePartEntityModel<T> 
 		this.animateMovement(StrowAnimations.RUN,limbSwing,limbSwingAmount,2f,2.5f);
 		this.updateAnimation(entity.attackAnimationState, StrowAnimations.PECK, ageInTicks, 1f);
 		if (entity.isAngry()) {
-			if (!entity.isChasing())
+			if (!entity.isActive())
 				this.updateAnimation(entity.activeAnimationState, StrowAnimations.STARE_ACTIVATE, ageInTicks, 1f);
 			this.updateAnimation(entity.activeAnimationState, StrowAnimations.IDLE_ACTIVE, ageInTicks, 1f);
 		}
 	}
+
 	private void setHeadAngles(float headYaw, float headPitch) {
 		headYaw = MathHelper.clamp(headYaw, -30.0f, 30.0f);
 		headPitch = MathHelper.clamp(headPitch, -25.0f, 45.0f);
@@ -64,10 +68,12 @@ public class StrowModel<T extends StrowEntity> extends SinglePartEntityModel<T> 
 		this.head.yaw = headYaw * ((float)Math.PI / 180);
 		this.head.pitch = headPitch * ((float)Math.PI / 180);
 	}
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
 		root.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
 	}
+
 	@Override
 	public ModelPart getPart() {
 		return root;
