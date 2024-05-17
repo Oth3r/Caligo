@@ -55,13 +55,13 @@ public abstract class HudOverlayMixin {
 
     @Shadow protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getFrozenTicks()I"))
+    @Inject(method = "renderMiscOverlays", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getFrozenTicks()I"))
     public void render(DrawContext context, float tickDelta, CallbackInfo ci) {
         PlayerEntity player = this.client.player;
         if (player == null) return;
 
         // render + logic
-        if (player.hasStatusEffect(ModEffects.PETRIFIED)) {
+        if (player.hasStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED))) {
 
             // if player isn't moving increase the timer, if not decrease
             if (playerSpeed(player) == 0) {
@@ -69,7 +69,7 @@ public abstract class HudOverlayMixin {
             } else if (notMovingTimer > 0) notMovingTimer -= 0.4;
 
             // render the overlay
-            if (player.getStatusEffect(ModEffects.PETRIFIED).getAmplifier() > 0) {
+            if (player.getStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED)).getAmplifier() > 0) {
                 this.renderOverlay(context, DEEP_PETRIFIED_OUTLINE, getOpacity());
             } else {
                 this.renderOverlay(context, PETRIFIED_OUTLINE, getOpacity());

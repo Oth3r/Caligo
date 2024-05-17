@@ -23,9 +23,9 @@ public abstract class DrawHeartMixin {
         if (!type.equals(InGameHud.HeartType.NORMAL)) return;
         PlayerEntity player = this.client.player;
         if (player == null) return;
-        if (player.hasStatusEffect(ModEffects.PETRIFIED)) {
+        if (player.hasStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED))) {
             Identifier texture;
-            if (player.getStatusEffect(ModEffects.PETRIFIED).getAmplifier() > 0) {
+            if (player.getStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED)).getAmplifier() > 0) {
                 texture = new Identifier("hud/heart/deep_petrified_full");
                 if (half) texture = new Identifier("hud/heart/deep_petrified_half");
             } else {

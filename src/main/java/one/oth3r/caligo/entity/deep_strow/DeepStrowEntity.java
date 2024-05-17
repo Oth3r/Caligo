@@ -11,6 +11,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
@@ -57,12 +58,14 @@ public class DeepStrowEntity extends StrowEntity {
 
         if (isPlayerStaring(target)) {
             int duration = 150;
-            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(ModEffects.PETRIFIED, duration, 1, false, false);
-            StatusEffect statusEffect = statusEffectInstance.getEffectType();
+
+            RegistryEntry<StatusEffect> petrified = ModEffects.getEffect(ModEffects.PETRIFIED);
+
+            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(petrified, duration, 1, false, false);
 
             // only apply the effect every 7 ticks after applying or play doesn't have effect
-            boolean canApply = !target.hasStatusEffect(statusEffect) || target.getStatusEffect(statusEffect).getAmplifier() < statusEffectInstance.getAmplifier() ||
-                    target.getStatusEffect(statusEffect).isDurationBelow(duration - 7);
+            boolean canApply = !target.hasStatusEffect(petrified) || target.getStatusEffect(petrified).getAmplifier() < statusEffectInstance.getAmplifier() ||
+                    target.getStatusEffect(petrified).isDurationBelow(duration - 7);
 
             if (canApply) target.addStatusEffect(statusEffectInstance);
         }

@@ -52,8 +52,9 @@ public class StatueBlock extends BlockWithEntity implements BlockEntityProvider 
         builder.add(STATE);
         builder.add(HALF);
     }
+
     @Override
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         return false;
     }
 

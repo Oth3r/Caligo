@@ -4,8 +4,11 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.DefaultedList;
@@ -51,8 +54,11 @@ public abstract class onDeathMixin extends PlayerEntity {
 
         // get the blockstate for the statue
         BlockState blockState = ModBlocks.STATUE_BLOCK.getDefaultState();
+
+        RegistryEntry<StatusEffect> petrified = ModEffects.getEffect(ModEffects.PETRIFIED);
+
         // if deep strow or strong petrification, deepslate statue
-        if ((this.hasStatusEffect(ModEffects.PETRIFIED) && this.getStatusEffect(ModEffects.PETRIFIED).getAmplifier() > 1)
+        if ((this.hasStatusEffect(petrified) && this.getStatusEffect(petrified).getAmplifier() > 1)
                 || damageSource.getSource() instanceof DeepStrowEntity) {
             blockState = ModBlocks.DEEPSLATE_STATUE_BLOCK.getDefaultState();
         }

@@ -19,7 +19,7 @@ public class ModEntityGeneration {
 
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), SpawnGroup.MONSTER,
                 ModEntities.DEEP_STROW, 35, 2, 4);
-        SpawnRestriction.register(ModEntities.DEEP_STROW, SpawnRestriction.Location.ON_GROUND,
+        SpawnRestriction.register(ModEntities.DEEP_STROW, SpawnLocationTypes.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DeepStrowEntity::canSpawn);
     }
 }

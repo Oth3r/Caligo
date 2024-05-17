@@ -17,6 +17,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -176,12 +177,14 @@ public class StrowEntity extends HostileEntity implements Angerable {
 
         if (isPlayerStaring(target)) {
             int duration = 300;
-            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(ModEffects.PETRIFIED, duration, 0, false, false);
-            StatusEffect statusEffect = statusEffectInstance.getEffectType();
+
+            RegistryEntry<StatusEffect> petrified = ModEffects.getEffect(ModEffects.PETRIFIED);
+
+            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(petrified, duration, 0, false, false);
 
             // make sure the effect doesn't override a stronger effect
-            boolean canApply = !target.hasStatusEffect(statusEffect)
-                    || target.getStatusEffect(statusEffect).getAmplifier() <= statusEffectInstance.getAmplifier();
+            boolean canApply = !target.hasStatusEffect(petrified)
+                    || target.getStatusEffect(petrified).getAmplifier() <= statusEffectInstance.getAmplifier();
 
             if (canApply) target.addStatusEffect(statusEffectInstance);
 
@@ -263,13 +266,15 @@ public class StrowEntity extends HostileEntity implements Angerable {
     public void chooseRandomAngerTime() {
         this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
     }
+
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(ANGRY, false);
-        this.dataTracker.startTracking(ACTIVE, false);
-        this.dataTracker.startTracking(ATTACKING, false);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(ANGRY,false)
+                .add(ACTIVE,false)
+                .add(ATTACKING,false);
     }
+
     public boolean isActive() {
         return this.dataTracker.get(ACTIVE);
     }

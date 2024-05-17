@@ -5,6 +5,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
@@ -14,6 +15,10 @@ public class ModEffects {
     public static StatusEffect PETRIFIED = register("petrified", new PetrifiedEffect()
                 .addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, MathHelper.randomUuid(Random.createLocal()).toString(),
             -0.35f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+
+    public static RegistryEntry<StatusEffect> getEffect(StatusEffect effect) {
+        return Registries.STATUS_EFFECT.getEntry(effect);
+    }
 
     public static void register() {}
 
