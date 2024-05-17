@@ -4,8 +4,7 @@
   "package": "one.oth3r.caligo.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "onDeathMixin",
-    "PlayerInvoker"
+    "onDeathMixin"
   ],
   "client": [
     "DrawHeartMixin",
