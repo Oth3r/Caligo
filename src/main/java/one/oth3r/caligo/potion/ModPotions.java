@@ -17,18 +17,20 @@ public class ModPotions {
             new Potion(new StatusEffectInstance(ModEffects.PETRIFIED, 900, 0)));
     public static final Potion PETRIFIED_POTION_LONG = registerPotion("petrified_extended",
             new Potion(new StatusEffectInstance(ModEffects.PETRIFIED, 1800, 0)));
-//    public static final Potion PETRIFIED_POTION_STRONG = registerPotion("petrified_amplified",
-//            new Potion(new StatusEffectInstance(ModEffects.PETRIFIED, 440, 2)));
+    public static final Potion PETRIFIED_POTION_STRONG = registerPotion("petrified_amplified",
+            new Potion(new StatusEffectInstance(ModEffects.PETRIFIED, 440, 2)));
+
     public static Potion registerPotion(String name, Potion potion) {
         return Registry.register(Registries.POTION, new Identifier(Caligo.MOD_ID,name),potion);
     }
     public static void register() {
         registerRecipes();
     }
+
     private static void registerRecipes() {
         BrewingRecipeRegistry.registerPotionRecipe(Potions.THICK, ModItems.STROW_ESSENCE, PETRIFIED_POTION);
         BrewingRecipeRegistry.registerPotionRecipe(PETRIFIED_POTION, Items.REDSTONE, PETRIFIED_POTION_LONG);
-//        BrewingRecipeRegistry.registerPotionRecipe(PETRIFIED_POTION, Items.GLOWSTONE, PETRIFIED_POTION_STRONG);
+        BrewingRecipeRegistry.registerPotionRecipe(PETRIFIED_POTION, Items.GLOWSTONE, PETRIFIED_POTION_STRONG);
     }
 
 }
