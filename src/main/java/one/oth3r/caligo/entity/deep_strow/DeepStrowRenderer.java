@@ -6,9 +6,7 @@ import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
 import one.oth3r.caligo.entity.ModModelLayers;
 import one.oth3r.caligo.entity.strow.StrowAngryFeatureRenderer;
-import one.oth3r.caligo.entity.strow.StrowEntity;
 import one.oth3r.caligo.entity.strow.StrowModel;
-import one.oth3r.caligo.entity.strow.StrowRenderer;
 
 public class DeepStrowRenderer extends MobEntityRenderer<DeepStrowEntity, StrowModel<DeepStrowEntity>> {
 
