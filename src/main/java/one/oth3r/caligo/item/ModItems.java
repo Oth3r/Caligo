@@ -17,6 +17,9 @@ public class ModItems {
     public static final Item STROW_SPAWN_EGG = registerItem("strow_spawn_egg",
             new SpawnEggItem(ModEntities.STROW, 0x808080, 0xa0a0a0, new FabricItemSettings()));
 
+    public static final Item DEEP_STROW_SPAWN_EGG = registerItem("deep_strow_spawn_egg",
+            new SpawnEggItem(ModEntities.DEEP_STROW, 0x33333b, 0x797979, new FabricItemSettings()));
+
     public static final Item STATUE = registerItem("statue",
             new BlockItem(ModBlocks.STATUE_BLOCK, new FabricItemSettings()));
 
@@ -34,6 +37,7 @@ public class ModItems {
         // add the spawn eggs to the spawn eggs tab, make it alphabetical
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(content -> {
             content.addAfter(Items.STRIDER_SPAWN_EGG,STROW_SPAWN_EGG);
+            content.addAfter(Items.CREEPER_SPAWN_EGG,DEEP_STROW_SPAWN_EGG);
         });
     }
 }
