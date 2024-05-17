@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public abstract class HudOverlayMixin {
 
     @Unique private static final Identifier PETRIFIED_OUTLINE = new Identifier("textures/misc/petrified_outline.png");
+    @Unique private static final Identifier DEEP_PETRIFIED_OUTLINE = new Identifier("textures/misc/deep_petrified_outline.png");
 
     @Unique private final Integer MAX = 140;
 
@@ -58,15 +59,23 @@ public abstract class HudOverlayMixin {
     public void render(DrawContext context, float tickDelta, CallbackInfo ci) {
         PlayerEntity player = this.client.player;
         if (player == null) return;
+
         // render + logic
         if (player.hasStatusEffect(ModEffects.PETRIFIED)) {
+
             // if player isn't moving increase the timer, if not decrease
             if (playerSpeed(player) == 0) {
                 if (notMovingTimer < MAX) notMovingTimer += 0.2;
             } else if (notMovingTimer > 0) notMovingTimer -= 0.4;
+
             // render the overlay
-            this.renderOverlay(context, PETRIFIED_OUTLINE, getOpacity());
+            if (player.getStatusEffect(ModEffects.PETRIFIED).getAmplifier() > 0) {
+                this.renderOverlay(context, DEEP_PETRIFIED_OUTLINE, getOpacity());
+            } else {
+                this.renderOverlay(context, PETRIFIED_OUTLINE, getOpacity());
+            }
         }
+
         // reset timer when not effected by potion
         else if (notMovingTimer != 0) notMovingTimer = 0.0;
     }
