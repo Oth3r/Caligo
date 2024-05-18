@@ -58,7 +58,7 @@ public abstract class onDeathMixin extends PlayerEntity {
         RegistryEntry<StatusEffect> petrified = ModEffects.getEffect(ModEffects.PETRIFIED);
 
         // if deep strow or strong petrification, deepslate statue
-        if ((this.hasStatusEffect(petrified) && this.getStatusEffect(petrified).getAmplifier() > 1)
+        if ((this.hasStatusEffect(petrified) && this.getStatusEffect(petrified).getAmplifier() > 0)
                 || damageSource.getSource() instanceof DeepStrowEntity) {
             blockState = ModBlocks.DEEPSLATE_STATUE_BLOCK.getDefaultState();
         }
