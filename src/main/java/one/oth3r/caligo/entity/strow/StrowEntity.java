@@ -62,9 +62,9 @@ public class StrowEntity extends HostileEntity implements Angerable {
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true, false));
     }
 
-    public static DefaultAttributeContainer.Builder createBirdAttributes() {
+    public static DefaultAttributeContainer.Builder createStrowAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 7)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, .3)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
                 .add(EntityAttributes.GENERIC_ATTACK_SPEED, 4)

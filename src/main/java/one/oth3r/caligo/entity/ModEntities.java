@@ -29,8 +29,8 @@ public class ModEntities {
                     .dimensions(EntityDimensions.fixed(.4f,.6f)).build());
 
     public static void register() {
-        FabricDefaultAttributeRegistry.register(ModEntities.STROW, StrowEntity.createBirdAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntities.DEEP_STROW, StrowEntity.createBirdAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.STROW, StrowEntity.createStrowAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.DEEP_STROW, DeepStrowEntity.createDeepStrowAttributes());
     }
     public static void registerClient() {
         EntityRendererRegistry.register(ModEntities.STROW, StrowRenderer::new);
