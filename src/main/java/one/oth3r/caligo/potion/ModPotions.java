@@ -5,7 +5,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
-import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -20,7 +19,7 @@ public class ModPotions {
     public static final Potion PETRIFIED_POTION_LONG = registerPotion("petrified_extended",
             new Potion(new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 1800, 0)));
     public static final Potion PETRIFIED_POTION_STRONG = registerPotion("petrified_amplified",
-            new Potion(new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 440, 2)));
+            new Potion(new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 440, 1)));
 
     public static Potion registerPotion(String name, Potion potion) {
         return Registry.register(Registries.POTION, new Identifier(Caligo.MOD_ID,name),potion);
