@@ -32,6 +32,7 @@ public class LuminCrystalBlockEntity extends BlockEntity {
             for (ServerPlayerEntity player : list) {
                 if (Utl.getBlockPosPlayerIsLookingAt(world,player,16).equals(pos)) {
                     setPower(world,15);
+                    break;
                 } else {
                     if (currentPower > NEARBY_LIGHT) {
                         setPower(world, currentPower-1);
