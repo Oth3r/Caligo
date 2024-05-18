@@ -31,8 +31,8 @@ public class DeepStrowEntity extends StrowEntity {
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0,new LookAtEntityGoal(this,PlayerEntity.class,20,.8f));
         this.goalSelector.add(1,new AttackGoal(this));
+        this.goalSelector.add(2,new LookAtEntityGoal(this,PlayerEntity.class,20,.8f));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true, false));
     }
 
