@@ -27,6 +27,7 @@
     "fabric": "*",
     "minecraft": "${minecraft_version}"
   },
+  "accessWidener" : "caligo.accesswidener",
   "mixins": [
     "caligo.mixins.json"
   ]

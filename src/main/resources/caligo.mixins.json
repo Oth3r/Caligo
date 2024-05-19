@@ -4,11 +4,12 @@
   "package": "one.oth3r.caligo.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "onDeathMixin",
-    "PlayerInvoker"
+    "onDeathMixin"
   ],
   "client": [
-    "GetHurtSoundMixin"
+    "DrawHeartMixin",
+    "GetHurtSoundMixin",
+    "HudOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1

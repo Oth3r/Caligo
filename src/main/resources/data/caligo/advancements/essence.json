@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_essence": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "caligo:strow_essence"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_essence"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "caligo:deepslate_statue",
+      "caligo:statue",
+      "caligo:lumin_crystal"
+    ]
+  }
+}
