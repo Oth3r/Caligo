@@ -19,21 +19,21 @@ public abstract class DrawHeartMixin {
     @Shadow @Final private MinecraftClient client;
 
     @Inject(method = "drawHeart", at = @At(value = "HEAD"), cancellable = true)
-    private void drawHeart(DrawContext context, InGameHud.HeartType type, int x, int y, boolean hardcore, boolean blinking, boolean half, CallbackInfo ci) {
+    private void drawHeart(DrawContext context, InGameHud.HeartType type, int x, int y, int v, boolean blinking, boolean halfHeart, CallbackInfo ci) {
         if (!type.equals(InGameHud.HeartType.NORMAL)) return;
         PlayerEntity player = this.client.player;
         if (player == null) return;
         if (player.hasStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED))) {
             Identifier texture;
             if (player.getStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED)).getAmplifier() > 0) {
-                texture = new Identifier("hud/heart/deep_petrified_full");
-                if (half) texture = new Identifier("hud/heart/deep_petrified_half");
+                texture = new Identifier("textures/gui/sprites/hud/heart/deep_petrified_full.png");
+                if (halfHeart) texture = new Identifier("textures/gui/sprites/hud/heart/deep_petrified_half.png");
             } else {
-                texture = new Identifier("hud/heart/petrified_full");
-                if (half) texture = new Identifier("hud/heart/petrified_half");
+                texture = new Identifier("textures/gui/sprites/hud/heart/petrified_full.png");
+                if (halfHeart) texture = new Identifier("textures/gui/sprites/hud/heart/petrified_half.png");
             }
 
-            context.drawGuiTexture(texture, x, y, 9, 9);
+            context.drawTexture(texture, x, y, 0, 0, 9, 9,9,9,9);
             ci.cancel();
         }
     }

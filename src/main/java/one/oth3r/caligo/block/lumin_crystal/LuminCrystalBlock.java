@@ -28,7 +28,6 @@ import one.oth3r.caligo.block.ModBlocks;
 import org.jetbrains.annotations.Nullable;
 
 public class LuminCrystalBlock extends BlockWithEntity implements Waterloggable {
-    public static final MapCodec<? extends BlockWithEntity> CODEC = LuminCrystalBlock.createCodec(LuminCrystalBlock::new);
     public static final IntProperty POWER = IntProperty.of("power",0,15);
     public static final DirectionProperty FACING = Properties.FACING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -39,11 +38,6 @@ public class LuminCrystalBlock extends BlockWithEntity implements Waterloggable 
     protected final VoxelShape westShape;
     protected final VoxelShape upShape;
     protected final VoxelShape downShape;
-
-    @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
-    }
 
     public LuminCrystalBlock(Settings settings) {
         super(settings);
@@ -155,7 +149,7 @@ public class LuminCrystalBlock extends BlockWithEntity implements Waterloggable 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(type, ModBlocks.LUMIN_CRYSTAL_BLOCK_ENTITY, ((world1, pos, state1, blockEntity) -> {
+        return checkType(type, ModBlocks.LUMIN_CRYSTAL_BLOCK_ENTITY, ((world1, pos, state1, blockEntity) -> {
             if (world instanceof ServerWorld serverWorld) {
                 blockEntity.serverTick(serverWorld,pos,state,blockEntity);
             }
