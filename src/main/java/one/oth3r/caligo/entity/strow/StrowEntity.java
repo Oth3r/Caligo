@@ -178,7 +178,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (isPlayerStaring(target)) {
             int duration = 300;
 
-            RegistryEntry<StatusEffect> petrified = ModEffects.getEffect(ModEffects.PETRIFIED);
+            StatusEffect petrified = ModEffects.getEffect(ModEffects.PETRIFIED);
 
             StatusEffectInstance statusEffectInstance = new StatusEffectInstance(petrified, duration, 0, false, false);
 
@@ -268,11 +268,11 @@ public class StrowEntity extends HostileEntity implements Angerable {
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(ANGRY,false)
-                .add(ACTIVE,false)
-                .add(ATTACKING,false);
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(ANGRY, false);
+        this.dataTracker.startTracking(ACTIVE, false);
+        this.dataTracker.startTracking(ATTACKING, false);
     }
 
     public boolean isActive() {

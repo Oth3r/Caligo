@@ -8,7 +8,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import one.oth3r.caligo.block.ModBlocks;
@@ -37,16 +36,15 @@ public class StatueBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        Inventories.writeNbt(nbt, this.inv, registryLookup);
-        super.writeNbt(nbt, registryLookup);
+    protected void writeNbt(NbtCompound nbt) {
+        Inventories.writeNbt(nbt, this.inv);
+        super.writeNbt(nbt);
     }
-
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+    public void readNbt(NbtCompound nbt) {
         this.inv = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
-        super.readNbt(nbt, registryLookup);
-        Inventories.readNbt(nbt, this.inv, registryLookup);
+        super.readNbt(nbt);
+        Inventories.readNbt(nbt, this.inv);
     }
 
     @Nullable
@@ -56,8 +54,8 @@ public class StatueBlockEntity extends BlockEntity {
     }
 
     @Override
-    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
-        return createNbt(registryLookup);
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 
     @Override

@@ -55,7 +55,7 @@ public abstract class HudOverlayMixin {
 
     @Shadow protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
 
-    @Inject(method = "renderMiscOverlays", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getFrozenTicks()I"))
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getFrozenTicks()I"))
     public void render(DrawContext context, float tickDelta, CallbackInfo ci) {
         PlayerEntity player = this.client.player;
         if (player == null) return;

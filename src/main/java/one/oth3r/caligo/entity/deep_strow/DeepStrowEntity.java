@@ -71,7 +71,7 @@ public class DeepStrowEntity extends StrowEntity {
         if (isPlayerStaring(target)) {
             int duration = 150;
 
-            RegistryEntry<StatusEffect> petrified = ModEffects.getEffect(ModEffects.PETRIFIED);
+            StatusEffect petrified = ModEffects.getEffect(ModEffects.PETRIFIED);
 
             StatusEffectInstance statusEffectInstance = new StatusEffectInstance(petrified, duration, 1, false, false);
 
