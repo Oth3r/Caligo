@@ -1,8 +1,8 @@
 package one.oth3r.caligo.mixin;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -53,10 +53,10 @@ public abstract class HudOverlayMixin {
 
     @Shadow @Final private MinecraftClient client;
 
-    @Shadow protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
+    @Shadow protected abstract void renderOverlay(MatrixStack matrices, Identifier texture, float opacity);
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getFrozenTicks()I"))
-    public void render(DrawContext context, float tickDelta, CallbackInfo ci) {
+    public void render(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         PlayerEntity player = this.client.player;
         if (player == null) return;
 
@@ -70,9 +70,9 @@ public abstract class HudOverlayMixin {
 
             // render the overlay
             if (player.getStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED)).getAmplifier() > 0) {
-                this.renderOverlay(context, DEEP_PETRIFIED_OUTLINE, getOpacity());
+                this.renderOverlay(matrices, DEEP_PETRIFIED_OUTLINE, getOpacity());
             } else {
-                this.renderOverlay(context, PETRIFIED_OUTLINE, getOpacity());
+                this.renderOverlay(matrices, PETRIFIED_OUTLINE, getOpacity());
             }
         }
 

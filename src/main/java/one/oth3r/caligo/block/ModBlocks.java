@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -27,11 +28,11 @@ public class ModBlocks {
     // STATUE
 
     public static final Block STATUE_BLOCK = registerBlock("statue",
-            new StatueBlock(FabricBlockSettings.create()
+            new StatueBlock(FabricBlockSettings.of(Material.STONE)
                     .mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5f, 6.0f)));
 
     public static final Block DEEPSLATE_STATUE_BLOCK = registerBlock("deepslate_statue",
-            new DeepslateStatueBlock(FabricBlockSettings.create()
+            new DeepslateStatueBlock(FabricBlockSettings.of(Material.STONE)
                     .mapColor(MapColor.DEEPSLATE_GRAY).requiresTool().strength(1.5f, 6.0f)));
 
     public static final BlockEntityType<StatueBlockEntity> STATUE_BLOCK_ENTITY = Registry.register(
@@ -44,7 +45,7 @@ public class ModBlocks {
     public static final ToIntFunction<BlockState> toInt = value -> value.get(LuminCrystalBlock.POWER);
 
     public static final Block LUMIN_CRYSTAL_BLOCK = registerBlock("lumin_crystal",
-            new LuminCrystalBlock(FabricBlockSettings.create()
+            new LuminCrystalBlock(FabricBlockSettings.of(Material.STONE)
                     .mapColor(MapColor.STONE_GRAY).luminance(toInt).requiresTool().strength(1.5f, 6.0f)));
 
     public static final BlockEntityType<LuminCrystalBlockEntity> LUMIN_CRYSTAL_BLOCK_ENTITY = Registry.register(

@@ -31,6 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class onDeathMixin extends PlayerEntity {
+
     /**
      * unused
      */
@@ -38,7 +39,7 @@ public abstract class onDeathMixin extends PlayerEntity {
         super(world, pos, yaw, gameProfile);
     }
 
-    @Shadow public abstract ServerWorld getServerWorld();
+    @Shadow public abstract ServerWorld getWorld();
 
     @Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;drop(Lnet/minecraft/entity/damage/DamageSource;)V"))
     private void onDeath(DamageSource damageSource, CallbackInfo ci) {
@@ -46,7 +47,7 @@ public abstract class onDeathMixin extends PlayerEntity {
 
         // exit if not the strow effects
         if (!(damageSource.getType().msgId().equalsIgnoreCase("caligo_petrified") || damageSource.getSource() instanceof StrowEntity)) return;
-        World world = this.getServerWorld();
+        World world = this.getWorld();
 
         // get the statue block placement
         BlockPos pos = Utl.statue.getPlacement(world,this.getBlockPos());
