@@ -6,6 +6,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.world.Heightmap;
 import one.oth3r.caligo.entity.ModEntities;
+import one.oth3r.caligo.entity.deep_strow.DeepStrowEntity;
 import one.oth3r.caligo.entity.strow.StrowEntity;
 
 public class ModEntityGeneration {
@@ -14,5 +15,10 @@ public class ModEntityGeneration {
                 ModEntities.STROW, 35, 1, 2);
         SpawnRestriction.register(ModEntities.STROW, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, StrowEntity::canSpawn);
+
+        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), SpawnGroup.MONSTER,
+                ModEntities.DEEP_STROW, 35, 2, 4);
+        SpawnRestriction.register(ModEntities.DEEP_STROW, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DeepStrowEntity::canSpawn);
     }
 }

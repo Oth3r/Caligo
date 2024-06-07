@@ -16,19 +16,25 @@ import org.jetbrains.annotations.Nullable;
 public class StatueBlockEntity extends BlockEntity {
     //set to max player items
     private DefaultedList<ItemStack> inv = DefaultedList.ofSize(size(),ItemStack.EMPTY);
+
     private int xp = 0;
+
     public StatueBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlocks.STATUE_BLOCK_ENTITY, pos, state);
     }
+
     public void setInv(DefaultedList<ItemStack> inv) {
         this.inv = inv;
     }
+
     public int size() {
         return 50;
     }
+
     public void setXp(int xp) {
         this.xp = xp;
     }
+
     @Override
     protected void writeNbt(NbtCompound nbt) {
         Inventories.writeNbt(nbt, this.inv);
@@ -40,19 +46,23 @@ public class StatueBlockEntity extends BlockEntity {
         super.readNbt(nbt);
         Inventories.readNbt(nbt, this.inv);
     }
+
     @Nullable
     @Override
     public Packet<ClientPlayPacketListener> toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);
     }
+
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         return createNbt();
     }
+
     @Override
     public boolean isRemoved() {
         return super.isRemoved();
     }
+
     public DefaultedList<ItemStack> getInv() {
         return this.inv;
     }
@@ -60,4 +70,5 @@ public class StatueBlockEntity extends BlockEntity {
     public Integer getXp() {
         return this.xp;
     }
+
 }

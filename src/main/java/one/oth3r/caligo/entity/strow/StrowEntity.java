@@ -9,6 +9,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.HostileEntity;
@@ -16,6 +17,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -42,7 +44,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
     private int activeAnimationTimeout = 0;
     public final AnimationState attackAnimationState = new AnimationState();
     private static final TrackedData<Boolean> ANGRY = DataTracker.registerData(StrowEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    private static final TrackedData<Boolean> CHASING = DataTracker.registerData(StrowEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> ACTIVE = DataTracker.registerData(StrowEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> ATTACKING = DataTracker.registerData(StrowEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final UniformIntProvider ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
     private int angerTime;
@@ -59,14 +61,16 @@ public class StrowEntity extends HostileEntity implements Angerable {
         this.goalSelector.add(1, new ChasePlayerGoal(this));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true, false));
     }
-    public static DefaultAttributeContainer.Builder createBirdAttributes() {
+
+    public static DefaultAttributeContainer.Builder createStrowAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 7)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, .3)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
                 .add(EntityAttributes.GENERIC_ATTACK_SPEED, 4)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,.7);
     }
+
     public static boolean canSpawn(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         return HostileEntity.canSpawnInDark(type, world, spawnReason, pos, random) && world.getLightLevel(LightType.SKY, pos) == 0 &&
                 pos.getY() > 0;
@@ -102,14 +106,13 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (world.isClient()) {
             setupAnimationStates();
         }
-        if (this.isAngry() && !this.isChasing()) {
+        if (this.isAngry()) {
             // every 4 second loop
             if (world.getTime() % 80L == 0L) {
                 this.playSound(getActiveSound(),.25f, (float) random.nextBetween(98, 102) / 100);
             }
         }
-        if (!this.isAngry() && this.cawTime > 0)
-            this.cawTime--;
+        if (!this.isAngry() && this.cawTime > 0) this.cawTime--;
     }
     @Override
     protected void mobTick() {
@@ -122,6 +125,9 @@ public class StrowEntity extends HostileEntity implements Angerable {
         }
     }
 
+    /**
+     * the custom player damage system, only allow pickaxes
+     */
     @Override
     public boolean damage(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source) || source.isIn(DamageTypeTags.IS_PROJECTILE)) {
@@ -139,7 +145,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
 
     /**
      * checks if the DamageSource will fully damage the Strow or not
-     * @param source the damagesource to check
+     * @param source the damage source to check
      * @return if full or not
      */
     private boolean isFullDamage(DamageSource source) {
@@ -170,8 +176,18 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (!this.isAngry()) return;
 
         if (isPlayerStaring(target)) {
-            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(ModEffects.PETRIFIED, 300, 0, false, false);
-            target.addStatusEffect(statusEffectInstance);
+            int duration = 300;
+
+            StatusEffect petrified = ModEffects.getEffect(ModEffects.PETRIFIED);
+
+            StatusEffectInstance statusEffectInstance = new StatusEffectInstance(petrified, duration, 0, false, false);
+
+            // make sure the effect doesn't override a stronger effect
+            boolean canApply = !target.hasStatusEffect(petrified)
+                    || target.getStatusEffect(petrified).getAmplifier() <= statusEffectInstance.getAmplifier();
+
+            if (canApply) target.addStatusEffect(statusEffectInstance);
+
             caw(world,entity.getPos(),this,25);
         }
     }
@@ -179,7 +195,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
     /**
      * @return true if looking at eyes
      */
-    boolean isPlayerStaring(PlayerEntity player) {
+    protected boolean isPlayerStaring(PlayerEntity player) {
         Vec3d vec3d = player.getRotationVec(1.0F).normalize();
         Vec3d vec3d2 = new Vec3d(this.getX() - player.getX(), this.getEyeY() - player.getEyeY(), this.getZ() - player.getZ());
         double distance = vec3d2.length();
@@ -250,18 +266,20 @@ public class StrowEntity extends HostileEntity implements Angerable {
     public void chooseRandomAngerTime() {
         this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
     }
+
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(ANGRY, false);
-        this.dataTracker.startTracking(CHASING, false);
+        this.dataTracker.startTracking(ACTIVE, false);
         this.dataTracker.startTracking(ATTACKING, false);
     }
-    public boolean isChasing() {
-        return this.dataTracker.get(CHASING);
+
+    public boolean isActive() {
+        return this.dataTracker.get(ACTIVE);
     }
-    public void setChasing(boolean b) {
-        this.dataTracker.set(CHASING, b);
+    public void setActive(boolean b) {
+        this.dataTracker.set(ACTIVE, b);
     }
     public boolean isAttacking() {
         return this.dataTracker.get(ATTACKING);
@@ -317,7 +335,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
         @Override
         public void start() {
             this.bird.getNavigation().stop();
-            this.bird.setChasing(true);
+            this.bird.setActive(true);
             this.ticksToNextAttack = 0;
         }
         @Override
@@ -328,7 +346,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
         public void stop() {
             super.stop();
             this.bird.getNavigation().stop();
-            this.bird.setChasing(false);
+            this.bird.setActive(false);
             this.bird.setAttacking(false);
         }
         @Override
