@@ -20,6 +20,9 @@
     ],
     "main": [
       "one.oth3r.caligo.Caligo"
+    ],
+    "mm:early_risers": [
+      "one.oth3r.caligo.mixin.EarlyRiser"
     ]
   },
   "depends": {

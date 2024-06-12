@@ -8,7 +8,6 @@
   ],
   "client": [
     "DrawHeartMixin",
-    "GetHurtSoundMixin",
     "HudOverlayMixin"
   ],
   "injectors": {
