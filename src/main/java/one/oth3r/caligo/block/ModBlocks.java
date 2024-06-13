@@ -36,7 +36,7 @@ public class ModBlocks {
 
     public static final BlockEntityType<StatueBlockEntity> STATUE_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
-            new Identifier(Caligo.MOD_ID,"statue_block_entity"),
+            Identifier.of(Caligo.MOD_ID,"statue_block_entity"),
             FabricBlockEntityTypeBuilder.create(StatueBlockEntity::new,STATUE_BLOCK,DEEPSLATE_STATUE_BLOCK).build());
 
     // LUMIN CRYSTAL
@@ -49,11 +49,11 @@ public class ModBlocks {
 
     public static final BlockEntityType<LuminCrystalBlockEntity> LUMIN_CRYSTAL_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
-            new Identifier(Caligo.MOD_ID,"lumin_crystal_block_entity"),
+            Identifier.of(Caligo.MOD_ID,"lumin_crystal_block_entity"),
             FabricBlockEntityTypeBuilder.create(LuminCrystalBlockEntity::new, LUMIN_CRYSTAL_BLOCK).build());
 
     private static Block registerBlock(String name, Block block) {
-        return Registry.register(Registries.BLOCK,new Identifier(Caligo.MOD_ID,name),block);
+        return Registry.register(Registries.BLOCK,Identifier.of(Caligo.MOD_ID,name),block);
     }
 
     public static void registerModBlocks() {

@@ -59,7 +59,7 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
         if (blockState.get(StatueBlock.HALF) == DoubleBlockHalf.UPPER) {
             renderLayer = RenderLayer.getEntityTranslucent(texture);
         }
-        model.render(matrices,vertexConsumers.getBuffer(renderLayer),light,overlay,1,1,1,0);
+        model.render(matrices,vertexConsumers.getBuffer(renderLayer),light,overlay);
         matrices.pop();
     }
 }
