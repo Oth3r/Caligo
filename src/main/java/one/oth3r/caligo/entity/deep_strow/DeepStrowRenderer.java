@@ -10,7 +10,7 @@ import one.oth3r.caligo.entity.strow.StrowModel;
 
 public class DeepStrowRenderer extends MobEntityRenderer<DeepStrowEntity, StrowModel<DeepStrowEntity>> {
 
-    private static final Identifier TEXTURE = new Identifier(Caligo.MOD_ID, "textures/entity/deep_strow/deep_strow.png");
+    private static final Identifier TEXTURE = Identifier.of(Caligo.MOD_ID, "textures/entity/deep_strow/deep_strow.png");
 
     public DeepStrowRenderer(EntityRendererFactory.Context context) {
         super(context, new StrowModel<>(context.getPart(ModModelLayers.STROW)), 0.2f);

@@ -40,7 +40,7 @@ public abstract class onDeathMixin extends PlayerEntity {
 
     @Shadow public abstract ServerWorld getServerWorld();
 
-    @Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;drop(Lnet/minecraft/entity/damage/DamageSource;)V"))
+    @Inject(method = "onDeath", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;drop(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/damage/DamageSource;)V"))
     private void onDeath(DamageSource damageSource, CallbackInfo ci) {
         // STATUE SPAWNING
 

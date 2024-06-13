@@ -3,6 +3,7 @@ package one.oth3r.caligo.mixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -20,8 +21,8 @@ import java.util.ArrayList;
 @Mixin(InGameHud.class)
 public abstract class HudOverlayMixin {
 
-    @Unique private static final Identifier PETRIFIED_OUTLINE = new Identifier("textures/misc/petrified_outline.png");
-    @Unique private static final Identifier DEEP_PETRIFIED_OUTLINE = new Identifier("textures/misc/deep_petrified_outline.png");
+    @Unique private static final Identifier PETRIFIED_OUTLINE = Identifier.of("textures/misc/petrified_outline.png");
+    @Unique private static final Identifier DEEP_PETRIFIED_OUTLINE = Identifier.of("textures/misc/deep_petrified_outline.png");
 
     @Unique private final Integer MAX = 140;
 
@@ -56,7 +57,7 @@ public abstract class HudOverlayMixin {
     @Shadow protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
 
     @Inject(method = "renderMiscOverlays", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getFrozenTicks()I"))
-    public void render(DrawContext context, float tickDelta, CallbackInfo ci) {
+    public void render(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         PlayerEntity player = this.client.player;
         if (player == null) return;
 

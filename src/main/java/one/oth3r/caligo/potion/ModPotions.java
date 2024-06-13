@@ -22,7 +22,7 @@ public class ModPotions {
             new Potion(new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 440, 1)));
 
     public static Potion registerPotion(String name, Potion potion) {
-        return Registry.register(Registries.POTION, new Identifier(Caligo.MOD_ID,name),potion);
+        return Registry.register(Registries.POTION, Identifier.of(Caligo.MOD_ID,name),potion);
     }
     public static void register() {
         registerRecipes();

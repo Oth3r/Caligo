@@ -26,11 +26,11 @@ public abstract class DrawHeartMixin {
         if (player.hasStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED))) {
             Identifier texture;
             if (player.getStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED)).getAmplifier() > 0) {
-                texture = new Identifier("hud/heart/deep_petrified_full");
-                if (half) texture = new Identifier("hud/heart/deep_petrified_half");
+                texture = Identifier.of("hud/heart/deep_petrified_full");
+                if (half) texture = Identifier.of("hud/heart/deep_petrified_half");
             } else {
-                texture = new Identifier("hud/heart/petrified_full");
-                if (half) texture = new Identifier("hud/heart/petrified_half");
+                texture = Identifier.of("hud/heart/petrified_full");
+                if (half) texture = Identifier.of("hud/heart/petrified_half");
             }
 
             context.drawGuiTexture(texture, x, y, 9, 9);

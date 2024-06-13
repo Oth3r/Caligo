@@ -29,7 +29,7 @@ public class ModItems {
             new BlockItem(ModBlocks.LUMIN_CRYSTAL_BLOCK, new Item.Settings()));
 
     public static Item registerItem(String name, Item item) {
-        return Registry.register(Registries.ITEM, new Identifier(Caligo.MOD_ID,name),item);
+        return Registry.register(Registries.ITEM, Identifier.of(Caligo.MOD_ID,name),item);
     }
 
     public static void register() {

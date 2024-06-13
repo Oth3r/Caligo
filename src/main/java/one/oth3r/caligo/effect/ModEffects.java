@@ -13,7 +13,7 @@ import one.oth3r.caligo.Caligo;
 
 public class ModEffects {
     public static StatusEffect PETRIFIED = register("petrified", new PetrifiedEffect()
-                .addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, MathHelper.randomUuid(Random.createLocal()).toString(),
+                .addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, Identifier.of(Caligo.MOD_ID,"petrified_slowness"),
             -0.35f, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
     public static RegistryEntry<StatusEffect> getEffect(StatusEffect effect) {
@@ -23,6 +23,6 @@ public class ModEffects {
     public static void register() {}
 
     private static StatusEffect register(String id, StatusEffect statusEffect) {
-        return Registry.register(Registries.STATUS_EFFECT, new Identifier(Caligo.MOD_ID, id), statusEffect);
+        return Registry.register(Registries.STATUS_EFFECT, Identifier.of(Caligo.MOD_ID, id), statusEffect);
     }
 }
