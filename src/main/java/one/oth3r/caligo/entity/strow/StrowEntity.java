@@ -140,7 +140,8 @@ public class StrowEntity extends HostileEntity implements Angerable {
             }
             return super.damage(source,amount);
         }
-        return super.damage(source, (float) (amount*.01));
+        // only do *.1 of the original damage if not a pickaxe
+        return super.damage(source, (float) (amount*.1));
     }
 
     /**
