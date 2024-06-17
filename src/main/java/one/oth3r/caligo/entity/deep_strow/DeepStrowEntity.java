@@ -85,8 +85,15 @@ public class DeepStrowEntity extends StrowEntity {
 
     @Override
     public boolean damage(DamageSource source, float amount) {
+        // if the attacker isnt a living entity, dont get angry
         if (!(source.getAttacker() instanceof LivingEntity)) return super.damage(source,amount);
+
         LivingEntity entity = (LivingEntity) source.getAttacker();
+
+        // if player is in creative or spectator dont get mad at them
+        if (entity instanceof PlayerEntity player) {
+            if (player.isCreative() || player.isSpectator()) return super.damage(source,amount);
+        }
 
         this.setTarget(entity);
         this.setAngryAt(entity.getUuid());

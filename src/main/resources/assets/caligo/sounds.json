@@ -2,13 +2,19 @@
   "strow_caw": {
     "subtitle": "sound.strow_caw",
     "sounds": [
-      "caligo:strow_caw_1"
+      {
+        "name": "caligo:strow_caw_1",
+        "attenuation_distance": 50
+      }
     ]
   },
   "strow_active": {
     "subtitle": "sound.strow_active",
     "sounds": [
-      "caligo:strow_active_1"
+      {
+        "name": "caligo:strow_active_1",
+        "attenuation_distance": 25
+      }
     ]
   },
   "strow_damage": {

@@ -12,8 +12,10 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.Angerable;
+import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.SquidEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
@@ -123,6 +125,12 @@ public class StrowEntity extends HostileEntity implements Angerable {
                     player.interactionManager.isSurvivalLike() && !this.isTeammate(player) && this.getPos().isInRange(player.getPos(), 25));
             for (PlayerEntity player : list) petrifyStaring(serverWorld,this, player);
         }
+
+        // custom drowning logic
+        if (this.isSubmergedInWater()) {
+            // set air to max to prevent drowning damage
+            this.setAir(300);
+        }
     }
 
     /**
@@ -140,7 +148,8 @@ public class StrowEntity extends HostileEntity implements Angerable {
             }
             return super.damage(source,amount);
         }
-        return super.damage(source, (float) (amount*.01));
+        // only do *.1 of the original damage if not a pickaxe
+        return super.damage(source, (float) (amount*.1));
     }
 
     /**

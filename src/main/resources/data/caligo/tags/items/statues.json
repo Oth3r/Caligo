@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "caligo:statue",
-    "caligo:deepslate_statue",
-    "caligo:lumin_crystal"
+    "caligo:deepslate_statue"
   ]
 }
