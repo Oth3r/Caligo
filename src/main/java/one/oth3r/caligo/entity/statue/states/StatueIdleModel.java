@@ -46,14 +46,13 @@ public class StatueIdleModel extends EntityModel<StatueEntity> {
     @Override
     public void setAngles(StatueEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
     }
-
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
-        Head.render(matrices, vertices, light, overlay, color);
-        Body.render(matrices, vertices, light, overlay, color);
-        RightArm.render(matrices, vertices, light, overlay, color);
-        LeftArm.render(matrices, vertices, light, overlay, color);
-        RightLeg.render(matrices, vertices, light, overlay, color);
-        LeftLeg.render(matrices, vertices, light, overlay, color);
+    public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+        Head.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+        Body.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+        RightArm.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+        LeftArm.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+        RightLeg.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+        LeftLeg.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
     }
 }
