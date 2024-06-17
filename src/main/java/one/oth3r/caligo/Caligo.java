@@ -8,9 +8,13 @@ import one.oth3r.caligo.generation.ModEntityGeneration;
 import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.potion.ModPotions;
 import one.oth3r.caligo.sound.ModSounds;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Caligo implements ModInitializer {
     public static final String MOD_ID = "caligo";
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
     @Override
     public void onInitialize() {
         ModEntities.register();
