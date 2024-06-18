@@ -1,6 +1,8 @@
 package one.oth3r.caligo;
 
+import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.entity.damage.DamageEffects;
 import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.effect.ModEffects;
 import one.oth3r.caligo.entity.ModEntities;
@@ -24,5 +26,9 @@ public class Caligo implements ModInitializer {
         ModItems.register();
         ModPotions.register();
         ModEntityGeneration.addSpawns();
+
+        // load the FabricASM changes to crash the game if something is wrong (mod compatibility ect)
+        DamageEffects pattern = ClassTinkerers.getEnum(DamageEffects.class, "PETRIFICATION");
+        LOGGER.info("Hello! Caligo injections complete!");
     }
 }
