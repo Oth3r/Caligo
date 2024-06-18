@@ -9,7 +9,9 @@
     "ShanicMCA"
   ],
   "contact": {
-    "repo": "https://github.com/Oth3r/Caligo"
+    "homepage": "https://modrinth.com/mod/caligo",
+    "issues": "https://github.com/Oth3r/Caligo/issues",
+    "sources": "https://github.com/Oth3r/Caligo"
   },
   "license": "MIT",
   "icon": "assets/caligo/icon.png",
