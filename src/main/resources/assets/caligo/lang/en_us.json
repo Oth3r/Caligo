@@ -1,4 +1,7 @@
 {
+  "tag.blocks.caligo.statues": "Statues",
+  "tag.items.caligo.statues": "Statues",
+
   "item.minecraft.potion.effect.petrified": "Potion of Petrification",
   "item.minecraft.splash_potion.effect.petrified": "Splash Potion of Petrification",
   "item.minecraft.lingering_potion.effect.petrified": "Lingering Potion of Petrification",
