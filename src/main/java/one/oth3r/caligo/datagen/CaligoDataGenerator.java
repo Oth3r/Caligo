@@ -8,10 +8,12 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
+        pack.addProvider(ModItemTagProvider::new);
+        pack.addProvider(ModBlockTagProvider::new);
+
+        pack.addProvider(ModEntityLootTableProvider::new);
         pack.addProvider(ModModelProvider::new);
     }
-
-
 }
 
 
