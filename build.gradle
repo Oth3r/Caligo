@@ -20,6 +20,10 @@ loom {
     accessWidenerPath = file("src/main/resources/caligo.accesswidener")
 }
 
+fabricApi {
+    configureDataGeneration()
+}
+
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -34,6 +38,8 @@ dependencies {
 }
 
 processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     inputs.property "version", project.version
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
