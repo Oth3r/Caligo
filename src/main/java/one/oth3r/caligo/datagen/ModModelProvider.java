@@ -17,10 +17,7 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.STATUE_BLOCK);
-        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(ModBlocks.STATUE_BLOCK);
-        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.DEEPSLATE_STATUE_BLOCK);
-        blockStateModelGenerator.excludeFromSimpleItemModelGeneration(ModBlocks.DEEPSLATE_STATUE_BLOCK);
+
 
         blockStateModelGenerator.blockStateCollector
                 .accept(VariantsBlockStateSupplier.create(ModBlocks.LUMIN_CRYSTAL_BLOCK,
