@@ -1,4 +1,4 @@
-package one.oth3r.caligo.block.deepslate_statue;
+package one.oth3r.caligo.block.statue.deepslate;
 
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;

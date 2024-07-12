@@ -10,7 +10,7 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import one.oth3r.caligo.block.deepslate_statue.DeepslateStatueBlock;
+import one.oth3r.caligo.block.statue.deepslate.DeepslateStatueBlock;
 import one.oth3r.caligo.entity.statue.StatueEntity;
 import one.oth3r.caligo.entity.statue.states.StatueCrouchModel;
 import one.oth3r.caligo.entity.statue.states.StatueIdleModel;
