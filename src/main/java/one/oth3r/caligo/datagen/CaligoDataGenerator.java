@@ -2,6 +2,8 @@ package one.oth3r.caligo.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import one.oth3r.caligo.datagen.custom.LuminCrystalProviders;
+import one.oth3r.caligo.datagen.custom.StatueProviders;
 
 public class CaligoDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -20,6 +22,11 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(StatueProviders.Model::new);
         pack.addProvider(StatueProviders.Recipe::new);
         pack.addProvider(StatueProviders.LootTable::new);
+
+        // LUMIN CRYSTAL
+        pack.addProvider(LuminCrystalProviders.Model::new);
+        pack.addProvider(LuminCrystalProviders.Recipe::new);
+        pack.addProvider(LuminCrystalProviders.LootTable::new);
     }
 }
 
