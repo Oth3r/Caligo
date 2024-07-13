@@ -5,13 +5,13 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DoorBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
@@ -21,9 +21,14 @@ import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.tag.ModBlockTags;
 import one.oth3r.caligo.tag.ModItemTags;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 public class StatueProviders {
+
+    public static final ArrayList<Block> PICKAXE_MINEABLE = new ArrayList<>(Arrays.asList(ModBlocks.STATUE_BLOCK,ModBlocks.DEEPSLATE_STATUE_BLOCK));
+    public static final ArrayList<Block> NEEDS_IRON_TOOL = new ArrayList<>(PICKAXE_MINEABLE);
 
     public static class ItemTag extends FabricTagProvider.ItemTagProvider {
 
@@ -53,14 +58,6 @@ public class StatueProviders {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
             getOrCreateTagBuilder(ModBlockTags.STATUES)
-                    .add(ModBlocks.STATUE_BLOCK)
-                    .add(ModBlocks.DEEPSLATE_STATUE_BLOCK);
-
-            getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                    .add(ModBlocks.STATUE_BLOCK)
-                    .add(ModBlocks.DEEPSLATE_STATUE_BLOCK);
-
-            getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL)
                     .add(ModBlocks.STATUE_BLOCK)
                     .add(ModBlocks.DEEPSLATE_STATUE_BLOCK);
         }
