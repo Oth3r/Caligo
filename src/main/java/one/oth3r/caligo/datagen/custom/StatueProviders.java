@@ -14,7 +14,6 @@ import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
 import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.block.statue.StatueBlock;
 import one.oth3r.caligo.item.ModItems;
@@ -103,7 +102,7 @@ public class StatueProviders {
         public void generate(RecipeExporter exporter) {
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STATUE_BLOCK)
                     .pattern(" E ").pattern("SSS").pattern(" S ")
-                    .input('S', Blocks.STONE)
+                    .input('S', Items.STONE)
                     .input('E', ModItems.STROW_ESSENCE)
                     .criterion(FabricRecipeProvider.hasItem(ModItems.STROW_ESSENCE),
                             FabricRecipeProvider.conditionsFromItem(ModItems.STROW_ESSENCE))
@@ -111,7 +110,7 @@ public class StatueProviders {
 
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.DEEPSLATE_STATUE_BLOCK)
                     .pattern(" E ").pattern("SSS").pattern(" S ")
-                    .input('S', Blocks.DEEPSLATE)
+                    .input('S', Items.DEEPSLATE)
                     .input('E', ModItems.STROW_ESSENCE)
                     .criterion(FabricRecipeProvider.hasItem(ModItems.STROW_ESSENCE),
                             FabricRecipeProvider.conditionsFromItem(ModItems.STROW_ESSENCE))

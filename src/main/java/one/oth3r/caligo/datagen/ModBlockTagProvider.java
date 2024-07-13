@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
+import one.oth3r.caligo.datagen.custom.LuminCrystalProviders;
 import one.oth3r.caligo.datagen.custom.StatueProviders;
 import one.oth3r.caligo.tag.ModBlockTags;
 
@@ -21,6 +22,7 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
         // add all pickaxe mineable tags
         ArrayList<Block> pickaxe_mineable = new ArrayList<>();
+        pickaxe_mineable.addAll(LuminCrystalProviders.PICKAXE_MINEABLE);
         pickaxe_mineable.addAll(StatueProviders.PICKAXE_MINEABLE);
 
         pickaxe_mineable.forEach(block -> getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block));
@@ -30,5 +32,9 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         needs_iron_tool.addAll(StatueProviders.NEEDS_IRON_TOOL);
 
         needs_iron_tool.forEach(block -> getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL).add(block));
+
+
+        getOrCreateTagBuilder(ModBlockTags.COPPICE_REPELLENTS)
+                .add(Blocks.BIG_DRIPLEAF);
     }
 }
