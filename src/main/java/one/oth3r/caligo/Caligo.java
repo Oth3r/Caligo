@@ -3,6 +3,7 @@ package one.oth3r.caligo;
 import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.entity.damage.DamageEffects;
+import one.oth3r.caligo.block.CustomPathNodes;
 import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.effect.ModEffects;
 import one.oth3r.caligo.entity.ModEntities;
@@ -19,6 +20,8 @@ public class Caligo implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        CustomPathNodes.register();
+
         ModEntities.register();
         ModSounds.register();
         ModEffects.register();
