@@ -6,16 +6,22 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.EntityPropertiesLootCondition;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import one.oth3r.caligo.block.ModBlocks;
-import one.oth3r.caligo.block.statue.StatueBlock;
 import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.tag.ModBlockTags;
 import one.oth3r.caligo.tag.ModItemTags;
@@ -123,16 +129,23 @@ public class StatueProviders {
         }
     }
 
-    public static class LootTable extends FabricBlockLootTableProvider {
+    public static class BlockLootTable extends FabricBlockLootTableProvider {
 
-        public LootTable(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        public BlockLootTable(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
             super(dataOutput, registryLookup);
         }
 
         @Override
         public void generate() {
-            addDrop(ModBlocks.STATUE_BLOCK, dropsWithProperty(ModBlocks.STATUE_BLOCK, StatueBlock.HALF, DoubleBlockHalf.LOWER));
-            addDrop(ModBlocks.DEEPSLATE_STATUE_BLOCK, dropsWithProperty(ModBlocks.DEEPSLATE_STATUE_BLOCK, StatueBlock.HALF, DoubleBlockHalf.LOWER));
+            addDrop(ModBlocks.STATUE_BLOCK, statueDrop(ModBlocks.STATUE_BLOCK));
+            addDrop(ModBlocks.DEEPSLATE_STATUE_BLOCK, statueDrop(ModBlocks.DEEPSLATE_STATUE_BLOCK));
+
+        }
+
+        public LootTable.Builder statueDrop(Block statue) {
+            return new LootTable.Builder().pool(addSurvivesExplosionCondition(statue, LootPool.builder()
+                    .rolls(ConstantLootNumberProvider.create(1.0F)).with(ItemEntry.builder(statue)
+                            .conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS,EntityPredicate.Builder.create().type(EntityType.PLAYER))))));
         }
 
         @Override
