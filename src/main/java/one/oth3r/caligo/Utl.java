@@ -1,9 +1,11 @@
 package one.oth3r.caligo;
 
 import net.minecraft.block.AirBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -40,12 +42,19 @@ public class Utl {
             // if none are valid, null
             return null;
         }
-        private static boolean checkPos(World world, BlockPos block) {
-            BlockState below = world.getBlockState(block.add(0,-1,0));
+
+        private static boolean checkPos(World world, BlockPos blockPos) {
+            BlockState below = world.getBlockState(blockPos.add(0,-1,0));
             // below cant be air or not a full block
-            if (below.getBlock() instanceof AirBlock || !below.isFullCube(world,block)) return false;
-            return world.getBlockState(block).getBlock() instanceof AirBlock &&
-                    world.getBlockState(block.add(0, 1, 0)).getBlock() instanceof AirBlock;
+            if (below.getBlock() instanceof AirBlock || !below.isFullCube(world,blockPos)) return false;
+            return checkBlock(world, blockPos) && checkBlock(world, blockPos.add(0, 1, 0));
+        }
+
+        private static boolean checkBlock(World world, BlockPos pos) {
+            Block block = world.getBlockState(pos).getBlock();
+            FluidState fluidState = world.getFluidState(pos);
+            System.out.println(block);
+            return block instanceof AirBlock || (!fluidState.isEmpty() && fluidState.isStill());
         }
     }
 
