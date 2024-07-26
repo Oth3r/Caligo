@@ -64,8 +64,10 @@ public class Utl {
      * @return the BlockPos
      */
     public static BlockPos getBlockPosPlayerIsLookingAt(ServerWorld world, PlayerEntity player, double range) {
-        Vec3d rayStart = player.getPos().add(0, player.getEyeHeight(player.getPose()), 0); // pos, adjusted to player eye level
-        Vec3d rayEnd = rayStart.add(player.getRotationVector().multiply(range)); // Extend ray by 5 blocks
+        // pos, adjusted to player eye level
+        Vec3d rayStart = player.getPos().add(0, player.getEyeHeight(player.getPose()), 0);
+        // extend ray by the range
+        Vec3d rayEnd = rayStart.add(player.getRotationVector().multiply(range));
 
         BlockHitResult hitResult = world.raycast(new RaycastContext(rayStart, rayEnd, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, ShapeContext.absent()));
 
