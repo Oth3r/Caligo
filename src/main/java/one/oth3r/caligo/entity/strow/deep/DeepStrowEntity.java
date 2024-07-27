@@ -1,4 +1,4 @@
-package one.oth3r.caligo.entity.deep_strow;
+package one.oth3r.caligo.entity.strow.deep;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -75,9 +75,9 @@ public class DeepStrowEntity extends StrowEntity {
 
             StatusEffectInstance statusEffectInstance = new StatusEffectInstance(petrified, duration, 1, false, false);
 
-            // only apply the effect every 7 ticks after applying or play doesn't have effect
+            // only apply the effect every 20 ticks after applying or play doesn't have effect
             boolean canApply = !target.hasStatusEffect(petrified) || target.getStatusEffect(petrified).getAmplifier() < statusEffectInstance.getAmplifier() ||
-                    target.getStatusEffect(petrified).isDurationBelow(duration - 7);
+                    target.getStatusEffect(petrified).isDurationBelow(duration - 20);
 
             if (canApply) target.addStatusEffect(statusEffectInstance);
         }

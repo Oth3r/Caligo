@@ -1,4 +1,4 @@
-package one.oth3r.caligo.entity.deep_strow;
+package one.oth3r.caligo.entity.strow.deep;
 
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
