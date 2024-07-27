@@ -23,6 +23,9 @@
     "main": [
       "one.oth3r.caligo.Caligo"
     ],
+    "fabric-datagen": [
+      "one.oth3r.caligo.datagen.CaligoDataGenerator"
+    ],
     "mm:early_risers": [
       "one.oth3r.caligo.mixin.EarlyRiser"
     ]
