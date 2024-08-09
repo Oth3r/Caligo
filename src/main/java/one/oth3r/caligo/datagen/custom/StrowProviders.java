@@ -1,7 +1,11 @@
 package one.oth3r.caligo.datagen.custom;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.Models;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
@@ -11,6 +15,7 @@ import net.minecraft.loot.function.EnchantedCountIncreaseLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.*;
 import net.minecraft.registry.*;
+import one.oth3r.caligo.datagen.ModModelProvider;
 import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.loot_table.ModLootTables;
 
@@ -18,14 +23,13 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
 public class StrowProviders {
-
     private static CompletableFuture<RegistryWrapper.WrapperLookup> regLookup;
+
     public static class EntityLootTable extends SimpleFabricLootTableProvider {
         public EntityLootTable(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
             super(output, registryLookup, LootContextTypes.ENTITY);
             regLookup = registryLookup;
         }
-
 
         @Override
         public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
@@ -48,6 +52,30 @@ public class StrowProviders {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        }
+
+        @Override
+        public String getName() {
+            return "Strow "+super.getName();
+        }
+    }
+
+    public static class Model extends FabricModelProvider {
+
+        public Model(FabricDataOutput output) {
+            super(output);
+        }
+
+        @Override
+        public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {}
+
+        @Override
+        public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+            itemModelGenerator.register(ModItems.STROW_ESSENCE, Models.GENERATED);
+
+            // SPAWN EGGS
+            itemModelGenerator.register(ModItems.STROW_SPAWN_EGG, ModModelProvider.SPAWN_EGG);
+            itemModelGenerator.register(ModItems.DEEP_STROW_SPAWN_EGG, ModModelProvider.SPAWN_EGG);
         }
 
         @Override

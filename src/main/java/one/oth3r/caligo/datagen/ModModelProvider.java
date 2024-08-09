@@ -18,29 +18,16 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
 
-
-        blockStateModelGenerator.blockStateCollector
-                .accept(VariantsBlockStateSupplier.create(ModBlocks.LUMIN_CRYSTAL_BLOCK,
-                        BlockStateVariant.create().put(VariantSettings.MODEL,Identifier.of(Caligo.MOD_ID,"block/lumin_crystal")))
-                        .coordinate(blockStateModelGenerator.createUpDefaultFacingVariantMap()));
     }
 
-    private static final Model SPAWN_EGG = new Model(Optional.of(Identifier.ofVanilla("item/template_spawn_egg")), Optional.empty());
+    public static final Model SPAWN_EGG = new Model(Optional.of(Identifier.ofVanilla("item/template_spawn_egg")), Optional.empty());
 
-    private static Model getBlockItem(String parent, TextureKey... requiredTextureKeys) {
+    public static Model getBlockItem(String parent, TextureKey... requiredTextureKeys) {
         return new Model(Optional.of(Identifier.of(Caligo.MOD_ID,"block/"+parent)),Optional.empty(), requiredTextureKeys);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
 
-        itemModelGenerator.register(ModItems.STROW_ESSENCE, Models.GENERATED);
-
-        itemModelGenerator.register(ModItems.LUMIN_CRYSTAL, getBlockItem("lumin_crystal"));
-
-
-        // SPAWN EGGS
-        itemModelGenerator.register(ModItems.STROW_SPAWN_EGG, SPAWN_EGG);
-        itemModelGenerator.register(ModItems.DEEP_STROW_SPAWN_EGG, SPAWN_EGG);
     }
 }
