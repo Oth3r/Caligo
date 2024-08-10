@@ -1,6 +1,17 @@
 {
-  "tag.blocks.caligo.statues": "Statues",
-  "tag.items.caligo.statues": "Statues",
+  "itemGroup.caligo": "Caligo",
+
+
+
+  "tag.block.caligo.statues": "Statues",
+  "tag.block.caligo.coppice.repellent": "Coppice Interests",
+
+  "tag.item.caligo.statues": "Statues",
+  "tag.item.caligo.coppice.food": "Coppice Food",
+  "tag.item.caligo.coppice.high_tier": "Coppice High Tier Wants",
+  "tag.item.caligo.coppice.low_tier": "Coppice Low Tier Wants",
+
+
 
   "item.minecraft.potion.effect.petrified": "Potion of Petrification",
   "item.minecraft.splash_potion.effect.petrified": "Splash Potion of Petrification",
@@ -18,10 +29,15 @@
   "item.minecraft.tipped_arrow.effect.petrified_amplified": "Arrow of Petrification",
 
 
+
   "death.attack.caligo_petrified": "%1$s turned into stone.",
   "death.attack.caligo_petrified.player": "%s got hard during a head-to-head with %s.",
 
+
+
   "effect.caligo.petrified": "Petrified",
+
+
 
   "sound.petrified": "Player petrifies",
   "sound.strow_active": "Strow ambiance",
@@ -29,13 +45,25 @@
   "sound.strow_damage": "Strow hurts",
   "sound.strow_death": "Strow dies",
 
+
+
   "entity.caligo.strow": "Strow",
   "item.caligo.strow_spawn_egg": "Strow Spawn Egg",
-
   "entity.caligo.deep_strow": "Deep Strow",
   "item.caligo.deep_strow_spawn_egg": "Deep Strow Spawn Egg",
 
+  "entity.caligo.coppice": "Coppice",
+  "item.caligo.coppice": "Coppice Spawn Egg",
+
+
+
   "item.caligo.strow_essence": "Strow Essence",
+
+  "item.caligo.small_ore_remains": "Small Ore Remains",
+  "item.caligo.ore_remains": "Ore Remains",
+  "item.caligo.large_ore_remains": "Large Ore Remains",
+
+
 
   "block.caligo.statue": "Statue Block",
   "block.caligo.deepslate_statue": "Deepslate Statue Block",
