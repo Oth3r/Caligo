@@ -21,13 +21,13 @@ import one.oth3r.caligo.entity.strow.StrowRenderer;
 public class ModEntities {
     public static final EntityType<StrowEntity> STROW = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "strow"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, StrowEntity::new)
-                    .dimensions(EntityDimensions.fixed(.4f,.6f)).build());
+            EntityType.Builder.create(StrowEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(.4f,.6f).build());
 
     public static final EntityType<DeepStrowEntity> DEEP_STROW = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "deep_strow"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DeepStrowEntity::new)
-                    .dimensions(EntityDimensions.fixed(.4f,.6f)).build());
+            EntityType.Builder.create(DeepStrowEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(.4f,.6f).build());
 
     public static final EntityType<CoppiceEntity> COPPICE = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "coppice"),
