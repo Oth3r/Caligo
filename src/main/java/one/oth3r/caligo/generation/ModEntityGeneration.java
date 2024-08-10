@@ -7,7 +7,7 @@ import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.world.Heightmap;
 import one.oth3r.caligo.entity.ModEntities;
-import one.oth3r.caligo.entity.deep_strow.DeepStrowEntity;
+import one.oth3r.caligo.entity.strow.deep.DeepStrowEntity;
 import one.oth3r.caligo.entity.strow.StrowEntity;
 
 public class ModEntityGeneration {
