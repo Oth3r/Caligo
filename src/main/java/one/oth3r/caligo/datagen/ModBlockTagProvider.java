@@ -3,12 +3,10 @@ package one.oth3r.caligo.datagen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import one.oth3r.caligo.datagen.custom.LuminCrystalProviders;
 import one.oth3r.caligo.datagen.custom.StatueProviders;
-import one.oth3r.caligo.tag.ModBlockTags;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
@@ -33,8 +31,5 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
         needs_iron_tool.forEach(block -> getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL).add(block));
 
-
-        getOrCreateTagBuilder(ModBlockTags.COPPICE_REPELLENTS)
-                .add(Blocks.BIG_DRIPLEAF);
     }
 }
