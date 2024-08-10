@@ -53,7 +53,6 @@ public class Utl {
         private static boolean checkBlock(World world, BlockPos pos) {
             Block block = world.getBlockState(pos).getBlock();
             FluidState fluidState = world.getFluidState(pos);
-            System.out.println(block);
             return block instanceof AirBlock || (!fluidState.isEmpty() && fluidState.isStill());
         }
     }
