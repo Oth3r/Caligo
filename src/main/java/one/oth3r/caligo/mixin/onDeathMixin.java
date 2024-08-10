@@ -21,7 +21,7 @@ import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.block.statue.StatueBlock;
 import one.oth3r.caligo.block.statue.StatueBlockEntity;
 import one.oth3r.caligo.effect.ModEffects;
-import one.oth3r.caligo.entity.deep_strow.DeepStrowEntity;
+import one.oth3r.caligo.entity.strow.deep.DeepStrowEntity;
 import one.oth3r.caligo.entity.strow.StrowEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
