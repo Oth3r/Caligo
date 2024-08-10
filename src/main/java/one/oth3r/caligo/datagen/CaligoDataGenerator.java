@@ -20,7 +20,7 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(StatueProviders.BlockTag::new);
         pack.addProvider(StatueProviders.Model::new);
         pack.addProvider(StatueProviders.Recipe::new);
-        pack.addProvider(StatueProviders.LootTable::new);
+        pack.addProvider(StatueProviders.BlockLootTable::new);
 
         // LUMIN CRYSTAL
         pack.addProvider(LuminCrystalProviders.Model::new);
