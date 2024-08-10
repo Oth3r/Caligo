@@ -13,6 +13,15 @@ public class ModItems {
     public static final Item STROW_ESSENCE = registerItem("strow_essence",
             new Item(new Item.Settings()));
 
+    public static final Item LARGE_ORE_REMAINS = registerItem("large_ore_remains",
+            new Item(new Item.Settings()));
+
+    public static final Item ORE_REMAINS = registerItem("ore_remains",
+            new Item(new Item.Settings()));
+
+    public static final Item SMALL_ORE_REMAINS = registerItem("small_ore_remains",
+            new Item(new Item.Settings()));
+
     public static final Item STROW_SPAWN_EGG = registerItem("strow_spawn_egg",
             new SpawnEggItem(ModEntities.STROW, 0x808080, 0xa0a0a0, new Item.Settings()));
 

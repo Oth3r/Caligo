@@ -30,6 +30,10 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
         // STROW
         pack.addProvider(StrowProviders.EntityLootTable::new);
         pack.addProvider(StrowProviders.Model::new);
+
+        // ORE REMAINS
+        pack.addProvider(OreRemainsProvider.Recipe::new);
+        pack.addProvider(OreRemainsProvider.Model::new);
     }
 }
 
