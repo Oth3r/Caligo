@@ -40,15 +40,15 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 		ModelPartData head = body.addChild("head", ModelPartBuilder.create().uv(0, 22).cuboid(-3.0F, -6.0F, -3.0F, 6.0F, 6.0F, 6.0F, new Dilation(0.0F))
 				.uv(4, 2).cuboid(-5.0F, -9.0F, -5.0F, 10.0F, 10.0F, 9.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -4.0F, 0.0F));
 
-		ModelPartData leaf = head.addChild("leaf", ModelPartBuilder.create().uv(8, 45).cuboid(-3.5F, -13.0F, 0.0F, 4.0F, 4.0F, 0.0F, new Dilation(0.0F))
-				.uv(44, 13).cuboid(-0.5F, -9.0F, 0.0F, 1.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -9.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
+		ModelPartData leaf = head.addChild("leaf", ModelPartBuilder.create().uv(9, 35).cuboid(-3.5F, -13.0F, 0.0F, 4.0F, 4.0F, 0.0F, new Dilation(0.0F))
+				.uv(45, 13).cuboid(-0.5F, -9.0F, 0.0F, 1.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -9.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
 
-		ModelPartData cube_r1 = leaf.addChild("cube_r1", ModelPartBuilder.create().uv(6, 49).cuboid(0.0F, 0.0F, 1.0F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -9.0F, -1.0F, 0.021F, -0.0454F, -0.9139F));
+		ModelPartData cube_r1 = leaf.addChild("cube_r1", ModelPartBuilder.create().uv(7, 39).cuboid(0.0F, 0.0F, 1.0F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -9.0F, -1.0F, 0.021F, -0.0454F, -0.9139F));
 
-		ModelPartData leaf2 = head.addChild("leaf2", ModelPartBuilder.create().uv(8, 45).cuboid(-3.5F, -13.0F, 0.0F, 4.0F, 4.0F, 0.0F, new Dilation(0.0F))
-				.uv(44, 13).cuboid(-0.5F, -9.0F, 0.0F, 1.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -9.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
+		ModelPartData leaf2 = head.addChild("leaf2", ModelPartBuilder.create().uv(9, 35).cuboid(-3.5F, -13.0F, 0.0F, 4.0F, 4.0F, 0.0F, new Dilation(0.0F))
+				.uv(45, 13).cuboid(-0.5F, -9.0F, 0.0F, 1.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -9.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
 
-		ModelPartData cube_r2 = leaf2.addChild("cube_r2", ModelPartBuilder.create().uv(6, 49).cuboid(0.0F, 0.0F, 1.0F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -9.0F, -1.0F, 0.021F, -0.0454F, -0.9139F));
+		ModelPartData cube_r2 = leaf2.addChild("cube_r2", ModelPartBuilder.create().uv(7, 39).cuboid(0.0F, 0.0F, 1.0F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -9.0F, -1.0F, 0.021F, -0.0454F, -0.9139F));
 
 		ModelPartData left_leg = root.addChild("left_leg", ModelPartBuilder.create().uv(24, 28).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(-1.0F, -4.0F, 0.0F));
 
