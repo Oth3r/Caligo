@@ -6,12 +6,21 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.gen.GenerationStep;
 import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.entity.strow.deep.DeepStrowEntity;
 import one.oth3r.caligo.entity.strow.StrowEntity;
 
-public class ModEntityGeneration {
-    public static void addSpawns() {
+public class ModGeneration {
+
+    public static void registerAll() {
+        addEntitySpawns();
+        addLushChanges();
+    }
+
+
+    public static void addEntitySpawns() {
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), SpawnGroup.MONSTER,
                 ModEntities.STROW, 35, 1, 2);
         SpawnRestriction.register(ModEntities.STROW, SpawnLocationTypes.ON_GROUND,
@@ -21,5 +30,11 @@ public class ModEntityGeneration {
                 ModEntities.DEEP_STROW, 35, 2, 4);
         SpawnRestriction.register(ModEntities.DEEP_STROW, SpawnLocationTypes.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DeepStrowEntity::canSpawn);
+    }
+
+    public static void addLushChanges() {
+        BiomeModifications.addFeature(
+                BiomeSelectors.includeByKey(BiomeKeys.LUSH_CAVES),
+                GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.DRIPLEAF_VINE_PLACED_KEY);
     }
 }

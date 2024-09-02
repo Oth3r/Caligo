@@ -48,6 +48,24 @@ public class ModBlocks {
             Identifier.of(Caligo.MOD_ID,"lumin_crystal_block_entity"),
             BlockEntityType.Builder.create(LuminCrystalBlockEntity::new, LUMIN_CRYSTAL_BLOCK).build());
 
+
+    // DRIPLEAF VINE
+    public static final Block DRIPLEAF_VINES = registerBlock("dripleaf_vines",
+            new DripleafVineBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.LIME).breakInstantly().noCollision()
+                    .sounds(BlockSoundGroup.BIG_DRIPLEAF)));
+    public static final Block DRIPLEAF_VINES_PLANT = registerBlock("dripleaf_vines_plant",
+            new DripleafVinePlantBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.LIME).breakInstantly().noCollision()
+                    .sounds(BlockSoundGroup.BIG_DRIPLEAF)));
+
+
+    // LUSH MARIGOLD
+    public static final Block LUSH_MARIGOLD = registerBlock("lush_marigold",
+            new LushMarigoldFlowerBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.LIME).breakInstantly().noCollision()
+                    .offset(AbstractBlock.OffsetType.XZ).sounds(BlockSoundGroup.GRASS)));
+
     private static Block registerBlock(String name, Block block) {
         return Registry.register(Registries.BLOCK,Identifier.of(Caligo.MOD_ID,name),block);
     }
@@ -59,5 +77,8 @@ public class ModBlocks {
     public static void registerClient() {
         BlockEntityRendererFactories.register(STATUE_BLOCK_ENTITY, StatueBlockEntityRenderer::new);
         BlockRenderLayerMap.INSTANCE.putBlock(LUMIN_CRYSTAL_BLOCK, RenderLayer.getCutout());
+
+        BlockRenderLayerMap.INSTANCE.putBlock(DRIPLEAF_VINES, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(DRIPLEAF_VINES_PLANT, RenderLayer.getCutout());
     }
 }
