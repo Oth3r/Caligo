@@ -33,7 +33,7 @@ public class ModEntities {
     public static final EntityType<CoppiceEntity> COPPICE = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "coppice"),
             EntityType.Builder.create(CoppiceEntity::new, ClassTinkerers.getEnum(SpawnGroup.class, "UNDERGROUND_CREATURE"))
-                    .dimensions(.6f,1.1f).build());
+                    .dimensions(.6f,1.1f).eyeHeight(.62f).build());
 
     public static void register() {
         FabricDefaultAttributeRegistry.register(ModEntities.STROW, StrowEntity.createStrowAttributes());
