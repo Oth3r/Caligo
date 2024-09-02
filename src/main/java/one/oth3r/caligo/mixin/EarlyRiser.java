@@ -18,5 +18,12 @@ public class EarlyRiser implements Runnable {
         ClassTinkerers.enumBuilder(dmgEffects,"Ljava/lang/String;",soundEvent)
                 .addEnum("PETRIFICATION",
         () -> new Object[]{"petrification", ModSounds.PETRIFIED_DAMAGE}).build();
+
+        String spawnGroup = remapper.mapClassName("intermediary","net.minecraft.class_1311"); // SpawnGroup
+        // add the cave creatures spawn group
+        ClassTinkerers.enumBuilder(spawnGroup, "Ljava/lang/String;", int.class, boolean.class, boolean.class, int.class)
+                .addEnum("UNDERGROUND_CREATURE", () -> new Object[]{
+                        "underground_creature", 8, true, false, 128
+                }).build();
     }
 }

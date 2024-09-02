@@ -1,5 +1,6 @@
 package one.oth3r.caligo.entity;
 
+import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -31,7 +32,7 @@ public class ModEntities {
 
     public static final EntityType<CoppiceEntity> COPPICE = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "coppice"),
-            EntityType.Builder.create(CoppiceEntity::new, SpawnGroup.CREATURE)
+            EntityType.Builder.create(CoppiceEntity::new, ClassTinkerers.getEnum(SpawnGroup.class, "UNDERGROUND_CREATURE"))
                     .dimensions(.6f,1.1f).build());
 
     public static void register() {

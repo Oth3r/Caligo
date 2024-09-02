@@ -30,6 +30,11 @@ public class ModGeneration {
                 ModEntities.DEEP_STROW, 35, 2, 4);
         SpawnRestriction.register(ModEntities.DEEP_STROW, SpawnLocationTypes.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DeepStrowEntity::canSpawn);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.LUSH_CAVES), ClassTinkerers.getEnum(SpawnGroup.class, "UNDERGROUND_CREATURE"),
+                ModEntities.COPPICE, 100, 1, 2);
+        SpawnRestriction.register(ModEntities.COPPICE, SpawnLocationTypes.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CoppiceEntity::canSpawn);
     }
 
     public static void addLushChanges() {

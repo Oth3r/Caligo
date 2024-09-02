@@ -19,8 +19,9 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.*;
 import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.entity.ai.ModSensorTypes;
 import org.jetbrains.annotations.Nullable;
@@ -48,6 +49,10 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
 
     public CoppiceEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    public static boolean canSpawn(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return SpawnReason.isTrialSpawner(spawnReason) || world.getLightLevel(LightType.SKY, pos) < 10;
     }
 
     public static DefaultAttributeContainer.Builder createLushAttributes() {
