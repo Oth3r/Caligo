@@ -2,7 +2,11 @@ package one.oth3r.caligo.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.minecraft.registry.RegistryBuilder;
+import net.minecraft.registry.RegistryKeys;
 import one.oth3r.caligo.datagen.custom.*;
+import one.oth3r.caligo.generation.ModConfiguredFeatures;
+import one.oth3r.caligo.generation.ModPlacedFeatures;
 
 public class CaligoDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -14,6 +18,8 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(ModEntityLootTableProvider::new);
         pack.addProvider(ModModelProvider::new);
+
+        pack.addProvider(ModWorldGenerator::new);
 
         // STATUES
         pack.addProvider(StatueProviders.ItemTag::new);
@@ -39,6 +45,12 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
         // ORE REMAINS
         pack.addProvider(OreRemainsProvider.Recipe::new);
         pack.addProvider(OreRemainsProvider.Model::new);
+    }
+
+    @Override
+    public void buildRegistry(RegistryBuilder registryBuilder) {
+        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModConfiguredFeatures::boostrap);
+        registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModPlacedFeatures::boostrap);
     }
 }
 
