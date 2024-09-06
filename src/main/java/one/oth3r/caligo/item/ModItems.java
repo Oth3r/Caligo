@@ -37,6 +37,12 @@ public class ModItems {
     public static final Item LUMIN_CRYSTAL = registerItem("lumin_crystal",
             new BlockItem(ModBlocks.LUMIN_CRYSTAL_BLOCK, new Item.Settings()));
 
+    public static final Item DRIPLEAF_VINES = registerItem("dripleaf_vines",
+            new BlockItem(ModBlocks.DRIPLEAF_VINES, new Item.Settings()));
+
+    public static final Item LUSH_MARIGOLD = registerItem("lush_marigold",
+            new PlaceableOnWaterItem(ModBlocks.LUSH_MARIGOLD, new Item.Settings()));
+
     public static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(Caligo.MOD_ID,name),item);
     }

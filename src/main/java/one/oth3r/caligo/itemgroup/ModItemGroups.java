@@ -38,6 +38,8 @@ public class ModItemGroups {
             itemGroup.add(ModItems.SMALL_ORE_REMAINS);
             itemGroup.add(ModItems.ORE_REMAINS);
             itemGroup.add(ModItems.LARGE_ORE_REMAINS);
+            itemGroup.add(ModItems.DRIPLEAF_VINES);
+            itemGroup.add(ModItems.LUSH_MARIGOLD);
         });
     }
 }
