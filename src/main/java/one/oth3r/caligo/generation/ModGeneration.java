@@ -1,5 +1,6 @@
 package one.oth3r.caligo.generation;
 
+import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.entity.SpawnGroup;
@@ -9,6 +10,7 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import one.oth3r.caligo.entity.ModEntities;
+import one.oth3r.caligo.entity.coppice.CoppiceEntity;
 import one.oth3r.caligo.entity.strow.deep.DeepStrowEntity;
 import one.oth3r.caligo.entity.strow.StrowEntity;
 
@@ -40,6 +42,10 @@ public class ModGeneration {
     public static void addLushChanges() {
         BiomeModifications.addFeature(
                 BiomeSelectors.includeByKey(BiomeKeys.LUSH_CAVES),
-                GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.DRIPLEAF_VINE_PLACED_KEY);
+                GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.DRIPLEAF_VINES_PLACED_KEY);
+
+        BiomeModifications.addFeature(
+                BiomeSelectors.includeByKey(BiomeKeys.LUSH_CAVES),
+                GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.LUSH_MARIGOLD_PLACED_KEY);
     }
 }

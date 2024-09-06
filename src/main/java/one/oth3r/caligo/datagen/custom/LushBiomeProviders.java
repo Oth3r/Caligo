@@ -1,0 +1,69 @@
+package one.oth3r.caligo.datagen.custom;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.minecraft.data.client.*;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.Identifier;
+import one.oth3r.caligo.Caligo;
+import one.oth3r.caligo.block.ModBlocks;
+import one.oth3r.caligo.datagen.ModModelProvider;
+import one.oth3r.caligo.item.ModItems;
+
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * everything added to the lush biome
+ */
+public class LushBiomeProviders {
+    public static class Model extends FabricModelProvider {
+
+        public Model(FabricDataOutput output) {
+            super(output);
+        }
+
+        @Override
+        public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+            blockStateModelGenerator.registerPlantPart(ModBlocks.DRIPLEAF_VINES_PLANT,ModBlocks.DRIPLEAF_VINES, BlockStateModelGenerator.TintType.NOT_TINTED);
+
+            Identifier[] marigold = new Identifier[]{
+                    Identifier.of(Caligo.MOD_ID,"block/marigold_1"),
+                    Identifier.of(Caligo.MOD_ID,"block/marigold_2"),
+                    Identifier.of(Caligo.MOD_ID,"block/marigold_3"),
+                    Identifier.of(Caligo.MOD_ID,"block/marigold_4")
+            };
+
+            blockStateModelGenerator.blockStateCollector.accept(ModModelProvider.createFlowerBlockState(ModBlocks.LUSH_MARIGOLD, marigold));
+        }
+
+        @Override
+        public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+            itemModelGenerator.register(ModItems.DRIPLEAF_VINES, Models.GENERATED);
+            itemModelGenerator.register(ModItems.LUSH_MARIGOLD, Models.GENERATED);
+        }
+
+        @Override
+        public String getName() {
+            return "Lush Biome "+super.getName();
+        }
+    }
+
+    public static class LootTable extends FabricBlockLootTableProvider {
+
+        public LootTable(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(dataOutput, registryLookup);
+        }
+
+        @Override
+        public void generate() {
+            addVinePlantDrop(ModBlocks.DRIPLEAF_VINES, ModBlocks.DRIPLEAF_VINES_PLANT);
+            addDrop(ModBlocks.LUSH_MARIGOLD);
+        }
+
+        @Override
+        public String getName() {
+            return "Lush Biome "+super.getName();
+        }
+    }
+}

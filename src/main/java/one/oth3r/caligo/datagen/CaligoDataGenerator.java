@@ -42,6 +42,10 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(CoppiceProviders.BlockTag::new);
         pack.addProvider(CoppiceProviders.EntityLootTable::new);
 
+        // LUSH
+        pack.addProvider(LushBiomeProviders.Model::new);
+        pack.addProvider(LushBiomeProviders.LootTable::new);
+
         // ORE REMAINS
         pack.addProvider(OreRemainsProvider.Recipe::new);
         pack.addProvider(OreRemainsProvider.Model::new);
