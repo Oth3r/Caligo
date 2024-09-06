@@ -2,6 +2,7 @@ package one.oth3r.caligo;
 
 import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.damage.DamageEffects;
 import one.oth3r.caligo.block.CustomPathNodes;
 import one.oth3r.caligo.block.ModBlocks;
@@ -33,7 +34,9 @@ public class Caligo implements ModInitializer {
         ModItemGroups.register();
 
         // load the FabricASM changes to crash the game if something is wrong (mod compatibility ect)
-        DamageEffects pattern = ClassTinkerers.getEnum(DamageEffects.class, "PETRIFICATION");
+        DamageEffects dmgEffect = ClassTinkerers.getEnum(DamageEffects.class, "PETRIFICATION");
+        SpawnGroup group = ClassTinkerers.getEnum(SpawnGroup.class, "UNDERGROUND_CREATURE");
         LOGGER.info("Hello! Caligo injections complete!");
+
     }
 }
