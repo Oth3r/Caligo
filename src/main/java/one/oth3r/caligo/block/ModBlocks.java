@@ -7,8 +7,11 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
+import one.oth3r.caligo.block.dripleaf_vine.DripleafVineBlock;
+import one.oth3r.caligo.block.dripleaf_vine.DripleafVinePlantBlock;
 import one.oth3r.caligo.block.statue.deepslate.DeepslateStatueBlock;
 import one.oth3r.caligo.block.lumin_crystal.LuminCrystalBlock;
 import one.oth3r.caligo.block.lumin_crystal.LuminCrystalBlockEntity;
@@ -21,7 +24,6 @@ import java.util.function.ToIntFunction;
 public class ModBlocks {
 
     // STATUE
-
     public static final Block STATUE_BLOCK = registerBlock("statue",
             new StatueBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5f, 6.0f)));
@@ -35,8 +37,9 @@ public class ModBlocks {
             Identifier.of(Caligo.MOD_ID,"statue_block_entity"),
             BlockEntityType.Builder.create(StatueBlockEntity::new,STATUE_BLOCK,DEEPSLATE_STATUE_BLOCK).build());
 
-    // LUMIN CRYSTAL
 
+
+    // LUMIN CRYSTAL
     public static final ToIntFunction<BlockState> toInt = value -> value.get(LuminCrystalBlock.POWER);
 
     public static final Block LUMIN_CRYSTAL_BLOCK = registerBlock("lumin_crystal",
@@ -80,5 +83,7 @@ public class ModBlocks {
 
         BlockRenderLayerMap.INSTANCE.putBlock(DRIPLEAF_VINES, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(DRIPLEAF_VINES_PLANT, RenderLayer.getCutout());
+
+        BlockRenderLayerMap.INSTANCE.putBlock(LUSH_MARIGOLD, RenderLayer.getCutout());
     }
 }
