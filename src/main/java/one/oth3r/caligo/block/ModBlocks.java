@@ -1,8 +1,10 @@
 package one.oth3r.caligo.block;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.registry.Registries;
@@ -10,8 +12,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
-import one.oth3r.caligo.block.dripleaf_vine.DripleafVineBlock;
-import one.oth3r.caligo.block.dripleaf_vine.DripleafVinePlantBlock;
+import one.oth3r.caligo.block.plant.dripleaf_vine.DripleafVineBlock;
+import one.oth3r.caligo.block.plant.dripleaf_vine.DripleafVinePlantBlock;
+import one.oth3r.caligo.block.plant.LushMarigoldFlowerBlock;
+import one.oth3r.caligo.block.plant.petunia.PetuniaFlowerBlock;
+import one.oth3r.caligo.block.plant.petunia.PetuniaBlock;
 import one.oth3r.caligo.block.statue.deepslate.DeepslateStatueBlock;
 import one.oth3r.caligo.block.lumin_crystal.LuminCrystalBlock;
 import one.oth3r.caligo.block.lumin_crystal.LuminCrystalBlockEntity;
@@ -55,18 +60,32 @@ public class ModBlocks {
     // DRIPLEAF VINE
     public static final Block DRIPLEAF_VINES = registerBlock("dripleaf_vines",
             new DripleafVineBlock(AbstractBlock.Settings.create()
-                    .mapColor(MapColor.LIME).breakInstantly().noCollision()
+                    .mapColor(MapColor.DARK_GREEN).breakInstantly().noCollision()
+                    .pistonBehavior(PistonBehavior.DESTROY)
                     .sounds(BlockSoundGroup.BIG_DRIPLEAF)));
     public static final Block DRIPLEAF_VINES_PLANT = registerBlock("dripleaf_vines_plant",
             new DripleafVinePlantBlock(AbstractBlock.Settings.create()
-                    .mapColor(MapColor.LIME).breakInstantly().noCollision()
+                    .mapColor(MapColor.DARK_GREEN).breakInstantly().noCollision()
+                    .pistonBehavior(PistonBehavior.DESTROY)
                     .sounds(BlockSoundGroup.BIG_DRIPLEAF)));
 
+    // PETUNIA BLOCK
+    public static final Block PETUNIA_FLOWER = registerBlock("petunia_stem",
+            new PetuniaFlowerBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.LIME).breakInstantly().noCollision()
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .sounds(BlockSoundGroup.VINE)));
+    public static final Block PETUNIA = registerBlock("petunia",
+            new PetuniaBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.PINK).breakInstantly().noCollision()
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .sounds(BlockSoundGroup.VINE)));
 
     // LUSH MARIGOLD
     public static final Block LUSH_MARIGOLD = registerBlock("lush_marigold",
             new LushMarigoldFlowerBlock(AbstractBlock.Settings.create()
-                    .mapColor(MapColor.LIME).breakInstantly().noCollision()
+                    .mapColor(MapColor.YELLOW).breakInstantly().noCollision()
+                    .pistonBehavior(PistonBehavior.DESTROY)
                     .offset(AbstractBlock.OffsetType.XZ).sounds(BlockSoundGroup.GRASS)));
 
     private static Block registerBlock(String name, Block block) {
@@ -74,7 +93,13 @@ public class ModBlocks {
     }
 
     public static void registerModBlocks() {
-        
+        FlammableBlockRegistry registry = FlammableBlockRegistry.getDefaultInstance();
+
+        registry.add(DRIPLEAF_VINES_PLANT,100, 60);
+        registry.add(DRIPLEAF_VINES,100, 60);
+        registry.add(PETUNIA_FLOWER,100, 60);
+        registry.add(PETUNIA,100, 60);
+        registry.add(LUSH_MARIGOLD,100, 60);
     }
 
     public static void registerClient() {
@@ -83,6 +108,9 @@ public class ModBlocks {
 
         BlockRenderLayerMap.INSTANCE.putBlock(DRIPLEAF_VINES, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(DRIPLEAF_VINES_PLANT, RenderLayer.getCutout());
+
+        BlockRenderLayerMap.INSTANCE.putBlock(PETUNIA, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(PETUNIA_FLOWER, RenderLayer.getCutout());
 
         BlockRenderLayerMap.INSTANCE.putBlock(LUSH_MARIGOLD, RenderLayer.getCutout());
     }

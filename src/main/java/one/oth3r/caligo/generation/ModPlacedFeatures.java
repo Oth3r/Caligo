@@ -21,6 +21,7 @@ import java.util.List;
 public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> DRIPLEAF_VINES_PLACED_KEY = registerKey("dripleaf_vines");
     public static final RegistryKey<PlacedFeature> LUSH_MARIGOLD_PLACED_KEY = registerKey("lush_marigold");
+    public static final RegistryKey<PlacedFeature> PETUNIA_PLACED_KEY = registerKey("petunia");
 
     public static void boostrap(Registerable<PlacedFeature> context) {
         var configuredFeatureRegistryEntryLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
@@ -36,6 +37,20 @@ public class ModPlacedFeatures {
                                 Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN), BlockPredicate.IS_AIR, 12
                         ),
                         RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
+                        BiomePlacementModifier.of()
+                ));
+
+        register(context, PETUNIA_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.PETUNIA_KEY),
+                Arrays.asList(
+                        CountPlacementModifier.of(80),
+                        SquarePlacementModifier.of(),
+                        HeightRangePlacementModifier.of(
+                                UniformHeightProvider.create(YOffset.aboveBottom(0),YOffset.getTop())
+                        ),
+                        EnvironmentScanPlacementModifier.of(
+                                Direction.DOWN, BlockPredicate.hasSturdyFace(Direction.DOWN), BlockPredicate.IS_AIR, 12
+                        ),
+                        RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(1)),
                         BiomePlacementModifier.of()
                 ));
 

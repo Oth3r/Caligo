@@ -22,7 +22,9 @@ import net.minecraft.world.gen.stateprovider.RandomizedIntBlockStateProvider;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 import one.oth3r.caligo.Caligo;
 import one.oth3r.caligo.block.ModBlocks;
-import one.oth3r.caligo.block.dripleaf_vine.DripleafVineBlock;
+import one.oth3r.caligo.block.plant.dripleaf_vine.DripleafVineBlock;
+import one.oth3r.caligo.block.plant.petunia.PetuniaBlock;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -30,6 +32,7 @@ public class ModConfiguredFeatures {
 
     public static final RegistryKey<ConfiguredFeature<?,?>> DRIPLEAF_VINES_KEY = registerKey("dripleaf_vines");
     public static final RegistryKey<ConfiguredFeature<?,?>> LUSH_MARIGOLD_KEY = registerKey("lush_marigold");
+    public static final RegistryKey<ConfiguredFeature<?,?>> PETUNIA_KEY = registerKey("petunia");
 
     public static void boostrap(Registerable<ConfiguredFeature<?, ?>> context) {
         register(context, DRIPLEAF_VINES_KEY, Feature.BLOCK_COLUMN,
@@ -56,24 +59,62 @@ public class ModConfiguredFeatures {
         );
 
         register(context, LUSH_MARIGOLD_KEY, Feature.RANDOM_PATCH,
-                new RandomPatchFeatureConfig(
-                        352,6,3,
-                        PlacedFeatures.createEntry(
-                            Feature.SIMPLE_BLOCK,
-                            new SimpleBlockFeatureConfig(SimpleBlockStateProvider.of(ModBlocks.LUSH_MARIGOLD)),
-                            BlockPredicate.anyOf(
-                                    BlockPredicate.allOf(
-                                            BlockPredicate.IS_AIR,
-                                            BlockPredicate.matchingBlockTag(new Vec3i(0,-1,0), TagKey.of(RegistryKeys.BLOCK, BlockTags.SMALL_DRIPLEAF_PLACEABLE.id()))
+                rpfcLush(352,6,3,
+                        Feature.SIMPLE_BLOCK,
+                        new SimpleBlockFeatureConfig(SimpleBlockStateProvider.of(ModBlocks.LUSH_MARIGOLD)),true));
+
+        register(context, PETUNIA_KEY, Feature.RANDOM_PATCH,
+                rpfcLush(190,6,3,
+                        Feature.BLOCK_COLUMN,
+                        new BlockColumnFeatureConfig(
+                                    Arrays.asList(
+                                            new BlockColumnFeatureConfig.Layer(
+                                                    new WeightedListIntProvider(new DataPool.Builder<IntProvider>()
+                                                            .add(UniformIntProvider.create(0,3),1)
+                                                            .add(UniformIntProvider.create(0,1),10)
+                                                            .build()
+                                                    ),
+                                                    BlockStateProvider.of(ModBlocks.PETUNIA_FLOWER)
+                                            ),
+                                            new BlockColumnFeatureConfig.Layer(
+                                                    ConstantIntProvider.create(1),
+                                                    new RandomizedIntBlockStateProvider(SimpleBlockStateProvider.of(ModBlocks.PETUNIA),
+                                                            PetuniaBlock.AGE, UniformIntProvider.create(23,25)))
                                     ),
-                                    BlockPredicate.allOf(
-                                            BlockPredicate.IS_AIR,
-                                            BlockPredicate.matchingFluids(new Vec3i(0,-1,0), Fluids.WATER)
-                                    ),
-                                    BlockPredicate.matchingBlocks(Blocks.SHORT_GRASS)
-                            )
-                        )
-                ));
+                                    Direction.UP,
+                                    BlockPredicate.IS_AIR,
+                                    true
+                            ),false));
+    }
+
+    /**
+     * makes a random patch of flowers for lush
+     */
+    public static <FC extends FeatureConfig, F extends Feature<FC>> RandomPatchFeatureConfig rpfcLush(int tries, int xzSpread, int ySpread, F feature, FC featureConfig, boolean water) {
+        BlockPredicate[] placements = {
+                BlockPredicate.allOf(
+                        BlockPredicate.IS_AIR,
+                        BlockPredicate.matchingBlockTag(new Vec3i(0,-1,0), TagKey.of(RegistryKeys.BLOCK, BlockTags.SMALL_DRIPLEAF_PLACEABLE.id()))
+                ),
+                BlockPredicate.matchingBlocks(Blocks.SHORT_GRASS)
+        };
+        BlockPredicate[] waterPlacement = {
+                BlockPredicate.allOf(
+                        BlockPredicate.IS_AIR,
+                        BlockPredicate.matchingFluids(new Vec3i(0,-1,0), Fluids.WATER)
+                )
+        };
+
+        BlockPredicate[] allPlacements = placements;
+        if (water) allPlacements = ArrayUtils.addAll(placements,waterPlacement);
+
+        return new RandomPatchFeatureConfig(
+                tries,xzSpread,ySpread,
+                PlacedFeatures.createEntry(
+                        feature, featureConfig,
+                        BlockPredicate.anyOf(allPlacements)
+                )
+        );
     }
 
     public static RegistryKey<ConfiguredFeature<?, ?>> registerKey(String name) {

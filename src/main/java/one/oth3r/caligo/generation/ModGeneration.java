@@ -46,6 +46,10 @@ public class ModGeneration {
 
         BiomeModifications.addFeature(
                 BiomeSelectors.includeByKey(BiomeKeys.LUSH_CAVES),
+                GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.PETUNIA_PLACED_KEY);
+
+        BiomeModifications.addFeature(
+                BiomeSelectors.includeByKey(BiomeKeys.LUSH_CAVES),
                 GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.LUSH_MARIGOLD_PLACED_KEY);
     }
 }
