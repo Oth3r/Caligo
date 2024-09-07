@@ -1,4 +1,4 @@
-package one.oth3r.caligo.block.dripleaf_vine;
+package one.oth3r.caligo.block.plant.dripleaf_vine;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
@@ -11,7 +11,7 @@ public class DripleafVineBlock extends AbstractPlantStemBlock {
     public static final MapCodec<DripleafVineBlock> CODEC = createCodec(DripleafVineBlock::new);
     @Override
     protected MapCodec<? extends AbstractPlantStemBlock> getCodec() {
-        return null;
+        return CODEC;
     }
 
 

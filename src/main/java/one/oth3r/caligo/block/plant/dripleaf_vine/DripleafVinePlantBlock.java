@@ -1,4 +1,4 @@
-package one.oth3r.caligo.block.dripleaf_vine;
+package one.oth3r.caligo.block.plant.dripleaf_vine;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;

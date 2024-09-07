@@ -1,10 +1,11 @@
-package one.oth3r.caligo.block;
+package one.oth3r.caligo.block.plant;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -37,6 +38,7 @@ public class LushMarigoldFlowerBlock extends FlowerBlock {
         FluidState fluidState = world.getFluidState(pos);
         FluidState fluidState2 = world.getFluidState(pos.up());
         boolean aboveWater = (fluidState.getFluid() == Fluids.WATER || floor.getBlock() instanceof IceBlock) && fluidState2.getFluid() == Fluids.EMPTY;
-        return aboveWater || floor.getBlock() == Blocks.CLAY;
+        return aboveWater || floor.getBlock() == Blocks.CLAY || floor.isOf(Blocks.FARMLAND) ||
+                floor.isOf(Blocks.MOSS_BLOCK) || floor.isIn(BlockTags.DIRT);
     }
 }
