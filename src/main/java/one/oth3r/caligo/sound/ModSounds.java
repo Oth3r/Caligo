@@ -3,27 +3,31 @@ package one.oth3r.caligo.sound;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
 
 public class ModSounds {
-    private static final Identifier STROW_CAW_ID = Identifier.of(Caligo.MOD_ID, "strow_caw");
-    public static SoundEvent STROW_CAW = SoundEvent.of(STROW_CAW_ID,50);
-    private static final Identifier STROW_ACTIVE_ID = Identifier.of(Caligo.MOD_ID, "strow_active");
-    public static SoundEvent STROW_ACTIVE = SoundEvent.of(STROW_ACTIVE_ID,25);
-    private static final Identifier STROW_DAMAGE_ID = Identifier.of(Caligo.MOD_ID, "strow_damage");
-    public static SoundEvent STROW_DAMAGE = SoundEvent.of(STROW_DAMAGE_ID);
-    private static final Identifier STROW_DEATH_ID = Identifier.of(Caligo.MOD_ID, "strow_death");
-    public static SoundEvent STROW_DEATH = SoundEvent.of(STROW_DEATH_ID);
-    private static final Identifier PETRIFIED_DAMAGE_ID = Identifier.of(Caligo.MOD_ID, "petrified_damage");
-    public static SoundEvent PETRIFIED_DAMAGE = SoundEvent.of(PETRIFIED_DAMAGE_ID);
+    public static SoundEvent STROW_CAW = registerSound("strow_caw",50);
+    public static SoundEvent STROW_ACTIVE = registerSound("strow_active",25);
+    public static SoundEvent STROW_DAMAGE = registerSound("strow_damage");
+    public static SoundEvent STROW_DEATH = registerSound("strow_death");
 
-    public static void register() {
-        Registry.register(Registries.SOUND_EVENT, STROW_CAW_ID, STROW_CAW);
-        Registry.register(Registries.SOUND_EVENT, STROW_ACTIVE_ID, STROW_ACTIVE);
-        Registry.register(Registries.SOUND_EVENT, STROW_DAMAGE_ID, STROW_DAMAGE);
-        Registry.register(Registries.SOUND_EVENT, STROW_DEATH_ID, STROW_DEATH);
-        Registry.register(Registries.SOUND_EVENT, PETRIFIED_DAMAGE_ID, PETRIFIED_DAMAGE);
+    public static SoundEvent PETRIFIED_DAMAGE = registerSound("petrified_damage");
+
+    public static final SoundEvent COPPICE_DAMAGE = registerSound("coppice_damage");
+    public static final SoundEvent COPPICE_DEATH = registerSound("coppice_death");
+    public static final SoundEvent COPPICE_EAT = registerSound("coppice_eat");
+    public static final SoundEvent COPPICE_AMIRE = registerSound("coppice_admire");
+    public static final SoundEvent COPPICE_PANIC = registerSound("coppice_panic");
+
+    public static void register() {}
+
+    private static SoundEvent registerSound(String id) {
+        return registerSound(id,16F);
+    }
+
+    private static SoundEvent registerSound(String id, float distanceToTravel) {
+        Identifier identifier = Identifier.of(Caligo.MOD_ID, id);
+        return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier,distanceToTravel));
     }
 }
