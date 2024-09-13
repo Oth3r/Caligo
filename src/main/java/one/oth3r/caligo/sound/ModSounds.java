@@ -18,7 +18,7 @@ public class ModSounds {
     public static final SoundEvent COPPICE_DEATH = registerSound("coppice_death");
     public static final SoundEvent COPPICE_EAT = registerSound("coppice_eat");
     public static final SoundEvent COPPICE_AMIRE = registerSound("coppice_admire");
-    public static final SoundEvent COPPICE_PANIC = registerSound("coppice_panic");
+    public static final SoundEvent COPPICE_PICKUP = registerSound("coppice_pickup");
 
     public static void register() {}
 
