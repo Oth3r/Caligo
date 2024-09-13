@@ -13,8 +13,8 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        pack.addProvider(ModItemTagProvider::new);
-        pack.addProvider(ModBlockTagProvider::new);
+        pack.addProvider(ModTagProvider.ItemTag::new);
+        pack.addProvider(ModTagProvider.BlockTag::new);
 
         pack.addProvider(ModEntityLootTableProvider::new);
         pack.addProvider(ModModelProvider::new);
@@ -40,11 +40,13 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
         // COPPICE
         pack.addProvider(CoppiceProviders.ItemTag::new);
         pack.addProvider(CoppiceProviders.BlockTag::new);
+        pack.addProvider(CoppiceProviders.Model::new);
         pack.addProvider(CoppiceProviders.EntityLootTable::new);
 
         // LUSH
         pack.addProvider(LushBiomeProviders.Model::new);
         pack.addProvider(LushBiomeProviders.LootTable::new);
+        pack.addProvider(LushBiomeProviders.Recipe::new);
 
         // ORE REMAINS
         pack.addProvider(OreRemainsProvider.Recipe::new);
