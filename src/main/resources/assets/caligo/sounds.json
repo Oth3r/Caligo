@@ -29,6 +29,39 @@
       "caligo:strow_death_1"
     ]
   },
+  "coppice_damage": {
+    "subtitle": "sound.coppice_damage",
+    "sounds": [
+      "caligo:coppice_damage_1"
+    ]
+  },
+  "coppice_death": {
+    "subtitle": "sound.coppice_death",
+    "sounds": [
+      "caligo:coppice_death_1"
+    ]
+  },
+  "coppice_eat": {
+    "subtitle": "sound.coppice_eat",
+    "sounds": [
+      "caligo:coppice_eat_1",
+      "caligo:coppice_eat_2",
+      "caligo:coppice_eat_3"
+    ]
+  },
+  "coppice_admire": {
+    "subtitle": "sound.coppice_admire",
+    "sounds": [
+      "caligo:coppice_admire_1",
+      "caligo:coppice_admire_2"
+    ]
+  },
+  "coppice_panic": {
+    "subtitle": "sound.coppice_pickup",
+    "sounds": [
+      "caligo:coppice_pickup_1"
+    ]
+  },
   "petrified_damage": {
     "subtitle": "sound.petrified",
     "sounds": [
