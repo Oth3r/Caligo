@@ -3,7 +3,9 @@ package one.oth3r.caligo.itemgroup;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -40,6 +42,15 @@ public class ModItemGroups {
             itemGroup.add(ModItems.LARGE_ORE_REMAINS);
             itemGroup.add(ModItems.DRIPLEAF_VINES);
             itemGroup.add(ModItems.LUSH_MARIGOLD);
+            itemGroup.add(ModItems.PETUNIA);
+            itemGroup.add(ModItems.COPPICE_SPAWN_EGG);
+        });
+
+        // add the spawn eggs to the spawn eggs tab, make it alphabetical
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(content -> {
+            content.addAfter(Items.STRIDER_SPAWN_EGG,ModItems.STROW_SPAWN_EGG);
+            content.addAfter(Items.COD_SPAWN_EGG,ModItems.DEEP_STROW_SPAWN_EGG);
+            content.addAfter(Items.CREEPER_SPAWN_EGG,ModItems.COPPICE_SPAWN_EGG);
         });
     }
 }
