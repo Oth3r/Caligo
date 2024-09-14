@@ -230,6 +230,36 @@
 			}
 		}
 	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 2.5, 0],
+			"scale": [0.43, 0.43, 0.43]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 2.5, 0],
+			"scale": [0.43, 0.43, 0.43]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 0, 12],
+			"translation": [0, 3, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 0, 12],
+			"translation": [0, 3, 0]
+		},
+		"ground": {
+			"scale": [0.43, 0.43, 0.43]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -3.5],
+			"scale": [0.78, 0.78, 0.78]
+		}
+	},
 	"groups": [
 		{
 			"name": "flower",

@@ -52,7 +52,6 @@ public class LushBiomeProviders {
         @Override
         public void generateItemModels(ItemModelGenerator itemModelGenerator) {
             itemModelGenerator.register(ModItems.DRIPLEAF_VINES, Models.GENERATED);
-            itemModelGenerator.register(ModItems.PETUNIA, Models.GENERATED);
             itemModelGenerator.register(ModItems.LUSH_MARIGOLD, Models.GENERATED);
         }
 
