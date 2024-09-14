@@ -19,11 +19,13 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.entity.ai.ModSensorTypes;
+import one.oth3r.caligo.sound.ModSounds;
 import org.jetbrains.annotations.Nullable;
 
 public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
@@ -206,5 +208,15 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
                 MemoryModuleType.NEAREST_VISIBLE_WANTED_ITEM, MemoryModuleType.ITEM_PICKUP_COOLDOWN_TICKS,
                 MemoryModuleType.ADMIRING_ITEM, MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM, MemoryModuleType.ADMIRING_DISABLED,
                 MemoryModuleType.DISABLE_WALK_TO_ADMIRE_ITEM);
+    }
+
+    @Override
+    protected @Nullable SoundEvent getHurtSound(DamageSource source) {
+        return ModSounds.COPPICE_DAMAGE;
+    }
+
+    @Override
+    protected @Nullable SoundEvent getDeathSound() {
+        return ModSounds.COPPICE_DEATH;
     }
 }

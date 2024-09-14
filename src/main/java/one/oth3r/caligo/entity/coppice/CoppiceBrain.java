@@ -20,12 +20,12 @@ import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import one.oth3r.caligo.loot_table.ModLootTables;
+import one.oth3r.caligo.sound.ModSounds;
 import one.oth3r.caligo.tag.ModItemTags;
 
 import java.util.*;
@@ -38,6 +38,7 @@ public class CoppiceBrain {
     private static final float WALKING_SPEED;
     private static final float RUNNING_SPEED;
     private static final UniformIntProvider AVOID_MEMORY_DURATION;
+    private static int lastSound = 0;
 
     public CoppiceBrain() {}
 
@@ -108,20 +109,32 @@ public class CoppiceBrain {
     }
 
     protected static void tickActivities(CoppiceEntity entity) {
+        if (lastSound > 0) lastSound--;
         Brain<CoppiceEntity> brain = entity.getBrain();
 
         Activity activity = brain.getFirstPossibleNonCoreActivity().orElse(null);
 
         // if admiring
         if (brain.hasMemoryModule(MemoryModuleType.ADMIRING_ITEM) && !doesNotHaveItemInHand(entity)) {
+            float expiry = brain.getMemoryExpiry(MemoryModuleType.ADMIRING_ITEM);
             // if 20 ticks from finishing, start the eating animation
-            if (brain.getMemoryExpiry(MemoryModuleType.ADMIRING_ITEM) == 20f) {
+            if (expiry == 20f) {
                 entity.setEating(true);
+                entity.playSound(ModSounds.COPPICE_EAT);
+            }
+            if (expiry == 15f) {
+                entity.playSound(ModSounds.COPPICE_EAT);
+            }
+            if (expiry == 10f) {
+                entity.playSound(ModSounds.COPPICE_EAT);
+            }
+            if (expiry == 5f) {
+                entity.playSound(ModSounds.COPPICE_EAT);
             }
             // if at the end of the admiration, stop the animation & play the eating finish sound
-            if (brain.getMemoryExpiry(MemoryModuleType.ADMIRING_ITEM) == 0f) {
+            if (expiry == 0f) {
                 entity.setEating(false);
-                entity.playSound(SoundEvents.ENTITY_PLAYER_BURP);
+                entity.playSound(ModSounds.COPPICE_EAT);
             }
         }
 
@@ -129,10 +142,11 @@ public class CoppiceBrain {
         Activity activity2 = brain.getFirstPossibleNonCoreActivity().orElse(null);
 
         // if doing a new activity, get the sound
-        if (activity != activity2) {
+        if (activity != activity2 && lastSound == 0) {
             Optional<SoundEvent> sound = getCurrentActivitySound(entity);
             Objects.requireNonNull(entity);
             sound.ifPresent(entity::playSound);
+            lastSound = 40;
         }
 
     }
@@ -259,19 +273,19 @@ public class CoppiceBrain {
      * gets a sound based on the current activity
      */
     public static Optional<SoundEvent> getCurrentActivitySound(CoppiceEntity entity) {
-        return entity.getBrain().getFirstPossibleNonCoreActivity().map(CoppiceBrain::getSound);
+        return entity.getBrain().getFirstPossibleNonCoreActivity().map(act -> getSound(entity,act));
     }
 
     /**
      * gets a sound based on activity
      */
-    private static SoundEvent getSound(Activity activity) {
+    private static SoundEvent getSound(CoppiceEntity entity, Activity activity) {
         if (activity == Activity.AVOID) {
-            return SoundEvents.ENTITY_PIGLIN_RETREAT;
-        } else if (activity == Activity.ADMIRE_ITEM) {
-            return SoundEvents.ENTITY_PIGLIN_ADMIRING_ITEM;
+            return null;
+        } else if (activity == Activity.ADMIRE_ITEM && doesNotHaveItemInHand(entity)) {
+            return ModSounds.COPPICE_AMIRE;
         } else {
-            return SoundEvents.ENTITY_PIGLIN_AMBIENT;
+            return null;
         }
     }
 
@@ -301,6 +315,7 @@ public class CoppiceBrain {
     private static void setAdmiringItem(CoppiceEntity entity) {
         entity.getBrain().remember(MemoryModuleType.ADMIRING_ITEM, true, ADMIRE_TIME);
         if (CoppiceBrain.getNearestDetectedPlayer(entity).isPresent()) {
+            entity.playSound(ModSounds.COPPICE_PICKUP);
             runAwayFrom(entity, CoppiceBrain.getNearestDetectedPlayer(entity).get());
         }
     }
