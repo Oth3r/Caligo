@@ -44,7 +44,11 @@
   "sound.strow_caw": "Strow caws",
   "sound.strow_damage": "Strow hurts",
   "sound.strow_death": "Strow dies",
-
+  "sound.coppice_eat": "Coppice eats",
+  "sound.coppice_admire": "Coppice admires",
+  "sound.coppice_death": "Coppice dies",
+  "sound.coppice_damage": "Coppice hurts",
+  "sound.coppice_pickup": "Coppice pickups item",
 
 
   "entity.caligo.strow": "Strow",
@@ -53,7 +57,7 @@
   "item.caligo.deep_strow_spawn_egg": "Deep Strow Spawn Egg",
 
   "entity.caligo.coppice": "Coppice",
-  "item.caligo.coppice": "Coppice Spawn Egg",
+  "item.caligo.coppice_spawn_egg": "Coppice Spawn Egg",
 
 
 
@@ -68,5 +72,9 @@
   "block.caligo.statue": "Statue Block",
   "block.caligo.deepslate_statue": "Deepslate Statue Block",
 
-  "block.caligo.lumin_crystal": "Lumin Crystal"
+  "block.caligo.lumin_crystal": "Lumin Crystal",
+
+  "block.caligo.dripleaf_vines": "Dripleaf Vines",
+  "block.caligo.lush_marigold": "Lush Marigold",
+  "block.caligo.petunia": "Petunia"
 }
