@@ -17,7 +17,7 @@ import one.oth3r.caligo.item.ModItems;
 public class ModItemGroups {
     public static final RegistryKey<ItemGroup> CALIGO_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(Caligo.MOD_ID, "caligo_group"));
     public static final ItemGroup CALIGO_GROUP = FabricItemGroup.builder()
-            .icon(() -> new ItemStack(ModItems.STATUE))
+            .icon(() -> new ItemStack(ModItems.PETUNIA))
             .displayName(Text.translatable("itemGroup.caligo"))
             .build();
 
