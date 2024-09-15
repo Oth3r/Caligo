@@ -1,6 +1,9 @@
 plugins {
     id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
+    id 'net.darkhax.curseforgegradle' version '1.1.+'
+    id 'co.uzzu.dotenv.gradle' version "4.0.0"
 }
 
 version = project.mod_version
@@ -11,8 +14,16 @@ base {
 }
 
 repositories {
-    maven {
-        url 'https://jitpack.io'
+    maven { url 'https://jitpack.io' }
+    maven { url "https://maven.terraformersmc.com/releases/" }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter { includeGroup "maven.modrinth" }
     }
 }
 
@@ -35,6 +46,12 @@ dependencies {
 
     // FABRIC ASM
     include modImplementation("com.github.Chocohead:Fabric-ASM:2.3")
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    modImplementation "maven.modrinth:carpet:${carpet_version}"
+}
+
+tasks.withType(Jar).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 processResources {
@@ -99,4 +116,33 @@ publishing {
         // The repositories here will be used for publishing your artifact, not for
         // retrieving dependencies.
     }
+}
+
+import com.modrinth.minotaur.dependencies.ModDependency
+
+modrinth {
+    token = env.fetchOrNull('MODRINTH')
+    projectId = 'SdEvidHA'
+    versionNumber = project.mod_version
+    versionName = "v${project.mod_version} [Fabric]"
+    uploadFile = remapJar
+    gameVersions = [project.minecraft_version]
+    loaders = ['fabric']
+    dependencies = [
+            new ModDependency('P7dR8mSH', 'required')
+    ]
+    changelog = file('changelog.md').text
+}
+
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
+    apiToken = env.fetchOrNull('CURSEFORGE')
+
+    def mainFile = upload(996454, remapJar)
+    mainFile.changelog = file('changelog.md')
+    mainFile.displayName = "v${project.mod_version} [Fabric]"
+    mainFile.addModLoader("fabric")
+    mainFile.releaseType = "release"
+    mainFile.addEnvironment("client", "server")
 }
