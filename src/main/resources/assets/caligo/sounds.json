@@ -56,7 +56,7 @@
       "caligo:coppice_admire_2"
     ]
   },
-  "coppice_panic": {
+  "coppice_pickup": {
     "subtitle": "sound.coppice_pickup",
     "sounds": [
       "caligo:coppice_pickup_1"
