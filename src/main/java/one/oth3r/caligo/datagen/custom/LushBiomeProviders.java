@@ -94,7 +94,7 @@ public class LushBiomeProviders {
         @Override
         public void generate(RecipeExporter exporter) {
             ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.LUSH_MARIGOLD,1,Items.YELLOW_DYE,1);
-            ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.DRIPLEAF_VINES,1,Items.LIME_DYE,1);
+            ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.DRIPLEAF_VINES,1,Items.GREEN_DYE,1);
             ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.PETUNIA,1,Items.MAGENTA_DYE,1);
         }
 
