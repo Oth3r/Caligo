@@ -124,9 +124,10 @@ modrinth {
     token = env.fetchOrNull('MODRINTH')
     projectId = 'SdEvidHA'
     versionNumber = project.mod_version
-    versionName = "v${project.mod_version} [Fabric]"
+    versionName = "a${project.mod_version}"
+    versionType = "alpha"
     uploadFile = remapJar
-    gameVersions = [project.minecraft_version]
+    gameVersions = [project.minecraft_version, project.min_minecraft_version]
     loaders = ['fabric']
     dependencies = [
             new ModDependency('P7dR8mSH', 'required')
@@ -141,8 +142,8 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 
     def mainFile = upload(996454, remapJar)
     mainFile.changelog = file('changelog.md')
-    mainFile.displayName = "v${project.mod_version} [Fabric]"
+    mainFile.displayName = "a${project.mod_version}"
     mainFile.addModLoader("fabric")
-    mainFile.releaseType = "release"
+    mainFile.releaseType = "alpha"
     mainFile.addEnvironment("client", "server")
 }
