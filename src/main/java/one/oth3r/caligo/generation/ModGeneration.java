@@ -34,7 +34,7 @@ public class ModGeneration {
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DeepStrowEntity::canSpawn);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.LUSH_CAVES), ClassTinkerers.getEnum(SpawnGroup.class, "UNDERGROUND_CREATURE"),
-                ModEntities.COPPICE, 100, 1, 2);
+                ModEntities.COPPICE, 100, 1, 1);
         SpawnRestriction.register(ModEntities.COPPICE, SpawnLocationTypes.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CoppiceEntity::canSpawn);
     }
