@@ -15,6 +15,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.AxolotlEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
@@ -42,6 +43,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
 
 
     private static final TrackedData<Boolean> EATING = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Integer> SOUND_COOLDOWN = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public static final float WALKING_SPEED = 0.4f;
     public static final float RUNNING_SPEED = 0.8f;
@@ -51,6 +53,16 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
 
     public CoppiceEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public boolean canImmediatelyDespawn(double distanceSquared) {
+        return !this.hasCustomName() && this.doesNotHaveItemInHand();
+    }
+
+    @Override
+    public boolean cannotDespawn() {
+        return super.cannotDespawn() || this.hasCustomName();
     }
 
     public static boolean canSpawn(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
@@ -79,6 +91,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
         builder.add(EATING,false);
+        builder.add(SOUND_COOLDOWN, 0);
     }
 
     // ANIMATION THINGS
@@ -118,6 +131,14 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
         return this.dataTracker.get(EATING);
     }
 
+    public void setSoundCooldown(int soundCooldown) {
+        this.dataTracker.set(SOUND_COOLDOWN, soundCooldown);
+    }
+
+    public int getSoundCooldown() {
+        return this.dataTracker.get(SOUND_COOLDOWN);
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -151,6 +172,10 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
     @Override
     public void setBaby(boolean baby) {
         this.setBreedingAge(baby ? -48000 : 0);
+    }
+
+    public boolean doesNotHaveItemInHand() {
+        return this.getMainHandStack().isEmpty();
     }
 
     @Override

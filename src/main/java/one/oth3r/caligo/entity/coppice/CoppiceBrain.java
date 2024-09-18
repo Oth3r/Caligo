@@ -38,7 +38,6 @@ public class CoppiceBrain {
     private static final float WALKING_SPEED;
     private static final float RUNNING_SPEED;
     private static final UniformIntProvider AVOID_MEMORY_DURATION;
-    private static int lastSound = 0;
 
     public CoppiceBrain() {}
 
@@ -77,7 +76,7 @@ public class CoppiceBrain {
 
     private static void addAdmireItemActivities(Brain<CoppiceEntity> brain) {
         brain.setTaskList(Activity.ADMIRE_ITEM, 10, ImmutableList.of(
-                WalkToNearestVisibleWantedItemTask.create(CoppiceBrain::doesNotHaveItemInHand, WALKING_SPEED, true, 9),
+                WalkToNearestVisibleWantedItemTask.create(CoppiceEntity::doesNotHaveItemInHand, WALKING_SPEED, true, 9),
                 GoToRememberedPositionTask.createEntityBased(MemoryModuleType.AVOID_TARGET, RUNNING_SPEED, 5, true),
                 WantMoreItemTask.create(9),
                 AdmireTimeLimitTask.create(200, 200), makeRandomWanderTask()), MemoryModuleType.ADMIRING_ITEM);
@@ -109,13 +108,13 @@ public class CoppiceBrain {
     }
 
     protected static void tickActivities(CoppiceEntity entity) {
-        if (lastSound > 0) lastSound--;
+        if (entity.getSoundCooldown() > 0) entity.setSoundCooldown(entity.getSoundCooldown()-1);
         Brain<CoppiceEntity> brain = entity.getBrain();
 
         Activity activity = brain.getFirstPossibleNonCoreActivity().orElse(null);
 
         // if admiring
-        if (brain.hasMemoryModule(MemoryModuleType.ADMIRING_ITEM) && !doesNotHaveItemInHand(entity)) {
+        if (brain.hasMemoryModule(MemoryModuleType.ADMIRING_ITEM) && !entity.doesNotHaveItemInHand()) {
             float expiry = brain.getMemoryExpiry(MemoryModuleType.ADMIRING_ITEM);
             // if 20 ticks from finishing, start the eating animation
             if (expiry == 20f) {
@@ -142,11 +141,11 @@ public class CoppiceBrain {
         Activity activity2 = brain.getFirstPossibleNonCoreActivity().orElse(null);
 
         // if doing a new activity, get the sound
-        if (activity != activity2 && lastSound == 0) {
+        if (activity != activity2 && entity.getSoundCooldown() == 0) {
             Optional<SoundEvent> sound = getCurrentActivitySound(entity);
             Objects.requireNonNull(entity);
             sound.ifPresent(entity::playSound);
-            lastSound = 40;
+            entity.setSoundCooldown(80);
         }
 
     }
@@ -239,13 +238,13 @@ public class CoppiceBrain {
      * if the coppice can gather an item, (if they arent holding + they want it + they arent admiring an item)
      */
     protected static boolean canGather(CoppiceEntity entity, ItemStack stack) {
-        return isWantedItem(stack) && CoppiceBrain.doesNotHaveItemInHand(entity) && !CoppiceBrain.isAdmiringItem(entity);
+        return canPickupItem(stack) && entity.doesNotHaveItemInHand() && !CoppiceBrain.isAdmiringItem(entity);
     }
 
     protected static void onAttacked(CoppiceEntity entity, LivingEntity attacker) {
         if (!(attacker instanceof CoppiceEntity)) {
             // get rid of the item in hand when attacked
-            if (!doesNotHaveItemInHand(entity)) {
+            if (!entity.doesNotHaveItemInHand()) {
                 entity.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
             }
 
@@ -282,7 +281,7 @@ public class CoppiceBrain {
     private static SoundEvent getSound(CoppiceEntity entity, Activity activity) {
         if (activity == Activity.AVOID) {
             return null;
-        } else if (activity == Activity.ADMIRE_ITEM && doesNotHaveItemInHand(entity)) {
+        } else if (activity == Activity.ADMIRE_ITEM && entity.doesNotHaveItemInHand()) {
             return ModSounds.COPPICE_AMIRE;
         } else {
             return null;
@@ -333,7 +332,11 @@ public class CoppiceBrain {
     }
 
     protected static boolean isWantedItem(ItemStack stack) {
-        return stack.isIn(ModItemTags.COPPICE_LOW_TIER) || stack.isIn(ModItemTags.COPPICE_HIGH_TIER) || stack.isIn(ItemTags.PICKAXES);
+        return canPickupItem(stack) || stack.isIn(ItemTags.PICKAXES);
+    }
+
+    protected static boolean canPickupItem(ItemStack stack) {
+        return stack.isIn(ModItemTags.COPPICE_LOW_TIER) || stack.isIn(ModItemTags.COPPICE_HIGH_TIER);
     }
 
     public static boolean isWantedHoldingPlayer(LivingEntity target) {
@@ -343,11 +346,6 @@ public class CoppiceBrain {
     protected static boolean isPanicking(CoppiceEntity entity) {
         return entity.getBrain().hasMemoryModule(MemoryModuleType.AVOID_TARGET);
     }
-
-    private static boolean doesNotHaveItemInHand(CoppiceEntity entity) {
-        return entity.getMainHandStack().isEmpty();
-    }
-
 
     static {
         AVOID_MEMORY_DURATION = TimeHelper.betweenSeconds(10, 20);
