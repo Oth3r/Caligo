@@ -6,8 +6,8 @@ import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -21,7 +21,7 @@ import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.block.statue.StatueBlock;
 import one.oth3r.caligo.block.statue.StatueBlockEntity;
 import one.oth3r.caligo.effect.ModEffects;
-import one.oth3r.caligo.entity.deep_strow.DeepStrowEntity;
+import one.oth3r.caligo.entity.strow.deep.DeepStrowEntity;
 import one.oth3r.caligo.entity.strow.StrowEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -69,9 +69,11 @@ public abstract class onDeathMixin extends PlayerEntity {
                 .with(StatueBlock.STATE, Utl.statue.getPlacementState(this));
 
         // place the blocks into the world
-        while (!world.setBlockState(pos, blockState.with(StatueBlock.HALF, DoubleBlockHalf.LOWER)))
+        while (!world.setBlockState(pos, blockState.with(StatueBlock.HALF, DoubleBlockHalf.LOWER)
+                .with(StatueBlock.WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER)))
             System.out.println("FAILED TO PLACE BLOCK, TRYING AGAIN");
-        while (!world.setBlockState(pos.up(), blockState.with(StatueBlock.HALF, DoubleBlockHalf.UPPER)))
+        while (!world.setBlockState(pos.up(), blockState.with(StatueBlock.HALF, DoubleBlockHalf.UPPER)
+                .with(StatueBlock.WATERLOGGED, world.getFluidState(pos.up()).getFluid() == Fluids.WATER)))
             System.out.println("FAILED TO PLACE BLOCK, TRYING AGAIN");
 
         // if keep inventory is off, yank the player items and put them in the staute

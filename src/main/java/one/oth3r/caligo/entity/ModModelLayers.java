@@ -13,4 +13,7 @@ public class ModModelLayers {
 
     public static final EntityModelLayer STATUE =
             new EntityModelLayer(Identifier.of(Caligo.MOD_ID, "statue"), "main");
+
+    public static final EntityModelLayer COPPICE =
+            new EntityModelLayer(Identifier.of(Caligo.MOD_ID, "coppice"), "main");
 }
