@@ -23,6 +23,9 @@
     "main": [
       "one.oth3r.caligo.Caligo"
     ],
+    "fabric-datagen": [
+      "one.oth3r.caligo.datagen.CaligoDataGenerator"
+    ],
     "mm:early_risers": [
       "one.oth3r.caligo.mixin.EarlyRiser"
     ]
@@ -30,7 +33,7 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
-    "minecraft": "${minecraft_version}"
+    "minecraft": ">=${min_minecraft_version} <=${minecraft_version}"
   },
   "accessWidener" : "caligo.accesswidener",
   "mixins": [
