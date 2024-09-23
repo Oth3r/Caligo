@@ -60,7 +60,7 @@ public class CoppiceBrain {
         brain.setTaskList(Activity.CORE, 0, ImmutableList.of(
                 new StayAboveWaterTask(.8f),
                 new LookAroundTask(45, 90),
-                new MoveToTargetTask(200,500), AdmireTask.create(ADMIRE_TIME), new TemptationCooldownTask(MemoryModuleType.TEMPTATION_COOLDOWN_TICKS),
+                new WanderAroundTask(200,500), AdmireTask.create(ADMIRE_TIME), new TemptationCooldownTask(MemoryModuleType.TEMPTATION_COOLDOWN_TICKS),
                 RemoveHandItemTask.create()));
     }
 

@@ -61,7 +61,7 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
             renderLayer = RenderLayer.getEntityTranslucent(texture);
         }
 
-        model.render(matrices,vertexConsumers.getBuffer(renderLayer),light,overlay);
+        model.render(matrices,vertexConsumers.getBuffer(renderLayer),light,overlay,1,1,1,0);
         matrices.pop();
     }
 }

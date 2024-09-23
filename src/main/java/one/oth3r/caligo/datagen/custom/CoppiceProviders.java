@@ -76,7 +76,7 @@ public class CoppiceProviders {
         }
 
         @Override
-        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
+        public void accept(RegistryWrapper.WrapperLookup registryLookup, BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
             lootTableBiConsumer.accept(ModLootTables.COPPICE_RAW_REMAINS, LootTable.builder()
                     .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(1,2))
                             .with(ItemEntry.builder(ModItems.SMALL_ORE_REMAINS).weight(2))

@@ -32,7 +32,7 @@ public class ModModelProvider extends FabricModelProvider {
         return VariantsBlockStateSupplier.create(block, variants);
     }
 
-    public static final Model SPAWN_EGG = new Model(Optional.of(Identifier.ofVanilla("item/template_spawn_egg")), Optional.empty());
+    public static final Model SPAWN_EGG = new Model(Optional.of(new Identifier("item/template_spawn_egg")), Optional.empty());
 
     public static Model getBlockItem(String parent, TextureKey... requiredTextureKeys) {
         return new Model(Optional.of(Identifier.of(Caligo.MOD_ID,"block/"+parent)),Optional.empty(), requiredTextureKeys);

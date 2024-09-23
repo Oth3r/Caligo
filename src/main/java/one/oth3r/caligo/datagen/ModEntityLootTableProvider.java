@@ -16,7 +16,5 @@ public class ModEntityLootTableProvider extends SimpleFabricLootTableProvider {
     }
 
     @Override
-    public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
-
-    }
+    public void accept(RegistryWrapper.WrapperLookup registryLookup, BiConsumer<RegistryKey<LootTable>, LootTable.Builder> consumer) {}
 }

@@ -84,8 +84,8 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
-		root.render(matrices, vertices, light, overlay, color);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+		root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
 
 	@Override
@@ -101,6 +101,7 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 		matrices.translate(0f,-.16f,0);
 		matrices.multiply(RotationAxis.POSITIVE_X.rotation(this.leftArm.pitch));
 		matrices.scale(0.5F, 0.5F, 0.5F);
-		matrices.translate(.05F, -.2f, .55F);
+		// a different offset cuz 1.20.6
+		matrices.translate(.05F, -.2f, .6F);
 	}
 }
