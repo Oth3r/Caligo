@@ -101,7 +101,7 @@ public class StatueProviders {
     public static class Recipe extends FabricRecipeProvider {
 
         public Recipe(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-            super(output, registriesFuture);
+            super(output);
         }
 
         @Override
@@ -132,7 +132,7 @@ public class StatueProviders {
     public static class BlockLootTable extends FabricBlockLootTableProvider {
 
         public BlockLootTable(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(dataOutput, registryLookup);
+            super(dataOutput);
         }
 
         @Override

@@ -44,5 +44,5 @@ public class PetuniaBlock extends AbstractPlantStemBlock {
      * remove random tick to stop growth without bonemeal
      */
     @Override
-    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {}
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {}
 }

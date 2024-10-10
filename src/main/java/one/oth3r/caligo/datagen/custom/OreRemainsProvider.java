@@ -20,7 +20,7 @@ public class OreRemainsProvider {
     public static class Recipe extends FabricRecipeProvider {
 
         public Recipe(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-            super(output, registriesFuture);
+            super(output);
         }
 
         private void provideOreRemainsRecipe(RecipeExporter exporter, ItemConvertible output, ItemConvertible input, int amount) {

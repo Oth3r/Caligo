@@ -17,6 +17,7 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -41,8 +42,8 @@ public class CoppiceBrain {
 
     public CoppiceBrain() {}
 
-    public static Predicate<ItemStack> getTemptItemPredicate() {
-        return (stack) -> stack.isIn(ModItemTags.COPPICE_FOOD);
+    public static Ingredient getTemptItemPredicate() {
+        return Ingredient.fromTag(ModItemTags.COPPICE_FOOD);
     }
 
     protected static Brain<?> create(CoppiceEntity coppice, Brain<CoppiceEntity> brain) {
@@ -119,21 +120,21 @@ public class CoppiceBrain {
             // if 20 ticks from finishing, start the eating animation
             if (expiry == 20f) {
                 entity.setEating(true);
-                entity.playSound(ModSounds.COPPICE_EAT);
+                entity.playSound(ModSounds.COPPICE_EAT, 1f, entity.getSoundPitch());
             }
             if (expiry == 15f) {
-                entity.playSound(ModSounds.COPPICE_EAT);
+                entity.playSound(ModSounds.COPPICE_EAT, 1f, entity.getSoundPitch());
             }
             if (expiry == 10f) {
-                entity.playSound(ModSounds.COPPICE_EAT);
+                entity.playSound(ModSounds.COPPICE_EAT, 1f, entity.getSoundPitch());
             }
             if (expiry == 5f) {
-                entity.playSound(ModSounds.COPPICE_EAT);
+                entity.playSound(ModSounds.COPPICE_EAT, 1f, entity.getSoundPitch());
             }
             // if at the end of the admiration, stop the animation & play the eating finish sound
             if (expiry == 0f) {
                 entity.setEating(false);
-                entity.playSound(ModSounds.COPPICE_EAT);
+                entity.playSound(ModSounds.COPPICE_EAT, 1f, entity.getSoundPitch());
             }
         }
 
@@ -144,7 +145,7 @@ public class CoppiceBrain {
         if (activity != activity2 && entity.getSoundCooldown() == 0) {
             Optional<SoundEvent> sound = getCurrentActivitySound(entity);
             Objects.requireNonNull(entity);
-            sound.ifPresent(entity::playSound);
+            sound.ifPresent(soundEvent -> entity.playSound(soundEvent, 1f, entity.getSoundPitch()));
             entity.setSoundCooldown(80);
         }
 
@@ -226,9 +227,9 @@ public class CoppiceBrain {
      * @return the item to drop
      */
     private static List<ItemStack> generateDropItem(CoppiceEntity entity, ItemStack admiringItem) {
-        LootTable lootTable = entity.getWorld().getServer().getReloadableRegistries().getLootTable(ModLootTables.COPPICE_RAW_REMAINS);
+        LootTable lootTable = entity.getWorld().getServer().getLootManager().getLootTable(ModLootTables.COPPICE_RAW_REMAINS);
         // if the item held is of high tier drops, and the coppice isnt a baby, change the loottable to the better one
-        if (admiringItem.isIn(ModItemTags.COPPICE_HIGH_TIER) && !entity.isBaby()) lootTable = entity.getWorld().getServer().getReloadableRegistries().getLootTable(ModLootTables.COPPICE_GEM_REMAINS);
+        if (admiringItem.isIn(ModItemTags.COPPICE_HIGH_TIER) && !entity.isBaby()) lootTable = entity.getWorld().getServer().getLootManager().getLootTable(ModLootTables.COPPICE_GEM_REMAINS);
 
         // generate the item from the loottable and return it
         return lootTable.generateLoot((new LootContextParameterSet.Builder((ServerWorld)entity.getWorld())).add(LootContextParameters.THIS_ENTITY, entity).build(LootContextTypes.BARTER));
@@ -314,7 +315,7 @@ public class CoppiceBrain {
     private static void setAdmiringItem(CoppiceEntity entity) {
         entity.getBrain().remember(MemoryModuleType.ADMIRING_ITEM, true, ADMIRE_TIME);
         if (CoppiceBrain.getNearestDetectedPlayer(entity).isPresent()) {
-            entity.playSound(ModSounds.COPPICE_PICKUP);
+            entity.playSound(ModSounds.COPPICE_PICKUP, 1f, entity.getSoundPitch());
             runAwayFrom(entity, CoppiceBrain.getNearestDetectedPlayer(entity).get());
         }
     }

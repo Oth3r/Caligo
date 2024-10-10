@@ -88,10 +88,10 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(EATING,false);
-        builder.add(SOUND_COOLDOWN, 0);
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(EATING,false);
+        this.dataTracker.startTracking(SOUND_COOLDOWN, 0);
     }
 
     // ANIMATION THINGS

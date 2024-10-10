@@ -13,12 +13,11 @@ public class PetrifiedEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (!(entity instanceof StrowEntity)) {
             amplifier++;
             entity.damage(ModDamageTypes.of(entity, ModDamageTypes.PETRIFY), amplifier * 0.75F);
         }
-        return true;
     }
 
     @Override

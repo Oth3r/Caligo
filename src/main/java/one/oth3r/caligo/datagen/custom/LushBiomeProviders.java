@@ -64,7 +64,7 @@ public class LushBiomeProviders {
     public static class LootTable extends FabricBlockLootTableProvider {
 
         public LootTable(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(dataOutput, registryLookup);
+            super(dataOutput);
         }
 
         @Override
@@ -88,7 +88,7 @@ public class LushBiomeProviders {
 
 
         public Recipe(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-            super(output, registriesFuture);
+            super(output);
         }
 
         @Override

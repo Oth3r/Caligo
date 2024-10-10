@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModRecipieProvider extends FabricRecipeProvider {
     public ModRecipieProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-        super(output, registriesFuture);
+        super(output);
     }
 
     public static void provideShapelessRecipe(RecipeExporter exporter, ItemConvertible input, int iAmt, ItemConvertible output, int oAmt) {
