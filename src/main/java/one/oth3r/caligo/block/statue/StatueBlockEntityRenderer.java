@@ -10,7 +10,7 @@ import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import one.oth3r.caligo.block.deepslate_statue.DeepslateStatueBlock;
+import one.oth3r.caligo.block.statue.deepslate.DeepslateStatueBlock;
 import one.oth3r.caligo.entity.statue.StatueEntity;
 import one.oth3r.caligo.entity.statue.states.StatueCrouchModel;
 import one.oth3r.caligo.entity.statue.states.StatueIdleModel;
@@ -27,6 +27,7 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
         matrices.push();
         matrices.translate(0.5, 1.5, 0.5);
 
+        // move down if the state upper half
         if (blockState.get(StatueBlock.HALF) == DoubleBlockHalf.UPPER) matrices.translate(0, -1, 0);
 
         float angle = blockState.get(StatueBlock.ROTATION) * -22.5f;
@@ -54,11 +55,12 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
         if (blockState.getBlock() instanceof DeepslateStatueBlock) texture = StatueEntity.TEXTURE_DEEP;
 
         // render the model
-        RenderLayer renderLayer = RenderLayer.getEntityCutout(texture);
+        RenderLayer renderLayer = RenderLayer.getEntityCutoutNoCullZOffset(texture);
         // if top half, render transparent to stop z fighting
         if (blockState.get(StatueBlock.HALF) == DoubleBlockHalf.UPPER) {
             renderLayer = RenderLayer.getEntityTranslucent(texture);
         }
+
         model.render(matrices,vertexConsumers.getBuffer(renderLayer),light,overlay,1,1,1,0);
         matrices.pop();
     }

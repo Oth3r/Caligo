@@ -1,23 +1,38 @@
 plugins {
-    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
+    id "com.modrinth.minotaur" version "2.+"
+    id 'net.darkhax.curseforgegradle' version '1.1.+'
+    id 'co.uzzu.dotenv.gradle' version "4.0.0"
 }
 
 version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archives_base_name
+    archivesName = project.mod_id
 }
 
 repositories {
-    maven {
-        url 'https://jitpack.io'
+    maven { url 'https://jitpack.io' }
+    maven { url "https://maven.terraformersmc.com/releases/" }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter { includeGroup "maven.modrinth" }
     }
 }
 
 loom {
     accessWidenerPath = file("src/main/resources/caligo.accesswidener")
+}
+
+fabricApi {
+    configureDataGeneration()
 }
 
 dependencies {
@@ -31,18 +46,29 @@ dependencies {
 
     // FABRIC ASM
     include modImplementation("com.github.Chocohead:Fabric-ASM:2.3")
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    modImplementation "maven.modrinth:carpet:${carpet_version}"
+}
+
+tasks.withType(Jar).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 processResources {
-    inputs.property "version", project.version
-    inputs.property "minecraft_version", project.minecraft_version
-    inputs.property "loader_version", project.loader_version
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     filteringCharset "UTF-8"
 
+    var replaceProperties = [
+            version                : project.version,
+            minecraft_version      : minecraft_version,
+            min_minecraft_version  : min_minecraft_version,
+            loader_version         : loader_version,
+            mod_id                 : mod_id
+    ]
+
+    inputs.properties replaceProperties
     filesMatching("fabric.mod.json") {
-        expand "version": project.version,
-                "minecraft_version": project.minecraft_version,
-                "loader_version": project.loader_version
+        expand replaceProperties
     }
 }
 
@@ -90,4 +116,34 @@ publishing {
         // The repositories here will be used for publishing your artifact, not for
         // retrieving dependencies.
     }
+}
+
+import com.modrinth.minotaur.dependencies.ModDependency
+
+modrinth {
+    token = env.fetchOrNull('MODRINTH')
+    projectId = 'SdEvidHA'
+    versionNumber = project.mod_version
+    versionName = "a${project.mod_version}"
+    versionType = "alpha"
+    uploadFile = remapJar
+    gameVersions = [project.minecraft_version, project.min_minecraft_version]
+    loaders = ['fabric']
+    dependencies = [
+            new ModDependency('P7dR8mSH', 'required')
+    ]
+    changelog = file('changelog.md').text
+}
+
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
+    apiToken = env.fetchOrNull('CURSEFORGE')
+
+    def mainFile = upload(996454, remapJar)
+    mainFile.changelog = file('changelog.md')
+    mainFile.displayName = "a${project.mod_version}"
+    mainFile.addModLoader("fabric")
+    mainFile.releaseType = "alpha"
+    mainFile.addEnvironment("client", "server")
 }
