@@ -96,7 +96,7 @@ public class ModConfiguredFeatures {
                         BlockPredicate.IS_AIR,
                         BlockPredicate.matchingBlockTag(new Vec3i(0,-1,0), TagKey.of(RegistryKeys.BLOCK, BlockTags.SMALL_DRIPLEAF_PLACEABLE.id()))
                 ),
-                BlockPredicate.matchingBlocks(Blocks.SHORT_GRASS)
+                BlockPredicate.matchingBlocks(Blocks.GRASS)
         };
         BlockPredicate[] waterPlacement = {
                 BlockPredicate.allOf(

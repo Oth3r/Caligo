@@ -1,6 +1,5 @@
 package one.oth3r.caligo.block.plant.petunia;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.AbstractPlantStemBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,11 +12,6 @@ import net.minecraft.util.shape.VoxelShapes;
 import one.oth3r.caligo.block.ModBlocks;
 
 public class PetuniaBlock extends AbstractPlantStemBlock {
-    public static final MapCodec<PetuniaBlock> CODEC = createCodec(PetuniaBlock::new);
-    @Override
-    protected MapCodec<? extends AbstractPlantStemBlock> getCodec() {
-        return CODEC;
-    }
 
     public static final VoxelShape SHAPE = VoxelShapes.cuboid(0, 0, 0, 1, 0.41, 1);
 

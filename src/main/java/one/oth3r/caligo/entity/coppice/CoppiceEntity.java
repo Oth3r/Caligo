@@ -66,7 +66,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
     }
 
     public static boolean canSpawn(EntityType<? extends AnimalEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return SpawnReason.isTrialSpawner(spawnReason) || world.getLightLevel(LightType.SKY, pos) < 10;
+        return world.getLightLevel(LightType.SKY, pos) < 10;
     }
 
     public static DefaultAttributeContainer.Builder createLushAttributes() {

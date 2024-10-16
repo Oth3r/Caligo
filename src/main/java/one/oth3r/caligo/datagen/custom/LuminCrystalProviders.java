@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
@@ -20,6 +20,7 @@ import one.oth3r.caligo.item.ModItems;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class LuminCrystalProviders {
 
@@ -57,7 +58,7 @@ public class LuminCrystalProviders {
         }
 
         @Override
-        public void generate(RecipeExporter exporter) {
+        public void generate(Consumer<RecipeJsonProvider> exporter) {
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LUMIN_CRYSTAL_BLOCK)
                     .pattern(" A ").pattern("SES").pattern("SAS")
                     .input('A', Items.AMETHYST_SHARD)
@@ -74,6 +75,7 @@ public class LuminCrystalProviders {
         public String getName() {
             return "Lumin Crystal "+super.getName();
         }
+
     }
 
     public static class LootTable extends FabricBlockLootTableProvider {

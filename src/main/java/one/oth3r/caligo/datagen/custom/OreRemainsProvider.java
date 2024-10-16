@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
@@ -15,6 +15,7 @@ import net.minecraft.registry.RegistryWrapper;
 import one.oth3r.caligo.item.ModItems;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class OreRemainsProvider {
     public static class Recipe extends FabricRecipeProvider {
@@ -23,14 +24,14 @@ public class OreRemainsProvider {
             super(output);
         }
 
-        private void provideOreRemainsRecipe(RecipeExporter exporter, ItemConvertible output, ItemConvertible input, int amount) {
+        private void provideOreRemainsRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input, int amount) {
             ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC,output).input(input, amount)
                     .criterion(hasItem(input),conditionsFromItem(input))
                     .offerTo(exporter,"ore_remains/"+getItemPath(output));
         }
 
         @Override
-        public void generate(RecipeExporter exporter) {
+        public void generate(Consumer<RecipeJsonProvider> exporter) {
             offerReversibleCompactingRecipes(exporter,RecipeCategory.MISC,ModItems.SMALL_ORE_REMAINS,RecipeCategory.MISC,ModItems.ORE_REMAINS,
                     "ore_remains/"+getRecipeName(ModItems.SMALL_ORE_REMAINS)+"_compact",null,
                     "ore_remains/"+getRecipeName(ModItems.SMALL_ORE_REMAINS)+"_uncompact",null);

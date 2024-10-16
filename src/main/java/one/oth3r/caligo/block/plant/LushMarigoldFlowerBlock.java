@@ -1,6 +1,5 @@
 package one.oth3r.caligo.block.plant;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.FluidState;
@@ -12,16 +11,11 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 
 public class LushMarigoldFlowerBlock extends FlowerBlock {
-    public static final MapCodec<LushMarigoldFlowerBlock> CODEC = createCodec(LushMarigoldFlowerBlock::new);
-    @Override
-    public MapCodec<LushMarigoldFlowerBlock> getCodec() {
-        return CODEC;
-    }
 
     protected static final VoxelShape SHAPE = VoxelShapes.cuboid(0.0625, 0, 0.0625, 0.9375, 0.5625, 0.9375);
 
     public LushMarigoldFlowerBlock(Settings settings) {
-        super(FlowerBlock.createStewEffectList(StatusEffects.GLOWING,15), settings); //todo check
+        super(StatusEffects.GLOWING,15, settings); //todo check
     }
 
     @Override

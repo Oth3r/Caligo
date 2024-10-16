@@ -1,6 +1,5 @@
 package one.oth3r.caligo.block.statue;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
@@ -32,12 +31,6 @@ import one.oth3r.caligo.Utl;
 import org.jetbrains.annotations.Nullable;
 
 public class StatueBlock extends BlockWithEntity implements BlockEntityProvider, Waterloggable {
-    public static final MapCodec<? extends BlockWithEntity> CODEC = StatueBlock.createCodec(StatueBlock::new);
-    @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return CODEC;
-    }
-
 
     public static final int MAX_ROTATION_INDEX = RotationPropertyHelper.getMax();
     private static final int MAX_ROTATIONS = MAX_ROTATION_INDEX + 1;

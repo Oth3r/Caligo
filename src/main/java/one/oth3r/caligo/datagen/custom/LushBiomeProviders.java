@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
-import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
@@ -19,6 +19,7 @@ import one.oth3r.caligo.item.ModItems;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 /**
  * everything added to the lush biome
@@ -92,7 +93,7 @@ public class LushBiomeProviders {
         }
 
         @Override
-        public void generate(RecipeExporter exporter) {
+        public void generate(Consumer<RecipeJsonProvider> exporter) {
             ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.LUSH_MARIGOLD,1,Items.YELLOW_DYE,1);
             ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.DRIPLEAF_VINES,1,Items.GREEN_DYE,1);
             ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.PETUNIA,1,Items.MAGENTA_DYE,1);

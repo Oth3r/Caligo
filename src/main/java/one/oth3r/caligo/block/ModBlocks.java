@@ -1,6 +1,7 @@
 package one.oth3r.caligo.block;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
@@ -40,7 +41,7 @@ public class ModBlocks {
     public static final BlockEntityType<StatueBlockEntity> STATUE_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID,"statue_block_entity"),
-            BlockEntityType.Builder.create(StatueBlockEntity::new,STATUE_BLOCK,DEEPSLATE_STATUE_BLOCK).build());
+            FabricBlockEntityTypeBuilder.create(StatueBlockEntity::new,STATUE_BLOCK,DEEPSLATE_STATUE_BLOCK).build());
 
 
 
@@ -54,7 +55,7 @@ public class ModBlocks {
     public static final BlockEntityType<LuminCrystalBlockEntity> LUMIN_CRYSTAL_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID,"lumin_crystal_block_entity"),
-            BlockEntityType.Builder.create(LuminCrystalBlockEntity::new, LUMIN_CRYSTAL_BLOCK).build());
+            FabricBlockEntityTypeBuilder.create(LuminCrystalBlockEntity::new, LUMIN_CRYSTAL_BLOCK).build());
 
 
     // DRIPLEAF VINE
