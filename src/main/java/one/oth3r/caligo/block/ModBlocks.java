@@ -87,6 +87,10 @@ public class ModBlocks {
                     .mapColor(MapColor.YELLOW).breakInstantly().noCollision()
                     .pistonBehavior(PistonBehavior.DESTROY)
                     .offset(AbstractBlock.OffsetType.XZ).sounds(BlockSoundGroup.GRASS)));
+    public static final Block POTTED_LUSH_MARIGOLD = registerBlock("potted_lush_marigold",
+            new FlowerPotBlock(LUSH_MARIGOLD, AbstractBlock.Settings.create()
+                    .mapColor(MapColor.YELLOW).breakInstantly().nonOpaque()
+                    .pistonBehavior(PistonBehavior.DESTROY)));
 
     private static Block registerBlock(String name, Block block) {
         return Registry.register(Registries.BLOCK,Identifier.of(Caligo.MOD_ID,name),block);
@@ -113,5 +117,6 @@ public class ModBlocks {
         BlockRenderLayerMap.INSTANCE.putBlock(PETUNIA_FLOWER, RenderLayer.getCutout());
 
         BlockRenderLayerMap.INSTANCE.putBlock(LUSH_MARIGOLD, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(POTTED_LUSH_MARIGOLD, RenderLayer.getCutout());
     }
 }
