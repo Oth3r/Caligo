@@ -38,6 +38,7 @@ public class LushBiomeProviders {
         public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
             blockStateModelGenerator.registerPlantPart(ModBlocks.DRIPLEAF_VINES_PLANT, ModBlocks.DRIPLEAF_VINES, BlockStateModelGenerator.TintType.NOT_TINTED);
             blockStateModelGenerator.registerPlantPart(ModBlocks.PETUNIA_FLOWER, ModBlocks.PETUNIA, BlockStateModelGenerator.TintType.NOT_TINTED);
+            blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.POTTED_PETUNIA);
 
             // marigold
             Identifier[] marigold = new Identifier[]{

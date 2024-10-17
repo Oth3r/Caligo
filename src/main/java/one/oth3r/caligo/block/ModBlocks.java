@@ -80,6 +80,10 @@ public class ModBlocks {
                     .mapColor(MapColor.PINK).breakInstantly().noCollision()
                     .pistonBehavior(PistonBehavior.DESTROY)
                     .sounds(BlockSoundGroup.VINE)));
+    public static final Block POTTED_PETUNIA = registerBlock("potted_petunia",
+            new FlowerPotBlock(PETUNIA, AbstractBlock.Settings.create()
+                    .mapColor(MapColor.PINK).breakInstantly().nonOpaque()
+                    .pistonBehavior(PistonBehavior.DESTROY)));
 
     // LUSH MARIGOLD
     public static final Block LUSH_MARIGOLD = registerBlock("lush_marigold",
@@ -115,6 +119,7 @@ public class ModBlocks {
 
         BlockRenderLayerMap.INSTANCE.putBlock(PETUNIA, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PETUNIA_FLOWER, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(POTTED_PETUNIA, RenderLayer.getCutout());
 
         BlockRenderLayerMap.INSTANCE.putBlock(LUSH_MARIGOLD, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(POTTED_LUSH_MARIGOLD, RenderLayer.getCutout());
