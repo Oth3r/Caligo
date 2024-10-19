@@ -14,22 +14,26 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.AxolotlEntity;
-import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.collection.WeightedList;
+import net.minecraft.util.function.ValueLists;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.entity.ai.ModSensorTypes;
 import one.oth3r.caligo.sound.ModSounds;
+import one.oth3r.caligo.tag.ModItemTags;
 import org.jetbrains.annotations.Nullable;
 
-public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
+import java.util.function.IntFunction;
+
+public class CoppiceEntity extends AnimalEntity implements InventoryOwner, VariantHolder<CoppiceEntity.Variant> {
     protected static final ImmutableList<SensorType<? extends Sensor<? super CoppiceEntity>>> SENSOR_TYPES;
     protected static final ImmutableList<MemoryModuleType<?>> MEMORY_MODULE_TYPES;
 
@@ -44,6 +48,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
 
     private static final TrackedData<Boolean> EATING = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Integer> SOUND_COOLDOWN = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> VARIANT = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public static final float WALKING_SPEED = 0.4f;
     public static final float RUNNING_SPEED = 0.8f;
@@ -92,6 +97,13 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
         super.initDataTracker(builder);
         builder.add(EATING,false);
         builder.add(SOUND_COOLDOWN, 0);
+        builder.add(VARIANT, 0);
+    }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
+        this.setVariant(Variant.getRandom());
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     // ANIMATION THINGS
@@ -243,5 +255,68 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
     @Override
     protected @Nullable SoundEvent getDeathSound() {
         return ModSounds.COPPICE_DEATH;
+    }
+
+    @Override
+    public void setVariant(Variant variant) {
+        this.dataTracker.set(VARIANT, variant.getId());
+    }
+
+    @Override
+    public Variant getVariant() {
+        return Variant.byId(this.dataTracker.get(VARIANT));
+    }
+
+    public enum Variant implements StringIdentifiable {
+        LUSH(0, "lush"),
+        MARIGOLD(1, "marigold"),
+        AUTUMN(2, "autumn"),
+        MOSS(3, "moss"),
+        PETUNIA(4, "petunia"),
+        CHERRY(5, "cherry");
+
+        private static final IntFunction<CoppiceEntity.Variant> BY_ID = ValueLists.createIdToValueFunction(
+                CoppiceEntity.Variant::getId, values(), ValueLists.OutOfBoundsHandling.ZERO
+        );
+
+        private final int id;
+        private final String name;
+
+        Variant(final int id, final String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return this.id;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        @Override
+        public String asString() {
+            return this.name;
+        }
+
+        public static CoppiceEntity.Variant byId(int id) {
+            return BY_ID.apply(id);
+        }
+
+        public static Variant getRandom() {
+            WeightedList<Variant> variantList = new WeightedList<>();
+            variantList.add(LUSH,20);
+            variantList.add(MARIGOLD,9);
+            variantList.add(PETUNIA,8);
+            variantList.add(AUTUMN,12);
+            variantList.add(MOSS, 14);
+            variantList.add(CHERRY,1);
+
+            variantList.shuffle();
+            if (variantList.stream().findFirst().isPresent()) {
+                return variantList.stream().findFirst().get();
+            } else return LUSH;
+        }
     }
 }
