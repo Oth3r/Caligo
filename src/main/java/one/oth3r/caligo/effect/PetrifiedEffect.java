@@ -3,6 +3,7 @@ package one.oth3r.caligo.effect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.server.world.ServerWorld;
 import one.oth3r.caligo.damage.ModDamageTypes;
 import one.oth3r.caligo.entity.strow.StrowEntity;
 
@@ -13,10 +14,10 @@ public class PetrifiedEffect extends StatusEffect {
     }
 
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         if (!(entity instanceof StrowEntity)) {
             amplifier++;
-            entity.damage(ModDamageTypes.of(entity, ModDamageTypes.PETRIFY), amplifier * 0.75F);
+            entity.damage(world, ModDamageTypes.of(entity, ModDamageTypes.PETRIFY), amplifier * 0.75F);
         }
         return true;
     }

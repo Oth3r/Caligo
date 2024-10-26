@@ -1,26 +1,15 @@
 package one.oth3r.caligo.entity.statue.states;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import one.oth3r.caligo.entity.statue.StatueEntity;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 
-public class StatueCrouchModel extends EntityModel<StatueEntity> {
-    private final ModelPart Head;
-    private final ModelPart Body;
-    private final ModelPart RightArm;
-    private final ModelPart LeftArm;
-    private final ModelPart RightLeg;
-    private final ModelPart LeftLeg;
+public class StatueCrouchModel extends EntityModel<LivingEntityRenderState> {
+
     public StatueCrouchModel(ModelPart root) {
-        this.Head = root.getChild("Head");
-        this.Body = root.getChild("Body");
-        this.RightArm = root.getChild("RightArm");
-        this.LeftArm = root.getChild("LeftArm");
-        this.RightLeg = root.getChild("RightLeg");
-        this.LeftLeg = root.getChild("LeftLeg");
+        super(root);
     }
+
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();
@@ -43,17 +32,5 @@ public class StatueCrouchModel extends EntityModel<StatueEntity> {
                 .uv(0, 48).cuboid(-2.0F, 2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.25F)), ModelTransform.pivot(1.9F, 12.0F, 0.0F));
         return TexturedModelData.of(modelData, 64, 64);
     }
-    @Override
-    public void setAngles(StatueEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-    }
 
-    @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
-        Head.render(matrices, vertices, light, overlay, color);
-        Body.render(matrices, vertices, light, overlay, color);
-        RightArm.render(matrices, vertices, light, overlay, color);
-        LeftArm.render(matrices, vertices, light, overlay, color);
-        RightLeg.render(matrices, vertices, light, overlay, color);
-        LeftLeg.render(matrices, vertices, light, overlay, color);
-    }
 }

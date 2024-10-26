@@ -14,15 +14,16 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.AxolotlEntity;
-import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.mob.PiglinEntity;
+import net.minecraft.entity.passive.*;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.profiler.Profiler;
+import net.minecraft.util.profiler.Profilers;
 import net.minecraft.world.*;
 import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.entity.ai.ModSensorTypes;
@@ -71,8 +72,9 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
 
     public static DefaultAttributeContainer.Builder createLushAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, WALKING_SPEED);
+                .add(EntityAttributes.MAX_HEALTH, 16.0)
+                .add(EntityAttributes.MOVEMENT_SPEED, WALKING_SPEED)
+                .add(EntityAttributes.TEMPT_RANGE);
     }
 
     protected Brain.Profile<CoppiceEntity> createBrainProfile() {
@@ -149,12 +151,17 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
     }
 
     @Override
-    protected void mobTick() {
-        this.getWorld().getProfiler().push("coppiceBrain");
+    protected void mobTick(ServerWorld world) {
+        Profiler profiler = Profilers.get();
+        profiler.push("coppiceBrain");
+
         this.getBrain().tick((ServerWorld)this.getWorld(), this);
-        this.getWorld().getProfiler().pop();
+
+        profiler.pop();
+
         CoppiceBrain.tickActivities(this);
-        super.mobTick();
+
+        super.mobTick(world);
     }
 
     @Override
@@ -166,7 +173,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return ModEntities.COPPICE.create(world);
+        return ModEntities.COPPICE.create(world, SpawnReason.BREEDING);
     }
 
     @Override
@@ -184,22 +191,20 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
     }
 
     @Override
-    public boolean canGather(ItemStack stack) {
-        return this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) &&
+    public boolean canGather(ServerWorld world, ItemStack stack) {
+        return world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) &&
                 this.canPickUpLoot() && CoppiceBrain.canGather(this, stack);
     }
 
     @Override
-    protected void loot(ItemEntity item) {
-        this.triggerItemPickedUpByEntityCriteria(item);
-        CoppiceBrain.loot(this, item);
+    protected void loot(ServerWorld world, ItemEntity itemEntity) {
+        this.triggerItemPickedUpByEntityCriteria(itemEntity);
+        CoppiceBrain.loot(this, itemEntity);
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
-        boolean shouldDamage = super.damage(source, amount);
-
-        if (this.getWorld().isClient) return false;
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
+        boolean shouldDamage = super.damage(world, source, amount);
 
         if (shouldDamage && source.getAttacker() instanceof LivingEntity) {
             CoppiceBrain.onAttacked(this, (LivingEntity)source.getAttacker());

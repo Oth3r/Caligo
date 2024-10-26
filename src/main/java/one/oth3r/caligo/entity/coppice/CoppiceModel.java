@@ -5,22 +5,22 @@
 package one.oth3r.caligo.entity.coppice;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.ModelWithArms;
-import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
-public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel<T> implements ModelWithArms {
+public class CoppiceModel<T extends CoppiceEntity> extends EntityModel<CoppiceEntityRenderState> implements ModelWithArms {
 	private final ModelPart root;
 	private final ModelPart body;
 	private final ModelPart head;
 	private final ModelPart leftArm;
 
 	public CoppiceModel(ModelPart root) {
-		this.root = root.getChild("root");
+        super(root);
+        this.root = root.getChild("root");
 		this.body = this.root.getChild("body");
 		this.head = this.body.getChild("head");
 		this.leftArm = this.body.getChild("left_arm");
@@ -57,22 +57,26 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 	}
 
 	@Override
-	public void setAngles(CoppiceEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.getPart().traverse().forEach(ModelPart::resetTransform);
-		this.setHeadAngles(netHeadYaw,headPitch);
+	public void setAngles(CoppiceEntityRenderState state) {
+		super.setAngles(state);
 
-		if (CoppiceBrain.isPanicking(entity)) {
-			this.animateMovement(CoppiceAnimations.RUN_SCARED, limbSwing, limbSwingAmount,3f,3f);
-		} else if (!entity.getMainHandStack().isEmpty()) {
-			this.animateMovement(CoppiceAnimations.RUN_ORE, limbSwing, limbSwingAmount,3f,3f);
+		this.head.pitch = state.pitch * (float) (Math.PI / 180.0);
+		this.head.yaw = state.yawDegrees * (float) (Math.PI / 180.0);
+
+
+
+		if (state.isPanicking) {
+			animateWalking(CoppiceAnimations.RUN_SCARED, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
+		} else if (state.hasItem) {
+			animateWalking(CoppiceAnimations.RUN_ORE, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
 		} else {
-			this.animateMovement(CoppiceAnimations.WALK, limbSwing, limbSwingAmount, 3f, 3f);
+			animateWalking(CoppiceAnimations.WALK, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
 		}
 
-		this.updateAnimation(entity.eatingAnimationState, CoppiceAnimations.EATING, ageInTicks, 1f);
+		animate(state.eatingAnimationState, CoppiceAnimations.EATING, state.age, 1f);
 
-		this.updateAnimation(entity.idleAnimationState, CoppiceAnimations.IDLE, ageInTicks, 1f);
-		this.updateAnimation(entity.holdAnimationState, CoppiceAnimations.HOLD, ageInTicks, 1f);
+		animate(state.idleAnimationState, CoppiceAnimations.IDLE, state.age, 1f);
+		animate(state.holdAnimationState, CoppiceAnimations.HOLD, state.age, 1f);
 	}
 
 	private void setHeadAngles(float headYaw, float headPitch) {
@@ -81,16 +85,6 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 
 		this.head.yaw = headYaw * ((float)Math.PI / 180) ;
 		this.head.pitch = headPitch * ((float)Math.PI / 180) * -1;
-	}
-
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
-		root.render(matrices, vertices, light, overlay, color);
-	}
-
-	@Override
-	public ModelPart getPart() {
-		return root;
 	}
 
 	@Override

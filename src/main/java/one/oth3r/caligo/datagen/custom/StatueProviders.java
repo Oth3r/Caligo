@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeGenerator;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
@@ -20,6 +21,8 @@ import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryEntryLookup;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.item.ModItems;
@@ -105,27 +108,32 @@ public class StatueProviders {
         }
 
         @Override
-        public void generate(RecipeExporter exporter) {
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STATUE_BLOCK)
-                    .pattern(" E ").pattern("SSS").pattern(" S ")
-                    .input('S', Items.STONE)
-                    .input('E', ModItems.STROW_ESSENCE)
-                    .criterion(FabricRecipeProvider.hasItem(ModItems.STROW_ESSENCE),
-                            FabricRecipeProvider.conditionsFromItem(ModItems.STROW_ESSENCE))
-                    .offerTo(exporter);
+        protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+            return new RecipeGenerator(registryLookup, exporter) {
+                @Override
+                public void generate() {
+                    createShaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.STATUE_BLOCK)
+                            .pattern(" E ").pattern("SSS").pattern(" S ")
+                            .input('S', Items.STONE)
+                            .input('E', ModItems.STROW_ESSENCE)
+                            .criterion(hasItem(ModItems.STROW_ESSENCE),
+                                    conditionsFromItem(ModItems.STROW_ESSENCE))
+                            .offerTo(exporter);
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.DEEPSLATE_STATUE_BLOCK)
-                    .pattern(" E ").pattern("SSS").pattern(" S ")
-                    .input('S', Items.DEEPSLATE)
-                    .input('E', ModItems.STROW_ESSENCE)
-                    .criterion(FabricRecipeProvider.hasItem(ModItems.STROW_ESSENCE),
-                            FabricRecipeProvider.conditionsFromItem(ModItems.STROW_ESSENCE))
-                    .offerTo(exporter);
+                    createShaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.DEEPSLATE_STATUE_BLOCK)
+                            .pattern(" E ").pattern("SSS").pattern(" S ")
+                            .input('S', Items.DEEPSLATE)
+                            .input('E', ModItems.STROW_ESSENCE)
+                            .criterion(hasItem(ModItems.STROW_ESSENCE),
+                                    conditionsFromItem(ModItems.STROW_ESSENCE))
+                            .offerTo(exporter);
+                }
+            };
         }
 
         @Override
         public String getName() {
-            return "Statue "+super.getName();
+            return "Statue Recipe Gen";
         }
     }
 
@@ -143,9 +151,12 @@ public class StatueProviders {
         }
 
         public LootTable.Builder statueDrop(Block statue) {
+            RegistryEntryLookup<EntityType<?>> registryEntryLookup = this.registries.getOrThrow(RegistryKeys.ENTITY_TYPE);
+
             return new LootTable.Builder().pool(addSurvivesExplosionCondition(statue, LootPool.builder()
                     .rolls(ConstantLootNumberProvider.create(1.0F)).with(ItemEntry.builder(statue)
-                            .conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS,EntityPredicate.Builder.create().type(EntityType.PLAYER))))));
+                            .conditionally(EntityPropertiesLootCondition.builder(LootContext.EntityTarget.THIS,
+                                    EntityPredicate.Builder.create().type(registryEntryLookup, EntityType.PLAYER))))));
         }
 
         @Override

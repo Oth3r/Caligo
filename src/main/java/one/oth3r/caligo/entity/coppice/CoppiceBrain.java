@@ -14,9 +14,9 @@ import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -58,9 +58,9 @@ public class CoppiceBrain {
 
     private static void addCoreActivities(Brain<CoppiceEntity> brain) {
         brain.setTaskList(Activity.CORE, 0, ImmutableList.of(
-                new StayAboveWaterTask(.8f),
-                new LookAroundTask(45, 90),
-                new MoveToTargetTask(200,500), AdmireTask.create(ADMIRE_TIME), new TemptationCooldownTask(MemoryModuleType.TEMPTATION_COOLDOWN_TICKS),
+                new StayAboveWaterTask<>(.8f),
+                new LookAroundTask(UniformIntProvider.create(40,50),90,0,0),
+                new MoveToTargetTask(200,500), AdmireTask.create(ADMIRE_TIME), new TickCooldownTask(MemoryModuleType.TEMPTATION_COOLDOWN_TICKS),
                 RemoveHandItemTask.create()));
     }
 
@@ -76,7 +76,7 @@ public class CoppiceBrain {
 
     private static void addAdmireItemActivities(Brain<CoppiceEntity> brain) {
         brain.setTaskList(Activity.ADMIRE_ITEM, 10, ImmutableList.of(
-                WalkToNearestVisibleWantedItemTask.create(CoppiceEntity::doesNotHaveItemInHand, WALKING_SPEED, true, 9),
+                WalkTowardsNearestVisibleWantedItemTask.create(CoppiceEntity::doesNotHaveItemInHand, WALKING_SPEED, true, 9),
                 GoToRememberedPositionTask.createEntityBased(MemoryModuleType.AVOID_TARGET, RUNNING_SPEED, 5, true),
                 WantMoreItemTask.create(9),
                 AdmireTimeLimitTask.create(200, 200), makeRandomWanderTask()), MemoryModuleType.ADMIRING_ITEM);
@@ -98,7 +98,7 @@ public class CoppiceBrain {
     private static RandomTask<CoppiceEntity> makeRandomWanderTask() {
         return new RandomTask<>(ImmutableList.of(
                 Pair.of(StrollTask.create(WALKING_SPEED), 2),
-                Pair.of(TaskTriggerer.runIf(CoppiceBrain::canWander,GoTowardsLookTargetTask.create(WALKING_SPEED, 3)), 2),
+                Pair.of(TaskTriggerer.runIf(CoppiceBrain::canWander,GoToLookTargetTask.create(WALKING_SPEED, 3)), 2),
                 Pair.of(makeGoToDripleafTask(), 1),
                 Pair.of(new WaitTask(80, 120), 1)));
     }
@@ -216,7 +216,7 @@ public class CoppiceBrain {
             // iterate through the items
             while (item.hasNext()) {
                 // drop the item
-                LookTargetUtil.give(entity, item.next(), findGround(entity).add(0.0, 1.0, 0.0));
+                TargetUtil.give(entity, item.next(), findGround(entity).add(0.0, 1.0, 0.0));
             }
         }
     }
@@ -231,7 +231,7 @@ public class CoppiceBrain {
         if (admiringItem.isIn(ModItemTags.COPPICE_HIGH_TIER) && !entity.isBaby()) lootTable = entity.getWorld().getServer().getReloadableRegistries().getLootTable(ModLootTables.COPPICE_GEM_REMAINS);
 
         // generate the item from the loottable and return it
-        return lootTable.generateLoot((new LootContextParameterSet.Builder((ServerWorld)entity.getWorld())).add(LootContextParameters.THIS_ENTITY, entity).build(LootContextTypes.BARTER));
+        return lootTable.generateLoot((new LootWorldContext.Builder((ServerWorld)entity.getWorld())).add(LootContextParameters.THIS_ENTITY, entity).build(LootContextTypes.BARTER));
     }
 
     /**

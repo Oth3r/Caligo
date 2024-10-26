@@ -7,6 +7,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -43,11 +44,11 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
         matrices.multiply(flipQuaternion);
 
         // get the model for rendering
-        EntityModel<StatueEntity> model;
+        EntityModel<LivingEntityRenderState> model;
         switch (blockState.get(StatueBlock.STATE)) {
-            default -> model = new StatueIdleModel(StatueIdleModel.getTexturedModelData().createModel());
             case RUN -> model = new StatueRunModel(StatueRunModel.getTexturedModelData().createModel());
             case CROUCH -> model = new StatueCrouchModel(StatueCrouchModel.getTexturedModelData().createModel());
+            default -> model = new StatueIdleModel(StatueIdleModel.getTexturedModelData().createModel());
         }
 
         // change textures based on statue type
