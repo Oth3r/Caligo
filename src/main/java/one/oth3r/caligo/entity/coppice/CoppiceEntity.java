@@ -110,9 +110,22 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     private void setupAnimationStates() {
         // loop the idle animation
         if (this.idleAnimationTimeout <= 0) {
-            this.idleAnimationTimeout = this.random.nextInt(80)+32; // at least 32 ticks long
-            this.idleAnimationState.start(this.age);
-        } else --this.idleAnimationTimeout;
+            // the amount of times to run the animation, at least 32 ticks long
+            this.idleAnimationTimeout = (this.random.nextInt(7)+1)*32;
+
+            // if already running, stop; else start the idle animation
+            if (idleAnimationState.isRunning()) {
+                this.idleAnimationState.stop();
+                // extend further
+                this.idleAnimationTimeout += this.random.nextBetween(40,200);
+            } else {
+                this.idleAnimationState.start(this.age);
+            }
+
+        } else {
+            // tick the animation timeout
+            --this.idleAnimationTimeout;
+        }
 
         if (!getMainHandStack().isEmpty() && this.holdAnimationTimeout <= 0) {
             this.holdAnimationTimeout = 80; // 40 ticks long
