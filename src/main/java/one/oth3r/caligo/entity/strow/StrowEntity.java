@@ -138,7 +138,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
     @Override
     public boolean damage(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source) || source.isIn(DamageTypeTags.IS_PROJECTILE)) {
-            return false;
+            return false; //todo just do this when blocking an attack
         }
         if (isFullDamage(source)) {
             Entity attacker = source.getAttacker();
