@@ -45,6 +45,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     private static final TrackedData<Integer> VARIANT = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public static final float WALKING_SPEED = 0.4f;
+    public static final float ADMIRE_SPEED = 0.6f;
     public static final float RUNNING_SPEED = 0.8f;
 
 

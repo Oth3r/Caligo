@@ -40,6 +40,7 @@ public class CoppiceBrain {
     private static final int ADMIRING_DISABLED_EXPIRY = 300;
     private static final int ADMIRE_TIME = 300;
     private static final float WALKING_SPEED;
+    private static final float ADMIRE_SPEED;
     private static final float RUNNING_SPEED;
     private static final UniformIntProvider AVOID_MEMORY_DURATION;
 
@@ -83,7 +84,7 @@ public class CoppiceBrain {
 
     private static void addAdmireItemActivities(Brain<CoppiceEntity> brain) {
         brain.setTaskList(Activity.ADMIRE_ITEM, 10, ImmutableList.of(
-                WalkToNearestVisibleWantedItemTask.create(CoppiceEntity::doesNotHaveItemInHand, WALKING_SPEED, true, 9),
+                WalkToNearestVisibleWantedItemTask.create(CoppiceEntity::doesNotHaveItemInHand, ADMIRE_SPEED, true, 9),
                 GoToRememberedPositionTask.createEntityBased(MemoryModuleType.AVOID_TARGET, RUNNING_SPEED, 5, true),
                 WantMoreItemTask.create(9),
                 AdmireTimeLimitTask.create(200, 200), makeRandomWanderTask()), MemoryModuleType.ADMIRING_ITEM);
@@ -361,6 +362,7 @@ public class CoppiceBrain {
         AVOID_MEMORY_DURATION = TimeHelper.betweenSeconds(10, 20);
         WALKING_SPEED = CoppiceEntity.WALKING_SPEED;
         RUNNING_SPEED = CoppiceEntity.RUNNING_SPEED;
+        ADMIRE_SPEED = CoppiceEntity.ADMIRE_SPEED;
 
         SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS,
                 SensorType.NEAREST_ITEMS, SensorType.HURT_BY, ModSensorTypes.COPPICE_SPECIFIC_SENSOR, ModSensorTypes.COPPICE_TEMPTATIONS);
