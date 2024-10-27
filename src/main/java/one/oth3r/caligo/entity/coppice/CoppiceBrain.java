@@ -24,6 +24,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.loot_table.ModLootTables;
 import one.oth3r.caligo.sound.ModSounds;
 import one.oth3r.caligo.tag.ModItemTags;
@@ -66,8 +67,8 @@ public class CoppiceBrain {
 
     private static void addIdleActivities(Brain<CoppiceEntity> brain) {
         brain.setTaskList(Activity.IDLE, ImmutableList.of(
-//                Pair.of(0, new BreedTask(ModEntities.COPPICE)),
-//                Pair.of(1, new TemptTask((coppice) -> WALKING_SPEED, (entity) -> entity.isBaby() ? 1 : 1.5)), // todo speeds
+                Pair.of(0, new BreedTask(ModEntities.COPPICE,WALKING_SPEED,0)),
+                Pair.of(1, new TemptTask((coppice) -> WALKING_SPEED, (entity) -> entity.isBaby() ? 0.5 : 1)),
                 Pair.of(2, WalkToNearestPlayerHoldingWantedItemTask.create(CoppiceBrain::hasPlayerHoldingWantedItemNearby, WALKING_SPEED, true, 14)),
                 Pair.of(3, makeRandomLookTask()), Pair.of(4, makeRandomWanderTask())
 //                FindInteractionTargetTask.create(EntityType.PLAYER, 4)
@@ -197,11 +198,8 @@ public class CoppiceBrain {
         // empty the hand stack
         entity.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
 
-        // if the entity isnt a baby, start the drop code
-        if (!entity.isBaby()) {
-            dropItems(entity, generateDropItem(entity, handStack));
-        }
-
+        // start the drop code
+        dropItems(entity, generateDropItem(entity, handStack));
     }
 
     /**

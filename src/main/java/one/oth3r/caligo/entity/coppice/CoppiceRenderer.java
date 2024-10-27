@@ -29,5 +29,9 @@ public class CoppiceRenderer extends MobEntityRenderer<CoppiceEntity, CoppiceMod
         return TEXTURES.get(entity.getVariant());
     }
 
-
+    @Override
+    protected float getShadowRadius(CoppiceEntity mobEntity) {
+        float rad = super.getShadowRadius(mobEntity);
+        return mobEntity.isBaby() ? rad * 1.5F : rad;
+    }
 }

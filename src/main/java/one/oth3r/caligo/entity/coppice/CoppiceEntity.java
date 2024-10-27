@@ -54,6 +54,11 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     public static final float RUNNING_SPEED = 0.8f;
 
 
+    private static final EntityDimensions BABY_BASE_DIMENSIONS = ModEntities.COPPICE
+            .getDimensions()
+            .withAttachments(EntityAttachments.builder().add(EntityAttachmentType.PASSENGER, 0.0F, ModEntities.COPPICE.getHeight(), -0.25F))
+            .scaled(0.65F);
+
     private final SimpleInventory inventory = new SimpleInventory(1);
 
     public CoppiceEntity(EntityType<? extends AnimalEntity> entityType, World world) {
@@ -182,22 +187,43 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
         super.mobTick();
     }
 
+    // BREEDING / BABY ----------------------
+
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return false;
-//        return stack.isIn(ModItemTags.COPPICE_FOOD);
+        return stack.isIn(ModItemTags.COPPICE_FOOD);
     }
 
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return ModEntities.COPPICE.create(world);
+        CoppiceEntity child = ModEntities.COPPICE.create(world);
+        assert child != null;
+
+        // set the variant to either parent
+        if (this.random.nextBoolean()) {
+            child.setVariant(this.getVariant());
+        } else child.setVariant(((CoppiceEntity)entity).getVariant());
+
+        return child;
     }
 
     @Override
     public void setBaby(boolean baby) {
         this.setBreedingAge(baby ? -48000 : 0);
     }
+
+    @Override
+    protected EntityDimensions getBaseDimensions(EntityPose pose) {
+        return isBaby() ? BABY_BASE_DIMENSIONS : super.getBaseDimensions(pose);
+    }
+
+    @Override
+    public float getScaleFactor() {
+        return this.isBaby() ? 0.65F : 1.0F;
+    }
+
+    // ITEMS -----------------
 
     public boolean doesNotHaveItemInHand() {
         return this.getMainHandStack().isEmpty();

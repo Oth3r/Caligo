@@ -43,7 +43,9 @@ public class CoppiceProviders {
                     .addOptionalTag(ConventionalItemTags.GEMS);
 
             getOrCreateTagBuilder(ModItemTags.COPPICE_FOOD)
-                    .add(Items.BIG_DRIPLEAF); //todo
+                    .add(ModItems.DRIPLEAF_VINES)
+                    .add(Items.BIG_DRIPLEAF)
+                    .add(Items.SMALL_DRIPLEAF);
         }
 
         @Override
