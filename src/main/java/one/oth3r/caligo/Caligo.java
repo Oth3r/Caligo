@@ -8,6 +8,7 @@ import one.oth3r.caligo.block.CustomPathNodes;
 import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.effect.ModEffects;
 import one.oth3r.caligo.entity.ModEntities;
+import one.oth3r.caligo.entity.ai.ModSensorTypes;
 import one.oth3r.caligo.generation.ModGeneration;
 import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.itemgroup.ModItemGroups;
@@ -25,6 +26,7 @@ public class Caligo implements ModInitializer {
         CustomPathNodes.register();
 
         ModEntities.register();
+        ModSensorTypes.register();
         ModSounds.register();
         ModEffects.register();
         ModBlocks.registerModBlocks();
