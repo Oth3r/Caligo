@@ -61,11 +61,6 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     }
 
     @Override
-    public boolean canImmediatelyDespawn(double distanceSquared) {
-        return !this.hasCustomName() && this.doesNotHaveItemInHand();
-    }
-
-    @Override
     public boolean cannotDespawn() {
         return super.cannotDespawn() || this.hasCustomName();
     }
