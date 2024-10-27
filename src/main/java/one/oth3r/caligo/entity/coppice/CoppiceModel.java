@@ -77,11 +77,16 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 		this.getPart().traverse().forEach(ModelPart::resetTransform);
 		this.setHeadAngles(netHeadYaw,headPitch);
 
-		if (CoppiceBrain.isPanicking(entity)) {
-			this.animateMovement(CoppiceAnimations.RUN_SCARED, limbSwing, limbSwingAmount,3f,3f);
-		} else if (!entity.getMainHandStack().isEmpty()) {
-			this.animateMovement(CoppiceAnimations.RUN_HOLDING, limbSwing, limbSwingAmount,3f,3f);
-		} else {
+		// if holding
+		if (!entity.getMainHandStack().isEmpty()) {
+			this.animateMovement(CoppiceAnimations.WALK_HOLDING, limbSwing, limbSwingAmount,3f,3f);
+		}
+		// else if panicking
+		else if (entity.isPanicking()) {
+			this.animateMovement(CoppiceAnimations.PANIC, limbSwing, limbSwingAmount,3f,3f);
+		}
+		// else normal
+		else {
 			this.animateMovement(CoppiceAnimations.WALK, limbSwing, limbSwingAmount, 3f, 3f);
 		}
 

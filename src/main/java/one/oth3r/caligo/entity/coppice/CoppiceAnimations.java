@@ -116,7 +116,7 @@ public class CoppiceAnimations {
                 ))
                 .build();
 
-        public static final Animation RUN_HOLDING = Animation.Builder.create(0.3333F).looping()
+        public static final Animation WALK_HOLDING = Animation.Builder.create(0.3333F).looping()
                 .addBoneAnimation("body", new Transformation(Transformation.Targets.ROTATE,
                         new Keyframe(0.0F, AnimationHelper.createRotationalVector(-17.5F, 6.0F, 0.0F), Transformation.Interpolations.LINEAR),
                         new Keyframe(0.1667F, AnimationHelper.createRotationalVector(-17.5F, -6.0F, 0.0F), Transformation.Interpolations.LINEAR),
@@ -209,7 +209,7 @@ public class CoppiceAnimations {
                 ))
                 .build();
 
-        public static final Animation RUN_SCARED = Animation.Builder.create(0.3333F).looping()
+        public static final Animation PANIC = Animation.Builder.create(0.3333F).looping()
                 .addBoneAnimation("body", new Transformation(Transformation.Targets.ROTATE,
                         new Keyframe(0.0F, AnimationHelper.createRotationalVector(25.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR)
                 ))

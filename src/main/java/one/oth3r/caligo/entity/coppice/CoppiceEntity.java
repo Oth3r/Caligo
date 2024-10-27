@@ -1,12 +1,8 @@
 package one.oth3r.caligo.entity.coppice;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.sensor.Sensor;
-import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -26,7 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import one.oth3r.caligo.entity.ModEntities;
-import one.oth3r.caligo.entity.ai.ModSensorTypes;
 import one.oth3r.caligo.sound.ModSounds;
 import one.oth3r.caligo.tag.ModItemTags;
 import org.jetbrains.annotations.Nullable;
@@ -34,8 +29,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.IntFunction;
 
 public class CoppiceEntity extends AnimalEntity implements InventoryOwner, VariantHolder<CoppiceEntity.Variant> {
-    protected static final ImmutableList<SensorType<? extends Sensor<? super CoppiceEntity>>> SENSOR_TYPES;
-    protected static final ImmutableList<MemoryModuleType<?>> MEMORY_MODULE_TYPES;
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
@@ -47,6 +40,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
 
 
     private static final TrackedData<Boolean> EATING = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> PANICKING = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Integer> SOUND_COOLDOWN = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Integer> VARIANT = DataTracker.registerData(CoppiceEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
@@ -85,14 +79,20 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, WALKING_SPEED);
     }
 
+    // BRAIN
+
+    @Override
     protected Brain.Profile<CoppiceEntity> createBrainProfile() {
-        return Brain.createProfile(MEMORY_MODULE_TYPES, SENSOR_TYPES);
+        return CoppiceBrain.createBrainProfile();
     }
 
+    @Override
     protected Brain<?> deserializeBrain(Dynamic<?> dynamic) {
         return CoppiceBrain.create(this, this.createBrainProfile().deserialize(dynamic));
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
     public Brain<CoppiceEntity> getBrain() {
         return (Brain<CoppiceEntity>) super.getBrain();
     }
@@ -101,6 +101,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
         builder.add(EATING,false);
+        builder.add(PANICKING, false); // todo see if the entity render data in 1.21 fixes these issues
         builder.add(SOUND_COOLDOWN, 0);
         builder.add(VARIANT, 0);
     }
@@ -161,6 +162,14 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
         return this.dataTracker.get(EATING);
     }
 
+    public void setPanicking(boolean b) {
+        this.dataTracker.set(PANICKING, b);
+    }
+
+    public boolean isPanicking() {
+        return this.dataTracker.get(PANICKING);
+    }
+
     public void setSoundCooldown(int soundCooldown) {
         this.dataTracker.set(SOUND_COOLDOWN, soundCooldown);
     }
@@ -183,7 +192,11 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
         this.getWorld().getProfiler().push("coppiceBrain");
         this.getBrain().tick((ServerWorld)this.getWorld(), this);
         this.getWorld().getProfiler().pop();
+
+        this.getWorld().getProfiler().push("caligoActivityTick");
         CoppiceBrain.tickActivities(this);
+        this.getWorld().getProfiler().pop();
+
         super.mobTick();
     }
 
@@ -266,24 +279,6 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
 
     protected void equipToMainHand(ItemStack stack) {
         this.equipLootStack(EquipmentSlot.MAINHAND, stack);
-    }
-
-    static {
-        SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS,
-                SensorType.NEAREST_ITEMS, SensorType.HURT_BY, ModSensorTypes.COPPICE_SPECIFIC_SENSOR, ModSensorTypes.COPPICE_TEMPTATIONS);
-
-        MEMORY_MODULE_TYPES = ImmutableList.of(MemoryModuleType.LOOK_TARGET, MemoryModuleType.WALK_TARGET,
-                MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, MemoryModuleType.PATH, MemoryModuleType.IS_PANICKING,
-                MemoryModuleType.VISIBLE_MOBS, MemoryModuleType.NEAREST_VISIBLE_PLAYER, MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM,
-
-                MemoryModuleType.BREED_TARGET,
-                MemoryModuleType.TEMPTING_PLAYER, MemoryModuleType.TEMPTATION_COOLDOWN_TICKS, MemoryModuleType.IS_TEMPTED,
-
-                MemoryModuleType.HURT_BY, MemoryModuleType.HURT_BY_ENTITY, MemoryModuleType.AVOID_TARGET, MemoryModuleType.NEAREST_REPELLENT,
-
-                MemoryModuleType.NEAREST_VISIBLE_WANTED_ITEM, MemoryModuleType.ITEM_PICKUP_COOLDOWN_TICKS,
-                MemoryModuleType.ADMIRING_ITEM, MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM, MemoryModuleType.ADMIRING_DISABLED,
-                MemoryModuleType.DISABLE_WALK_TO_ADMIRE_ITEM);
     }
 
     @Override

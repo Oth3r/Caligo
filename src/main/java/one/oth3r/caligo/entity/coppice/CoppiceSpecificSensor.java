@@ -22,7 +22,7 @@ import java.util.Set;
 public class CoppiceSpecificSensor extends Sensor<CoppiceEntity> {
     @Override
     public Set<MemoryModuleType<?>> getOutputMemoryModules() {
-        return ImmutableSet.copyOf(CoppiceEntity.MEMORY_MODULE_TYPES);
+        return ImmutableSet.copyOf(CoppiceBrain.MEMORY_MODULE_TYPES);
 
     }
 
