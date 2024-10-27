@@ -15,9 +15,9 @@ public class ModRecipieProvider extends FabricRecipeProvider {
         super(output, registriesFuture);
     }
 
-    public static void provideShapelessRecipe(RecipeExporter exporter, ItemConvertible input, int iAmt, ItemConvertible output, int oAmt) {
+    public static void provideShapelessRecipe(RecipeExporter exporter, ItemConvertible input, int iAmt, ItemConvertible output, int oAmt, String group) {
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC,output, oAmt).input(input, iAmt)
-                .criterion(hasItem(input),conditionsFromItem(input))
+                .criterion(hasItem(input),conditionsFromItem(input)).group(group)
                 .offerTo(exporter);
     }
 
