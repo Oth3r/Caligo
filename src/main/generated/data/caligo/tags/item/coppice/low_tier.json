@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#c:raw_materials",
+      "required": false
+    },
+    {
+      "id": "#minecraft:coals",
+      "required": false
+    }
+  ]
+}
