@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.RecipeGenerator;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
@@ -57,22 +57,25 @@ public class LuminCrystalProviders {
         }
 
         @Override
-        public void generate(RecipeExporter exporter) {
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LUMIN_CRYSTAL_BLOCK)
-                    .pattern(" A ").pattern("SES").pattern("SAS")
-                    .input('A', Items.AMETHYST_SHARD)
-                    .input('S', Items.STONE)
-                    .input('E', ModItems.STROW_ESSENCE)
-                    .criterion(FabricRecipeProvider.hasItem(ModItems.STROW_ESSENCE),
-                            FabricRecipeProvider.conditionsFromItem(ModItems.STROW_ESSENCE))
-                    .criterion(FabricRecipeProvider.hasItem(Items.AMETHYST_SHARD),
-                            FabricRecipeProvider.conditionsFromItem(Items.AMETHYST_SHARD))
-                    .offerTo(exporter);
+        protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+            return new RecipeGenerator(registryLookup, exporter) {
+                @Override
+                public void generate() {
+                    createShaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.LUMIN_CRYSTAL_BLOCK)
+                            .pattern(" A ").pattern("SES").pattern("SAS")
+                            .input('A', Items.AMETHYST_SHARD)
+                            .input('S', Items.STONE)
+                            .input('E', ModItems.STROW_ESSENCE)
+                            .criterion(hasItem(ModItems.STROW_ESSENCE), conditionsFromItem(ModItems.STROW_ESSENCE))
+                            .criterion(hasItem(Items.AMETHYST_SHARD), conditionsFromItem(Items.AMETHYST_SHARD))
+                            .offerTo(exporter);
+                }
+            };
         }
 
         @Override
         public String getName() {
-            return "Lumin Crystal "+super.getName();
+            return "Lumin Crystal Recipe Gen";
         }
     }
 

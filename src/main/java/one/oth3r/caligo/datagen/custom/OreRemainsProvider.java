@@ -7,10 +7,13 @@ import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
 import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeGenerator;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryWrapper;
 import one.oth3r.caligo.item.ModItems;
 
@@ -23,38 +26,45 @@ public class OreRemainsProvider {
             super(output, registriesFuture);
         }
 
-        private void provideOreRemainsRecipe(RecipeExporter exporter, ItemConvertible output, ItemConvertible input, int amount) {
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC,output).input(input, amount)
-                    .criterion(hasItem(input),conditionsFromItem(input))
-                    .offerTo(exporter,"ore_remains/"+getItemPath(output));
-        }
-
         @Override
-        public void generate(RecipeExporter exporter) {
-            offerReversibleCompactingRecipes(exporter,RecipeCategory.MISC,ModItems.SMALL_ORE_REMAINS,RecipeCategory.MISC,ModItems.ORE_REMAINS,
-                    "ore_remains/"+getRecipeName(ModItems.SMALL_ORE_REMAINS)+"_compact",null,
-                    "ore_remains/"+getRecipeName(ModItems.SMALL_ORE_REMAINS)+"_uncompact",null);
-            offerReversibleCompactingRecipes(exporter,RecipeCategory.MISC,ModItems.ORE_REMAINS,RecipeCategory.MISC,ModItems.LARGE_ORE_REMAINS,
-                    "ore_remains/"+getRecipeName(ModItems.ORE_REMAINS)+"_compact",null,
-                    "ore_remains/"+getRecipeName(ModItems.ORE_REMAINS)+"_uncompact",null);
+        protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+            return new RecipeGenerator(registryLookup, exporter) {
+                @Override
+                public void generate() {
+                    offerReversibleCompactingRecipes(
+                            RecipeCategory.MISC,ModItems.SMALL_ORE_REMAINS,RecipeCategory.MISC,ModItems.ORE_REMAINS,
+                            "ore_remains/"+getRecipeName(ModItems.SMALL_ORE_REMAINS)+"_compact",null,
+                            "ore_remains/"+getRecipeName(ModItems.SMALL_ORE_REMAINS)+"_uncompact",null);
+                    offerReversibleCompactingRecipes(
+                            RecipeCategory.MISC, ModItems.ORE_REMAINS, RecipeCategory.MISC, ModItems.LARGE_ORE_REMAINS,
+                            "ore_remains/"+getRecipeName(ModItems.ORE_REMAINS)+"_compact",null,
+                            "ore_remains/"+getRecipeName(ModItems.ORE_REMAINS)+"_uncompact",null);
 
-            // LARGE RECIPES
-            provideOreRemainsRecipe(exporter,Items.DIAMOND,ModItems.LARGE_ORE_REMAINS,9);
-            provideOreRemainsRecipe(exporter,Items.EMERALD,ModItems.LARGE_ORE_REMAINS,6);
-            provideOreRemainsRecipe(exporter,Items.LAPIS_LAZULI,ModItems.LARGE_ORE_REMAINS,3);
+                    // LARGE RECIPES
+                    provideOreRemainsRecipe(exporter,Items.DIAMOND,ModItems.LARGE_ORE_REMAINS,9);
+                    provideOreRemainsRecipe(exporter,Items.EMERALD,ModItems.LARGE_ORE_REMAINS,6);
+                    provideOreRemainsRecipe(exporter,Items.LAPIS_LAZULI,ModItems.LARGE_ORE_REMAINS,3);
 
-            // NORMAL RECIPES
-            provideOreRemainsRecipe(exporter,Items.RAW_GOLD,ModItems.ORE_REMAINS,6);
-            provideOreRemainsRecipe(exporter,Items.RAW_IRON,ModItems.ORE_REMAINS,3);
+                    // NORMAL RECIPES
+                    provideOreRemainsRecipe(exporter,Items.RAW_GOLD,ModItems.ORE_REMAINS,6);
+                    provideOreRemainsRecipe(exporter,Items.RAW_IRON,ModItems.ORE_REMAINS,3);
 
-            // SMALL RECIPES
-            provideOreRemainsRecipe(exporter,Items.COAL,ModItems.SMALL_ORE_REMAINS,6);
-            provideOreRemainsRecipe(exporter,Items.RAW_COPPER,ModItems.SMALL_ORE_REMAINS,3);
+                    // SMALL RECIPES
+                    provideOreRemainsRecipe(exporter,Items.COAL,ModItems.SMALL_ORE_REMAINS,6);
+                    provideOreRemainsRecipe(exporter,Items.RAW_COPPER,ModItems.SMALL_ORE_REMAINS,3);
+
+                }
+                private void provideOreRemainsRecipe(RecipeExporter exporter, ItemConvertible output, ItemConvertible input, int amount) {
+                    createShapeless(RecipeCategory.MISC,output).input(input, amount)
+                            .criterion(hasItem(input),conditionsFromItem(input))
+                            .offerTo(exporter,"ore_remains/"+getItemPath(output));
+                }
+            };
         }
 
         @Override
         public String getName() {
-            return "Ore Remains "+super.getName();
+            return "Ore Remains Recipe Gen";
         }
     }
 

@@ -14,15 +14,15 @@ import one.oth3r.caligo.effect.ModEffects;
 import one.oth3r.caligo.item.ModItems;
 
 public class ModPotions {
-    public static final Potion PETRIFIED_POTION = registerPotion("petrified",
-            new Potion(new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 900, 0)));
-    public static final Potion PETRIFIED_POTION_LONG = registerPotion("petrified_extended",
-            new Potion(new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 1800, 0)));
-    public static final Potion PETRIFIED_POTION_STRONG = registerPotion("petrified_amplified",
-            new Potion(new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 440, 1)));
+    public static final Potion PETRIFIED_POTION = registerPotion(
+            new Potion("petrified", new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 900, 0)));
+    public static final Potion PETRIFIED_POTION_LONG = registerPotion(
+            new Potion("petrified_extended", new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 1800, 0)));
+    public static final Potion PETRIFIED_POTION_STRONG = registerPotion(
+            new Potion("petrified_amplified", new StatusEffectInstance(ModEffects.getEffect(ModEffects.PETRIFIED), 440, 1)));
 
-    public static Potion registerPotion(String name, Potion potion) {
-        return Registry.register(Registries.POTION, Identifier.of(Caligo.MOD_ID,name),potion);
+    public static Potion registerPotion(Potion potion) {
+        return Registry.register(Registries.POTION, Identifier.of(Caligo.MOD_ID,potion.getBaseName()),potion);
     }
     public static void register() {
         registerRecipes();
