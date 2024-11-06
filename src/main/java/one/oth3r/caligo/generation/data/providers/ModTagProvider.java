@@ -1,4 +1,4 @@
-package one.oth3r.caligo.datagen;
+package one.oth3r.caligo.generation.data.providers;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -7,9 +7,9 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import one.oth3r.caligo.block.ModBlocks;
-import one.oth3r.caligo.datagen.custom.LuminCrystalProviders;
-import one.oth3r.caligo.datagen.custom.LushBiomeProviders;
-import one.oth3r.caligo.datagen.custom.StatueProviders;
+import one.oth3r.caligo.generation.data.providers.grouped.LuminCrystalProviders;
+import one.oth3r.caligo.generation.data.providers.grouped.LushBiomeProviders;
+import one.oth3r.caligo.generation.data.providers.grouped.StatueProviders;
 import one.oth3r.caligo.item.ModItems;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package one.oth3r.caligo.datagen.custom;
+package one.oth3r.caligo.generation.data.providers.grouped;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -15,7 +15,7 @@ import net.minecraft.loot.function.EnchantedCountIncreaseLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.*;
 import net.minecraft.registry.*;
-import one.oth3r.caligo.datagen.ModModelProvider;
+import one.oth3r.caligo.generation.data.providers.ModModelProvider;
 import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.loot_table.ModLootTables;
 

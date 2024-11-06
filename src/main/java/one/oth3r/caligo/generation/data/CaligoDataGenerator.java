@@ -1,12 +1,16 @@
-package one.oth3r.caligo.datagen;
+package one.oth3r.caligo.generation.data;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
-import one.oth3r.caligo.datagen.custom.*;
+import one.oth3r.caligo.generation.data.providers.grouped.*;
 import one.oth3r.caligo.generation.ModConfiguredFeatures;
 import one.oth3r.caligo.generation.ModPlacedFeatures;
+import one.oth3r.caligo.generation.data.providers.ModEntityLootTableProvider;
+import one.oth3r.caligo.generation.data.providers.ModModelProvider;
+import one.oth3r.caligo.generation.data.providers.ModTagProvider;
+import one.oth3r.caligo.generation.data.providers.ModWorldProvider;
 
 public class CaligoDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -18,7 +22,7 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(ModEntityLootTableProvider::new);
         pack.addProvider(ModModelProvider::new);
 
-        pack.addProvider(ModWorldGenerator::new);
+        pack.addProvider(ModWorldProvider::new);
 
         // STATUES
         pack.addProvider(StatueProviders.ItemTag::new);
