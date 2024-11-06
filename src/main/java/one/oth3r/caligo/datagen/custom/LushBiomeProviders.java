@@ -7,13 +7,13 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeGenerator;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
 import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.datagen.ModModelProvider;
-import one.oth3r.caligo.datagen.ModRecipieProvider;
 import one.oth3r.caligo.item.ModItems;
 
 import java.util.ArrayList;
@@ -95,15 +95,20 @@ public class LushBiomeProviders {
         }
 
         @Override
-        public void generate(RecipeExporter exporter) {
-            ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.LUSH_MARIGOLD,1,Items.YELLOW_DYE,1, "yellow_dye");
-            ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.DRIPLEAF_VINES,1,Items.GREEN_DYE,1, "green_dye");
-            ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.PETUNIA,1,Items.MAGENTA_DYE,1, "magenta_dye");
+        protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+            return new RecipeGenerator(registryLookup, exporter) {
+                @Override
+                public void generate() {
+                    offerShapelessRecipe(Items.YELLOW_DYE,ModItems.LUSH_MARIGOLD,"yellow_dye",1);
+                    offerShapelessRecipe(Items.GREEN_DYE,ModItems.DRIPLEAF_VINES,"green_dye",1);
+                    offerShapelessRecipe(Items.MAGENTA_DYE,ModItems.PETUNIA,"magenta_dye",1);
+                }
+            };
         }
 
         @Override
         public String getName() {
-            return "Lush Biome "+super.getName();
+            return "Lush Biome Recipe Gen";
         }
     }
 }

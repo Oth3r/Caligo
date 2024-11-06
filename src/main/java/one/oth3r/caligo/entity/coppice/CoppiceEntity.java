@@ -20,6 +20,8 @@ import net.minecraft.util.collection.WeightedList;
 import net.minecraft.util.function.ValueLists;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.profiler.Profiler;
+import net.minecraft.util.profiler.Profilers;
 import net.minecraft.world.*;
 import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.sound.ModSounds;
@@ -71,8 +73,9 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
 
     public static DefaultAttributeContainer.Builder createLushAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 16.0)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, WALKING_SPEED);
+                .add(EntityAttributes.MAX_HEALTH, 16.0)
+                .add(EntityAttributes.MOVEMENT_SPEED, WALKING_SPEED)
+                .add(EntityAttributes.TEMPT_RANGE);
     }
 
     // BRAIN
@@ -184,16 +187,19 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     }
 
     @Override
-    protected void mobTick() {
-        this.getWorld().getProfiler().push("coppiceBrain");
+    protected void mobTick(ServerWorld world) {
+        Profiler profiler = Profilers.get();
+        profiler.push("coppiceBrain");
+
         this.getBrain().tick((ServerWorld)this.getWorld(), this);
-        this.getWorld().getProfiler().pop();
 
-        this.getWorld().getProfiler().push("caligoActivityTick");
+        profiler.pop();
+
+        profiler.push("caligoActivityTick");
         CoppiceBrain.tickActivities(this);
-        this.getWorld().getProfiler().pop();
+        profiler.pop();
 
-        super.mobTick();
+        super.mobTick(world);
     }
 
     // BREEDING / BABY ----------------------
@@ -206,7 +212,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        CoppiceEntity child = ModEntities.COPPICE.create(world);
+        CoppiceEntity child = ModEntities.COPPICE.create(world, SpawnReason.BREEDING);
         assert child != null;
 
         // set the variant to either parent
@@ -244,22 +250,20 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     }
 
     @Override
-    public boolean canGather(ItemStack stack) {
-        return this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) &&
+    public boolean canGather(ServerWorld world, ItemStack stack) {
+        return world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) &&
                 this.canPickUpLoot() && CoppiceBrain.canGather(this, stack);
     }
 
     @Override
-    protected void loot(ItemEntity item) {
-        this.triggerItemPickedUpByEntityCriteria(item);
-        CoppiceBrain.loot(this, item);
+    protected void loot(ServerWorld world, ItemEntity itemEntity) {
+        this.triggerItemPickedUpByEntityCriteria(itemEntity);
+        CoppiceBrain.loot(this, itemEntity);
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
-        boolean shouldDamage = super.damage(source, amount);
-
-        if (this.getWorld().isClient) return false;
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
+        boolean shouldDamage = super.damage(world, source, amount);
 
         if (shouldDamage && source.getAttacker() instanceof LivingEntity) {
             CoppiceBrain.onAttacked(this, (LivingEntity)source.getAttacker());

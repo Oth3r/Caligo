@@ -4,22 +4,26 @@
 
 package one.oth3r.caligo.entity.coppice;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
+import one.oth3r.caligo.entity.AnimatedBabyModelTransformer;
 
-public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel<T> implements ModelWithArms {
+import java.util.Set;
+
+public class CoppiceModel extends EntityModel<CoppiceEntityRenderState> implements ModelWithArms {
+	public static final ModelTransformer BABY_TRANSFORMER = new AnimatedBabyModelTransformer(true,
+			2.289F, 0F, .7f,.5f,0f, Set.of("head"));
+
 	private final ModelPart root;
 	private final ModelPart body;
 	private final ModelPart head;
 	private final ModelPart leftArm;
 
 	public CoppiceModel(ModelPart root) {
+		super(root);
 		this.root = root.getChild("root");
 		this.body = this.root.getChild("body");
 		this.head = this.root.getChild("head");
@@ -71,68 +75,35 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 		ModelPartData right_leg = root.addChild("right_leg", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(1.0F, -4.0F, 0.0F));
 		return TexturedModelData.of(modelData, 64, 64);
 	}
+	public static TexturedModelData getBabyTexturedModelData() {
+		return getTexturedModelData().transform(CoppiceModel.BABY_TRANSFORMER);
+	}
 
 	@Override
-	public void setAngles(CoppiceEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.getPart().traverse().forEach(ModelPart::resetTransform);
-		this.setHeadAngles(netHeadYaw,headPitch);
+	public void setAngles(CoppiceEntityRenderState state) {
+		super.setAngles(state);
+
+		this.head.pitch = state.pitch * (float) (Math.PI / 180.0);
+		this.head.yaw = state.yawDegrees * (float) (Math.PI / 180.0);
+
 
 		// if holding
-		if (!entity.getMainHandStack().isEmpty()) {
-			this.animateMovement(CoppiceAnimations.WALK_HOLDING, limbSwing, limbSwingAmount,3f,3f);
+		if (state.hasItem) {
+			animateWalking(CoppiceAnimations.WALK_HOLDING, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
 		}
 		// else if panicking
-		else if (entity.isPanicking()) {
-			this.animateMovement(CoppiceAnimations.PANIC, limbSwing, limbSwingAmount,3f,3f);
+		else if (state.isPanicking) {
+			animateWalking(CoppiceAnimations.PANIC, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
 		}
 		// else normal
 		else {
-			this.animateMovement(CoppiceAnimations.WALK, limbSwing, limbSwingAmount, 3f, 3f);
+			animateWalking(CoppiceAnimations.WALK, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
 		}
 
-		this.updateAnimation(entity.eatingAnimationState, CoppiceAnimations.EATING, ageInTicks, 1f);
+		animate(state.eatingAnimationState, CoppiceAnimations.EATING, state.age, 1f);
 
-		this.updateAnimation(entity.idleAnimationState, CoppiceAnimations.IDLE, ageInTicks, 1f);
-		this.updateAnimation(entity.holdAnimationState, CoppiceAnimations.HOLD, ageInTicks, 1f);
-	}
-
-	private void setHeadAngles(float headYaw, float headPitch) {
-		headYaw = MathHelper.clamp(headYaw, -30.0f, 30.0f);
-		headPitch = MathHelper.clamp(headPitch, -25.0f, 45.0f);
-
-		this.head.yaw = headYaw * ((float)Math.PI / 180) ;
-		this.head.pitch = headPitch * ((float)Math.PI / 180) * -1;
-	}
-
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
-		ImmutableList<ModelPart>
-				head = ImmutableList.of(this.head),
-				body = ImmutableList.of(this.body,this.root.getChild("left_leg"),root.getChild("right_leg"));
-
-		if (this.child) {
-			matrices.push();
-			float f = 0.7f;
-			matrices.scale(-f, f, -f);
-			matrices.translate(0,2.289,0);
-			head.forEach(modelPart -> modelPart.render(matrices, vertices, light, overlay, color));
-			matrices.pop();
-
-			matrices.push();
-			f = 0.5f;
-			matrices.scale(-f, f, -f);
-			matrices.translate(0,3,0);
-			body.forEach(modelPart -> modelPart.render(matrices, vertices, light, overlay, color));
-			matrices.pop();
-		}
-		else {
-			root.render(matrices, vertices, light, overlay, color);
-		}
-	}
-
-	@Override
-	public ModelPart getPart() {
-		return root;
+		animate(state.idleAnimationState, CoppiceAnimations.IDLE, state.age, 1f);
+		animate(state.holdAnimationState, CoppiceAnimations.HOLD, state.age, 1f);
 	}
 
 	@Override
