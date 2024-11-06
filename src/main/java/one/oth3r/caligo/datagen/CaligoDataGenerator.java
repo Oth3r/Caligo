@@ -15,7 +15,6 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(ModTagProvider.ItemTag::new);
         pack.addProvider(ModTagProvider.BlockTag::new);
-
         pack.addProvider(ModEntityLootTableProvider::new);
         pack.addProvider(ModModelProvider::new);
 
