@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "caligo:ore_remains"
-    },
-    {
-      "item": "caligo:ore_remains"
-    },
-    {
-      "item": "caligo:ore_remains"
-    }
+    "caligo:ore_remains",
+    "caligo:ore_remains",
+    "caligo:ore_remains"
   ],
   "result": {
     "count": 1,

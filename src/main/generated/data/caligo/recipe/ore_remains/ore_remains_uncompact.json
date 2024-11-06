@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "caligo:large_ore_remains"
-    }
+    "caligo:large_ore_remains"
   ],
   "result": {
     "count": 9,
