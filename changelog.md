@@ -11,9 +11,10 @@
 * each variant has its own rarity
 
 ### Other
-* tweaked the idle animation code to be more fluid
+* rewrote the idle animation code to be more fluid and consistent
 * increased the speed of the coppice when going to a dropped ore
 * tweaked coppice despawning, they should now stay in the world longer
+* tweaked coppice animations
 
 ## Other Changes
 * added potted variants to the **Petunia** and the **Lush Marigold**
