@@ -1,18 +1,14 @@
 package one.oth3r.caligo.block;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
@@ -28,86 +24,80 @@ import one.oth3r.caligo.block.statue.StatueBlock;
 import one.oth3r.caligo.block.statue.StatueBlockEntity;
 import one.oth3r.caligo.block.statue.StatueBlockEntityRenderer;
 
-import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
 public class ModBlocks {
 
     // STATUE
     public static final Block STATUE_BLOCK = registerBlock("statue",
-            StatueBlock::new, AbstractBlock.Settings.create()
-                    .mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5f, 6.0f));
+            new StatueBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5f, 6.0f)));
 
     public static final Block DEEPSLATE_STATUE_BLOCK = registerBlock("deepslate_statue",
-            DeepslateStatueBlock::new, AbstractBlock.Settings.create()
-                    .mapColor(MapColor.DEEPSLATE_GRAY).requiresTool().strength(1.5f, 6.0f));
+            new DeepslateStatueBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.DEEPSLATE_GRAY).requiresTool().strength(1.5f, 6.0f)));
 
-    public static final BlockEntityType<StatueBlockEntity> STATUE_BLOCK_ENTITY = registerBlockEntity(
-            "statue_block_entity", StatueBlockEntity::new, STATUE_BLOCK, DEEPSLATE_STATUE_BLOCK);
+    public static final BlockEntityType<StatueBlockEntity> STATUE_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            Identifier.of(Caligo.MOD_ID,"statue_block_entity"),
+            BlockEntityType.Builder.create(StatueBlockEntity::new,STATUE_BLOCK,DEEPSLATE_STATUE_BLOCK).build());
+
 
 
     // LUMIN CRYSTAL
     public static final ToIntFunction<BlockState> toInt = value -> value.get(LuminCrystalBlock.POWER);
 
     public static final Block LUMIN_CRYSTAL_BLOCK = registerBlock("lumin_crystal",
-            LuminCrystalBlock::new, AbstractBlock.Settings.create()
-                    .mapColor(MapColor.STONE_GRAY).luminance(toInt).requiresTool().strength(1.5f, 6.0f));
+            new LuminCrystalBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.STONE_GRAY).luminance(toInt).requiresTool().strength(1.5f, 6.0f)));
 
-    public static final BlockEntityType<LuminCrystalBlockEntity> LUMIN_CRYSTAL_BLOCK_ENTITY = registerBlockEntity(
-            "lumin_crystal_block_entity", LuminCrystalBlockEntity::new, LUMIN_CRYSTAL_BLOCK);
+    public static final BlockEntityType<LuminCrystalBlockEntity> LUMIN_CRYSTAL_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            Identifier.of(Caligo.MOD_ID,"lumin_crystal_block_entity"),
+            BlockEntityType.Builder.create(LuminCrystalBlockEntity::new, LUMIN_CRYSTAL_BLOCK).build());
 
 
     // DRIPLEAF VINE
     public static final Block DRIPLEAF_VINES = registerBlock("dripleaf_vines",
-            DripleafVineBlock::new, AbstractBlock.Settings.create()
+            new DripleafVineBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.DARK_GREEN).breakInstantly().noCollision()
                     .pistonBehavior(PistonBehavior.DESTROY)
-                    .sounds(BlockSoundGroup.BIG_DRIPLEAF));
+                    .sounds(BlockSoundGroup.BIG_DRIPLEAF)));
     public static final Block DRIPLEAF_VINES_PLANT = registerBlock("dripleaf_vines_plant",
-            DripleafVinePlantBlock::new, AbstractBlock.Settings.create()
+            new DripleafVinePlantBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.DARK_GREEN).breakInstantly().noCollision()
                     .pistonBehavior(PistonBehavior.DESTROY)
-                    .sounds(BlockSoundGroup.BIG_DRIPLEAF));
+                    .sounds(BlockSoundGroup.BIG_DRIPLEAF)));
 
     // PETUNIA BLOCK
     public static final Block PETUNIA_FLOWER = registerBlock("petunia_stem",
-            PetuniaFlowerBlock::new, AbstractBlock.Settings.create()
+            new PetuniaFlowerBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.LIME).breakInstantly().noCollision()
                     .pistonBehavior(PistonBehavior.DESTROY)
-                    .sounds(BlockSoundGroup.VINE));
+                    .sounds(BlockSoundGroup.VINE)));
     public static final Block PETUNIA = registerBlock("petunia",
-            PetuniaBlock::new, AbstractBlock.Settings.create()
+            new PetuniaBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.PINK).breakInstantly().noCollision()
                     .pistonBehavior(PistonBehavior.DESTROY)
-                    .sounds(BlockSoundGroup.VINE));
+                    .sounds(BlockSoundGroup.VINE)));
     public static final Block POTTED_PETUNIA = registerBlock("potted_petunia",
-            settings -> new FlowerPotBlock(PETUNIA, settings), AbstractBlock.Settings.create()
+            new FlowerPotBlock(PETUNIA, AbstractBlock.Settings.create()
                     .mapColor(MapColor.PINK).breakInstantly().nonOpaque()
-                    .pistonBehavior(PistonBehavior.DESTROY));
+                    .pistonBehavior(PistonBehavior.DESTROY)));
 
     // LUSH MARIGOLD
     public static final Block LUSH_MARIGOLD = registerBlock("lush_marigold",
-            LushMarigoldFlowerBlock::new, AbstractBlock.Settings.create()
+            new LushMarigoldFlowerBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.YELLOW).breakInstantly().noCollision()
                     .pistonBehavior(PistonBehavior.DESTROY)
-                    .offset(AbstractBlock.OffsetType.XZ).sounds(BlockSoundGroup.GRASS));
+                    .offset(AbstractBlock.OffsetType.XZ).sounds(BlockSoundGroup.GRASS)));
     public static final Block POTTED_LUSH_MARIGOLD = registerBlock("potted_lush_marigold",
-            settings -> new FlowerPotBlock(LUSH_MARIGOLD, settings), AbstractBlock.Settings.create()
+            new FlowerPotBlock(LUSH_MARIGOLD, AbstractBlock.Settings.create()
                     .mapColor(MapColor.YELLOW).breakInstantly().nonOpaque()
-                    .pistonBehavior(PistonBehavior.DESTROY));
+                    .pistonBehavior(PistonBehavior.DESTROY)));
 
-    private static RegistryKey<Block> keyOf(String id) {
-        return RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(Caligo.MOD_ID, id));
-    }
-
-    private static Block registerBlock(String name, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
-        return Blocks.register(keyOf(name), factory, settings);
-    }
-
-    private static <T extends BlockEntity> BlockEntityType<T> registerBlockEntity(
-            String name, FabricBlockEntityTypeBuilder.Factory<T> factory, Block... blocks) {
-        return Registry.register(Registries.BLOCK_ENTITY_TYPE,Identifier.of(Caligo.MOD_ID,name),
-                FabricBlockEntityTypeBuilder.create(factory,blocks).build());
+    private static Block registerBlock(String name, Block block) {
+        return Registry.register(Registries.BLOCK,Identifier.of(Caligo.MOD_ID,name),block);
     }
 
     public static void registerModBlocks() {

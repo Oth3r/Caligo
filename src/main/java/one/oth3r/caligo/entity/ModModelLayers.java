@@ -16,7 +16,4 @@ public class ModModelLayers {
 
     public static final EntityModelLayer COPPICE =
             new EntityModelLayer(Identifier.of(Caligo.MOD_ID, "coppice"), "main");
-
-    public static final EntityModelLayer COPPICE_BABY =
-            new EntityModelLayer(Identifier.of(Caligo.MOD_ID, "coppice_baby"), "main");
 }

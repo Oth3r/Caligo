@@ -3,13 +3,10 @@ package one.oth3r.caligo.entity;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
 import one.oth3r.caligo.CustomEnum;
@@ -23,29 +20,20 @@ import one.oth3r.caligo.entity.strow.StrowModel;
 import one.oth3r.caligo.entity.strow.StrowRenderer;
 
 public class ModEntities {
-    public static final EntityType<StrowEntity> STROW = registerEntity("strow",
+    public static final EntityType<StrowEntity> STROW = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(Caligo.MOD_ID, "strow"),
             EntityType.Builder.create(StrowEntity::new, SpawnGroup.MONSTER)
-                    .dimensions(.4f,.6f));
+                    .dimensions(.4f,.6f).build());
 
-    public static final EntityType<DeepStrowEntity> DEEP_STROW = registerEntity("deep_strow",
+    public static final EntityType<DeepStrowEntity> DEEP_STROW = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(Caligo.MOD_ID, "deep_strow"),
             EntityType.Builder.create(DeepStrowEntity::new, SpawnGroup.MONSTER)
-                    .dimensions(.4f,.6f));
+                    .dimensions(.4f,.6f).build());
 
-    public static final EntityType<CoppiceEntity> COPPICE = registerEntity("coppice",
+    public static final EntityType<CoppiceEntity> COPPICE = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(Caligo.MOD_ID, "coppice"),
             EntityType.Builder.create(CoppiceEntity::new, CustomEnum.UNDERGROUND_CREATURE)
-                    .dimensions(.6f,1.1f).eyeHeight(.62f));
-
-    private static <T extends Entity> EntityType<T> registerEntity(String id, EntityType.Builder<T> type) {
-        return registerEntity(keyOf(id), type);
-    }
-
-    private static <T extends Entity> EntityType<T> registerEntity(RegistryKey<EntityType<?>> key, EntityType.Builder<T> type) {
-        return Registry.register(Registries.ENTITY_TYPE, key, type.build(key));
-    }
-
-    private static RegistryKey<EntityType<?>> keyOf(String id) {
-        return RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(Caligo.MOD_ID, id));
-    }
+                    .dimensions(.6f,1.1f).eyeHeight(.62f).build());
 
     public static void register() {
         FabricDefaultAttributeRegistry.register(ModEntities.STROW, StrowEntity.createStrowAttributes());
@@ -62,7 +50,5 @@ public class ModEntities {
 
         EntityRendererRegistry.register(ModEntities.COPPICE, CoppiceRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.COPPICE, CoppiceModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.COPPICE_BABY,
-                CoppiceModel::getBabyTexturedModelData);
     }
 }
