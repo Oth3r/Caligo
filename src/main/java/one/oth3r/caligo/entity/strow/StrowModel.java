@@ -1,14 +1,17 @@
 package one.oth3r.caligo.entity.strow;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.entity.model.SinglePartEntityModel;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
 
-public class StrowModel extends EntityModel<StrowEntityRenderState> {
+public class StrowModel<T extends StrowEntity> extends SinglePartEntityModel<T> {
+	private final ModelPart root;
 	private final ModelPart head;
 
 	public StrowModel(ModelPart root) {
-		super(root);
+		this.root = root.getChild("root");
 		this.head = root.getChild("root").getChild("body").getChild("head");
 	}
 
@@ -45,22 +48,16 @@ public class StrowModel extends EntityModel<StrowEntityRenderState> {
 	}
 
 	@Override
-	public void setAngles(StrowEntityRenderState state) {
-		super.setAngles(state);
+	public void setAngles(StrowEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.getPart().traverse().forEach(ModelPart::resetTransform);
+		this.setHeadAngles(netHeadYaw,headPitch);
 
-		this.head.pitch = state.pitch * (float) (Math.PI / 180.0);
-		this.head.yaw = state.yawDegrees * (float) (Math.PI / 180.0);
-
-		animateWalking(StrowAnimations.RUN, state.limbFrequency, state.limbAmplitudeMultiplier, 2f, 2.5f);
-		animate(state.attackAnimationState, StrowAnimations.PECK, state.age);
-
-		if (state.isAngry) {
-			// todo comment
-			if (!state.isActive) {
-				animate(state.activeAnimationState, StrowAnimations.STARE_ACTIVATE, state.age);
-			}
-
-			animate(state.activeAnimationState, StrowAnimations.IDLE_ACTIVE, state.age);
+		this.animateMovement(StrowAnimations.RUN,limbSwing,limbSwingAmount,2f,2.5f);
+		this.updateAnimation(entity.attackAnimationState, StrowAnimations.PECK, ageInTicks, 1f);
+		if (entity.isAngry()) {
+			if (!entity.isActive())
+				this.updateAnimation(entity.activeAnimationState, StrowAnimations.STARE_ACTIVATE, ageInTicks, 1f);
+			this.updateAnimation(entity.activeAnimationState, StrowAnimations.IDLE_ACTIVE, ageInTicks, 1f);
 		}
 	}
 
@@ -72,4 +69,13 @@ public class StrowModel extends EntityModel<StrowEntityRenderState> {
 		this.head.pitch = headPitch * ((float)Math.PI / 180);
 	}
 
+	@Override
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+		root.render(matrices, vertices, light, overlay, color);
+	}
+
+	@Override
+	public ModelPart getPart() {
+		return root;
+	}
 }

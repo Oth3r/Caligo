@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
 import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.datagen.ModModelProvider;
+import one.oth3r.caligo.datagen.ModRecipieProvider;
 import one.oth3r.caligo.item.ModItems;
 
 import java.util.ArrayList;

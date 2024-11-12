@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.8-SNAPSHOT'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
     id "com.modrinth.minotaur" version "2.+"
     id 'net.darkhax.curseforgegradle' version '1.1.+'
@@ -25,14 +25,6 @@ repositories {
         }
         filter { includeGroup "maven.modrinth" }
     }
-    exclusiveContent {
-        forRepository {
-            maven {
-                url "https://cursemaven.com"
-            }
-        }
-        filter {includeGroup "curse.maven"}
-    }
 }
 
 loom {
@@ -55,7 +47,7 @@ dependencies {
     // FABRIC ASM
     include modImplementation("com.github.Chocohead:Fabric-ASM:2.3")
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-    modImplementation "curse.maven:carpet-349239:${project.carpet_version}"
+    modImplementation "maven.modrinth:carpet:${carpet_version}"
 }
 
 tasks.withType(Jar).configureEach {

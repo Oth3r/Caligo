@@ -34,11 +34,11 @@ public class DeepStrowEntity extends StrowEntity {
 
     public static DefaultAttributeContainer.Builder createDeepStrowAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 8)
-                .add(EntityAttributes.MOVEMENT_SPEED, .35)
-                .add(EntityAttributes.ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.ATTACK_SPEED, 4)
-                .add(EntityAttributes.KNOCKBACK_RESISTANCE,.7);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, .35)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 4)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,.7);
     }
 
     @Override
@@ -54,11 +54,12 @@ public class DeepStrowEntity extends StrowEntity {
     }
 
     @Override
-    protected void mobTick(ServerWorld serverWorld) {
-        super.mobTick(serverWorld);
+    protected void mobTick() {
+        super.mobTick();
+        ServerWorld world = (ServerWorld)this.getWorld();
 
         if (this.isActive()) {
-            caw(serverWorld,this.getPos(),this,25);
+            caw(world,this.getPos(),this,25);
         }
     }
 
@@ -83,22 +84,22 @@ public class DeepStrowEntity extends StrowEntity {
     }
 
     @Override
-    public boolean damage(ServerWorld world, DamageSource source, float amount) {
+    public boolean damage(DamageSource source, float amount) {
         // if the attacker isnt a living entity, dont get angry
-        if (!(source.getAttacker() instanceof LivingEntity)) return super.damage(world,source,amount);
+        if (!(source.getAttacker() instanceof LivingEntity)) return super.damage(source,amount);
 
         LivingEntity entity = (LivingEntity) source.getAttacker();
 
         // if player is in creative or spectator dont get mad at them
         if (entity instanceof PlayerEntity player) {
-            if (player.isCreative() || player.isSpectator()) return super.damage(world,source,amount);
+            if (player.isCreative() || player.isSpectator()) return super.damage(source,amount);
         }
 
         this.setTarget(entity);
         this.setAngryAt(entity.getUuid());
         this.setActive(true);
 
-        return super.damage(world, source, amount);
+        return super.damage(source, amount);
     }
 
     static class AttackGoal extends Goal {
@@ -166,7 +167,7 @@ public class DeepStrowEntity extends StrowEntity {
                     this.ticksToNextAttack = 6;
                     this.deepStrow.getLookControl().lookAt(pEnemy);
                     this.deepStrow.setAttacking(true);
-                    this.deepStrow.tryAttack(getServerWorld(this.deepStrow), pEnemy);
+                    this.deepStrow.tryAttack(pEnemy);
                 }
                 // if cant attack turn off attacking animation
                 else this.deepStrow.setAttacking(false);

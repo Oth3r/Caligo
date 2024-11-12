@@ -52,9 +52,11 @@ public class StrowEntity extends HostileEntity implements Angerable {
     @Nullable
     private UUID angryAt;
     private LivingEntity target;
+
     public StrowEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
     }
+
     // INIT THINGS
     @Override
     protected void initGoals() {
@@ -115,6 +117,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
         }
         if (!this.isAngry() && this.cawTime > 0) this.cawTime--;
     }
+
     @Override
     protected void mobTick() {
         ServerWorld serverWorld = (ServerWorld)this.getWorld();
@@ -138,15 +141,18 @@ public class StrowEntity extends HostileEntity implements Angerable {
     @Override
     public boolean damage(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source) || source.isIn(DamageTypeTags.IS_PROJECTILE)) {
-            return false; //todo just do this when blocking an attack
+            return false;
         }
+
         if (isFullDamage(source)) {
             Entity attacker = source.getAttacker();
+
             if (attacker instanceof PlayerEntity player) {
                 this.takeKnockback(1.8F, player.getX() - this.getX(), player.getZ() - this.getZ());
             }
             return super.damage(source,amount);
         }
+
         // only do *.1 of the original damage if not a pickaxe
         return super.damage(source, (float) (amount*.1));
     }
@@ -326,6 +332,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
             this.bird = bird;
             this.setControls(EnumSet.of(Control.JUMP, Control.MOVE, Control.LOOK));
         }
+
         @Override
         public boolean canStart() {
             this.target = this.bird.getTarget();
@@ -340,16 +347,19 @@ public class StrowEntity extends HostileEntity implements Angerable {
 
             return !this.bird.isPlayerGlancing((PlayerEntity)this.target);
         }
+
         @Override
         public void start() {
             this.bird.getNavigation().stop();
             this.bird.setActive(true);
             this.ticksToNextAttack = 0;
         }
+
         @Override
         public boolean shouldContinue() {
             return !this.bird.isPlayerGlancing((PlayerEntity)this.target) && this.bird.isAngry();
         }
+
         @Override
         public void stop() {
             super.stop();
@@ -357,12 +367,14 @@ public class StrowEntity extends HostileEntity implements Angerable {
             this.bird.setActive(false);
             this.bird.setAttacking(false);
         }
+
         @Override
         public void tick() {
             this.bird.getNavigation().startMovingAlong(
                     this.bird.getNavigation().findPathTo(this.target.getX(),this.target.getY(),this.target.getZ(),0),1);
             attack(this.target);
         }
+
         private void attack(LivingEntity pEnemy) {
             if (this.ticksToNextAttack>0) --this.ticksToNextAttack;
             if (isInDistance(pEnemy)) {
@@ -375,6 +387,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
                 // set attack to false to update the animation (it doesnt work if u get rid of it)
             }
         }
+
         private boolean isInDistance(LivingEntity pEnemy) {
             return this.bird.distanceTo(pEnemy) <= 1f;
         }

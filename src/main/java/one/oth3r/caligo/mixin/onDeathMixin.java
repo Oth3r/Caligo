@@ -46,7 +46,7 @@ public abstract class onDeathMixin extends PlayerEntity {
 
         // exit if not the strow effects
         if (!(damageSource.getType().msgId().equalsIgnoreCase("caligo_petrified") || damageSource.getSource() instanceof StrowEntity)) return;
-        ServerWorld world = this.getServerWorld();
+        World world = this.getServerWorld();
 
         // get the statue block placement
         BlockPos pos = Utl.statue.getPlacement(world,this.getBlockPos());

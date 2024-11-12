@@ -38,7 +38,7 @@ public class StrowProviders {
                         .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1F))
                                 .with(ItemEntry.builder(ModItems.STROW_ESSENCE)
                                         .apply(SetCountLootFunction.builder(BinomialLootNumberProvider.create(1, 0.65F)))
-                                        .apply(new EnchantedCountIncreaseLootFunction.Builder(regLookup.get().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.LOOTING),UniformLootNumberProvider.create(0,1)))))
+                                        .apply(new EnchantedCountIncreaseLootFunction.Builder(regLookup.get().getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.LOOTING),UniformLootNumberProvider.create(0,1)))))
                         .randomSequenceId(ModLootTables.STROW.getRegistry()));
 
 
@@ -46,7 +46,7 @@ public class StrowProviders {
                         .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1F))
                                 .with(ItemEntry.builder(ModItems.STROW_ESSENCE)
                                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
-                                        .apply(new EnchantedCountIncreaseLootFunction.Builder(regLookup.get().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.LOOTING),UniformLootNumberProvider.create(0,1)))))
+                                        .apply(new EnchantedCountIncreaseLootFunction.Builder(regLookup.get().getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.LOOTING),UniformLootNumberProvider.create(0,1)))))
                         .randomSequenceId(ModLootTables.DEEP_STROW.getRegistry()));
 
             } catch (Exception e) {

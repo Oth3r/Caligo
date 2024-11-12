@@ -3,7 +3,6 @@ package one.oth3r.caligo.mixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.effect.ModEffects;
@@ -34,7 +33,7 @@ public abstract class DrawHeartMixin {
                 if (half) texture = Identifier.of("hud/heart/petrified_half");
             }
 
-            context.drawGuiTexture(RenderLayer::getGuiTextured, texture, x, y, 9, 9);
+            context.drawGuiTexture(texture, x, y, 9, 9);
             ci.cancel();
         }
     }
