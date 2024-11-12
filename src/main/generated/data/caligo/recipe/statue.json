@@ -2,8 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "E": "caligo:strow_essence",
-    "S": "minecraft:stone"
+    "E": {
+      "item": "caligo:strow_essence"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
   },
   "pattern": [
     " E ",

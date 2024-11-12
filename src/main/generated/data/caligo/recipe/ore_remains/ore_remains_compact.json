@@ -2,7 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": "caligo:ore_remains"
+    "#": {
+      "item": "caligo:ore_remains"
+    }
   },
   "pattern": [
     "###",

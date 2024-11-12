@@ -2,12 +2,24 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    "caligo:small_ore_remains",
-    "caligo:small_ore_remains",
-    "caligo:small_ore_remains",
-    "caligo:small_ore_remains",
-    "caligo:small_ore_remains",
-    "caligo:small_ore_remains"
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    }
   ],
   "result": {
     "count": 1,

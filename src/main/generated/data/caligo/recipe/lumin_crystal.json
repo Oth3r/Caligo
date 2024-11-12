@@ -2,9 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "A": "minecraft:amethyst_shard",
-    "E": "caligo:strow_essence",
-    "S": "minecraft:stone"
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "E": {
+      "item": "caligo:strow_essence"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
   },
   "pattern": [
     " A ",
