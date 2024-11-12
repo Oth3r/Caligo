@@ -7,13 +7,15 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.*;
 import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
 import one.oth3r.caligo.block.ModBlocks;
-import one.oth3r.caligo.datagen.ModModelProvider;
-import one.oth3r.caligo.datagen.ModRecipieProvider;
+import one.oth3r.caligo.generation.data.providers.ModModelProvider;
 import one.oth3r.caligo.item.ModItems;
 
 import java.util.ArrayList;
@@ -96,9 +98,15 @@ public class LushBiomeProviders {
 
         @Override
         public void generate(RecipeExporter exporter) {
-            ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.LUSH_MARIGOLD,1,Items.YELLOW_DYE,1, "yellow_dye");
-            ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.DRIPLEAF_VINES,1,Items.GREEN_DYE,1, "green_dye");
-            ModRecipieProvider.provideShapelessRecipe(exporter,ModItems.PETUNIA,1,Items.MAGENTA_DYE,1, "magenta_dye");
+            provideShapelessRecipe(exporter,ModItems.LUSH_MARIGOLD,1,Items.YELLOW_DYE,1, "yellow_dye");
+            provideShapelessRecipe(exporter,ModItems.DRIPLEAF_VINES,1,Items.GREEN_DYE,1, "green_dye");
+            provideShapelessRecipe(exporter,ModItems.PETUNIA,1,Items.MAGENTA_DYE,1, "magenta_dye");
+        }
+
+        public static void provideShapelessRecipe(RecipeExporter exporter, ItemConvertible input, int iAmt, ItemConvertible output, int oAmt, String group) {
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC,output, oAmt).input(input, iAmt)
+                    .criterion(hasItem(input),conditionsFromItem(input)).group(group)
+                    .offerTo(exporter);
         }
 
         @Override
