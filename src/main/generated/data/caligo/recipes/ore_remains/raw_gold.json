@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "caligo:ore_remains"
+    },
+    {
+      "item": "caligo:ore_remains"
+    },
+    {
+      "item": "caligo:ore_remains"
+    },
+    {
+      "item": "caligo:ore_remains"
+    },
+    {
+      "item": "caligo:ore_remains"
+    },
+    {
+      "item": "caligo:ore_remains"
+    }
+  ],
+  "result": {
+    "item": "minecraft:raw_gold"
+  }
+}

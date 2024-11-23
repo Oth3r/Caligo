@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    },
+    {
+      "item": "caligo:small_ore_remains"
+    }
+  ],
+  "result": {
+    "item": "minecraft:coal"
+  }
+}

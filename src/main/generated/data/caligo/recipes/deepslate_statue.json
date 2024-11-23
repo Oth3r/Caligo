@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "E": {
+      "item": "caligo:strow_essence"
+    },
+    "S": {
+      "item": "minecraft:deepslate"
+    }
+  },
+  "pattern": [
+    " E ",
+    "SSS",
+    " S "
+  ],
+  "result": {
+    "item": "caligo:deepslate_statue"
+  }
+}

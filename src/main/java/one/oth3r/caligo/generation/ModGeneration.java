@@ -1,6 +1,5 @@
 package one.oth3r.caligo.generation;
 
-import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.entity.SpawnGroup;
@@ -8,6 +7,7 @@ import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
+import one.oth3r.caligo.CustomEnum;
 import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.entity.coppice.CoppiceEntity;
 import one.oth3r.caligo.entity.strow.deep.DeepStrowEntity;
@@ -32,7 +32,7 @@ public class ModGeneration {
         SpawnRestriction.register(ModEntities.DEEP_STROW, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DeepStrowEntity::canSpawn);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.LUSH_CAVES), ClassTinkerers.getEnum(SpawnGroup.class, "UNDERGROUND_CREATURE"),
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.LUSH_CAVES), CustomEnum.UNDERGROUND_CREATURE,
                 ModEntities.COPPICE, 100, 1, 1);
         SpawnRestriction.register(ModEntities.COPPICE, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CoppiceEntity::canSpawn);

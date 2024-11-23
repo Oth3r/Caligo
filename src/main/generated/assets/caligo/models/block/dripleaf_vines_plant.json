@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "caligo:block/dripleaf_vines_plant"
+  }
+}

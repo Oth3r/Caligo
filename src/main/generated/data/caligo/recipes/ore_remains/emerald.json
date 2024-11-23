@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "caligo:large_ore_remains"
+    },
+    {
+      "item": "caligo:large_ore_remains"
+    },
+    {
+      "item": "caligo:large_ore_remains"
+    },
+    {
+      "item": "caligo:large_ore_remains"
+    },
+    {
+      "item": "caligo:large_ore_remains"
+    },
+    {
+      "item": "caligo:large_ore_remains"
+    }
+  ],
+  "result": {
+    "item": "minecraft:emerald"
+  }
+}
