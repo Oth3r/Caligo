@@ -34,14 +34,15 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
       "has_strow_essence",
-      "has_amethyst_shard"
+      "has_amethyst_shard",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "caligo:lumin_crystal"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "caligo:large_ore_remains"
-  }
+  },
+  "show_notification": true
 }

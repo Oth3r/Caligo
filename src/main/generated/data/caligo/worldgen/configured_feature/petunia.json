@@ -97,7 +97,7 @@
               },
               {
                 "type": "minecraft:matching_blocks",
-                "blocks": "minecraft:short_grass"
+                "blocks": "minecraft:grass"
               }
             ]
           }

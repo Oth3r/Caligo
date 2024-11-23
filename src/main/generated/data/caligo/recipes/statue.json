@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "caligo:statue"
-  }
+  },
+  "show_notification": true
 }

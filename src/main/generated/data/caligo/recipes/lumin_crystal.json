@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "caligo:lumin_crystal"
-  }
+  },
+  "show_notification": true
 }

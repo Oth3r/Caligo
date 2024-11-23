@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_lush_marigold"
+      "has_lush_marigold",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "minecraft:yellow_dye"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_petunia"
+      "has_petunia",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "minecraft:magenta_dye"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

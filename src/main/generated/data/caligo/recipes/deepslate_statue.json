@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "caligo:deepslate_statue"
-  }
+  },
+  "show_notification": true
 }

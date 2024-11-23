@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_large_ore_remains"
+      "has_large_ore_remains",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "minecraft:ore_remains/diamond"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

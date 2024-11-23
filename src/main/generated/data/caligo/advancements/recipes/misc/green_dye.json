@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_dripleaf_vines"
+      "has_dripleaf_vines",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "minecraft:green_dye"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

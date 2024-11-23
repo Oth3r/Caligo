@@ -22,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_strow_essence"
+      "has_strow_essence",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "caligo:statue"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }
