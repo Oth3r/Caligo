@@ -3,6 +3,8 @@ package one.oth3r.caligo.entity;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
@@ -22,18 +24,18 @@ import one.oth3r.caligo.entity.strow.StrowRenderer;
 public class ModEntities {
     public static final EntityType<StrowEntity> STROW = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "strow"),
-            EntityType.Builder.create(StrowEntity::new, SpawnGroup.MONSTER)
-                    .setDimensions(.4f,.6f).build());
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, StrowEntity::new)
+                    .dimensions(EntityDimensions.fixed(.4f,.6f)).build());
 
     public static final EntityType<DeepStrowEntity> DEEP_STROW = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "deep_strow"),
-            EntityType.Builder.create(DeepStrowEntity::new, SpawnGroup.MONSTER)
-                    .setDimensions(.4f,.6f).build());
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DeepStrowEntity::new)
+                    .dimensions(EntityDimensions.fixed(.4f,.6f)).build());
 
     public static final EntityType<CoppiceEntity> COPPICE = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "coppice"),
-            EntityType.Builder.create(CoppiceEntity::new, CustomEnum.UNDERGROUND_CREATURE)
-                    .setDimensions(.6f,1.1f).build());
+            FabricEntityTypeBuilder.create(CustomEnum.UNDERGROUND_CREATURE, CoppiceEntity::new)
+                    .dimensions(EntityDimensions.fixed(.6f,1.1f)).build());
 
     public static void register() {
         FabricDefaultAttributeRegistry.register(ModEntities.STROW, StrowEntity.createStrowAttributes());
