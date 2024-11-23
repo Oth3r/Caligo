@@ -31,5 +31,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "minecraft:loot_table"
+  "random_sequence": "caligo:entities/deep_strow"
 }

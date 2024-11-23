@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "caligo:dripleaf_vines"
+            "items": [
+              "caligo:dripleaf_vines"
+            ]
           }
         ]
       },

@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "caligo:lush_marigold"
+            "items": [
+              "caligo:lush_marigold"
+            ]
           }
         ]
       },

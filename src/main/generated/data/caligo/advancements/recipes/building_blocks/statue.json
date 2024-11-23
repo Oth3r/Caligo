@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "caligo:strow_essence"
+            "items": [
+              "caligo:strow_essence"
+            ]
           }
         ]
       },

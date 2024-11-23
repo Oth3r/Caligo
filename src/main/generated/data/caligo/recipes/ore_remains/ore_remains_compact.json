@@ -12,7 +12,6 @@
     "###"
   ],
   "result": {
-    "count": 1,
-    "id": "caligo:large_ore_remains"
+    "item": "caligo:large_ore_remains"
   }
 }

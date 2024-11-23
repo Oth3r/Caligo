@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "caligo:small_ore_remains"
+            "items": [
+              "caligo:small_ore_remains"
+            ]
           }
         ]
       },

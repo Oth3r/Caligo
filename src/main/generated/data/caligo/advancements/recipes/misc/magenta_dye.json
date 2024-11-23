@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "caligo:petunia"
+            "items": [
+              "caligo:petunia"
+            ]
           }
         ]
       },
