@@ -1,6 +1,5 @@
 package one.oth3r.caligo.entity;
 
-import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -10,6 +9,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
+import one.oth3r.caligo.CustomEnum;
 import one.oth3r.caligo.entity.strow.deep.DeepStrowEntity;
 import one.oth3r.caligo.entity.strow.deep.DeepStrowRenderer;
 import one.oth3r.caligo.entity.coppice.CoppiceEntity;
@@ -23,17 +23,17 @@ public class ModEntities {
     public static final EntityType<StrowEntity> STROW = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "strow"),
             EntityType.Builder.create(StrowEntity::new, SpawnGroup.MONSTER)
-                    .setDimensions(.4f,.6f).build());
+                    .dimensions(.4f,.6f).build());
 
     public static final EntityType<DeepStrowEntity> DEEP_STROW = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "deep_strow"),
             EntityType.Builder.create(DeepStrowEntity::new, SpawnGroup.MONSTER)
-                    .setDimensions(.4f,.6f).build());
+                    .dimensions(.4f,.6f).build());
 
     public static final EntityType<CoppiceEntity> COPPICE = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "coppice"),
-            EntityType.Builder.create(CoppiceEntity::new, ClassTinkerers.getEnum(SpawnGroup.class, "UNDERGROUND_CREATURE"))
-                    .setDimensions(.6f,1.1f).build());
+            EntityType.Builder.create(CoppiceEntity::new, CustomEnum.UNDERGROUND_CREATURE)
+                    .dimensions(.6f,1.1f).eyeHeight(.62f).build());
 
     public static void register() {
         FabricDefaultAttributeRegistry.register(ModEntities.STROW, StrowEntity.createStrowAttributes());

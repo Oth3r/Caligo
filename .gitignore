@@ -3,3 +3,4 @@
 /build/
 /.env
 /.idea/
+/src/main/generated/.cache/
