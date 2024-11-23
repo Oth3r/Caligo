@@ -105,7 +105,7 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 	}
 
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 		ImmutableList<ModelPart>
 				head = ImmutableList.of(this.head),
 				body = ImmutableList.of(this.body,this.root.getChild("left_leg"),root.getChild("right_leg"));
@@ -115,18 +115,18 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 			float f = 0.7f;
 			matrices.scale(-f, f, -f);
 			matrices.translate(0,2.289,0);
-			head.forEach(modelPart -> modelPart.render(matrices, vertices, light, overlay, color));
+			head.forEach(modelPart -> modelPart.render(matrices, vertices, light, overlay, red, green, blue, alpha));
 			matrices.pop();
 
 			matrices.push();
 			f = 0.5f;
 			matrices.scale(-f, f, -f);
 			matrices.translate(0,3,0);
-			body.forEach(modelPart -> modelPart.render(matrices, vertices, light, overlay, color));
+			body.forEach(modelPart -> modelPart.render(matrices, vertices, light, overlay, red, green, blue, alpha));
 			matrices.pop();
 		}
 		else {
-			root.render(matrices, vertices, light, overlay, color);
+			root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 		}
 	}
 
