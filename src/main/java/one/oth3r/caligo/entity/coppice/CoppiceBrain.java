@@ -75,7 +75,7 @@ public class CoppiceBrain {
 
     private static void addIdleActivities(Brain<CoppiceEntity> brain) {
         brain.setTaskList(Activity.IDLE, ImmutableList.of(
-                Pair.of(0, new BreedTask(ModEntities.COPPICE,WALKING_SPEED,0)),
+                Pair.of(0, new BreedTask(ModEntities.COPPICE,WALKING_SPEED)),
                 Pair.of(1, new TemptTask((coppice) -> WALKING_SPEED, (entity) -> entity.isBaby() ? 0.5 : 1)),
                 Pair.of(2, WalkToNearestPlayerHoldingWantedItemTask.create(CoppiceBrain::hasPlayerHoldingWantedItemNearby, WALKING_SPEED, true, 14)),
                 Pair.of(3, makeRandomLookTask()), Pair.of(4, makeRandomWanderTask())

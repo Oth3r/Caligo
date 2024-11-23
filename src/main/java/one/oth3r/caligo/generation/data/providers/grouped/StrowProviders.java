@@ -14,6 +14,7 @@ import net.minecraft.loot.function.LootingEnchantLootFunction;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.*;
 import net.minecraft.registry.*;
+import net.minecraft.util.Identifier;
 import one.oth3r.caligo.generation.data.providers.ModModelProvider;
 import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.loot_table.ModLootTables;
@@ -22,23 +23,21 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
 public class StrowProviders {
-    private static CompletableFuture<RegistryWrapper.WrapperLookup> regLookup;
 
     public static class EntityLootTable extends SimpleFabricLootTableProvider {
         public EntityLootTable(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(output, registryLookup, LootContextTypes.ENTITY);
-            regLookup = registryLookup;
+            super(output, LootContextTypes.ENTITY);
         }
 
         @Override
-        public void accept(RegistryWrapper.WrapperLookup registryLookup, BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
+        public void accept(BiConsumer<Identifier, LootTable.Builder> lootTableBiConsumer) {
             try {
                 lootTableBiConsumer.accept(ModLootTables.STROW, LootTable.builder()
                         .pool(LootPool.builder().rolls(ConstantLootNumberProvider.create(1F))
                                 .with(ItemEntry.builder(ModItems.STROW_ESSENCE)
                                         .apply(SetCountLootFunction.builder(BinomialLootNumberProvider.create(1, 0.65F)))
                                         .apply(new LootingEnchantLootFunction.Builder(UniformLootNumberProvider.create(0,1)))))
-                        .randomSequenceId(ModLootTables.STROW.getRegistry()));
+                        .randomSequenceId(ModLootTables.STROW));
 
 
                 lootTableBiConsumer.accept(ModLootTables.DEEP_STROW, LootTable.builder()
@@ -46,7 +45,7 @@ public class StrowProviders {
                                 .with(ItemEntry.builder(ModItems.STROW_ESSENCE)
                                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2)))
                                         .apply(new LootingEnchantLootFunction.Builder(UniformLootNumberProvider.create(0,1)))))
-                        .randomSequenceId(ModLootTables.DEEP_STROW.getRegistry()));
+                        .randomSequenceId(ModLootTables.DEEP_STROW));
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -57,6 +56,7 @@ public class StrowProviders {
         public String getName() {
             return "Strow "+super.getName();
         }
+
     }
 
     public static class Model extends FabricModelProvider {

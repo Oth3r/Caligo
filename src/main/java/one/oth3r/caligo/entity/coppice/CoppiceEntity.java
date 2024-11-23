@@ -13,6 +13,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.*;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.StringIdentifiable;
@@ -50,9 +51,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
 
 
     private static final EntityDimensions BABY_BASE_DIMENSIONS = ModEntities.COPPICE
-            .getDimensions()
-            .withAttachments(EntityAttachments.builder().add(EntityAttachmentType.PASSENGER, 0.0F, ModEntities.COPPICE.getHeight(), -0.25F))
-            .scaled(0.65F);
+            .getDimensions().scaled(0.65F);
 
     private final SimpleInventory inventory = new SimpleInventory(1);
 
@@ -94,18 +93,18 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(EATING,false);
-        builder.add(PANICKING, false); // todo see if the entity render data in 1.21 fixes these issues
-        builder.add(SOUND_COOLDOWN, 0);
-        builder.add(VARIANT, 0);
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(EATING,false);
+        this.dataTracker.startTracking(PANICKING, false); // todo see if the entity render data in 1.21 fixes these issues
+        this.dataTracker.startTracking(SOUND_COOLDOWN, 0);
+        this.dataTracker.startTracking(VARIANT, 0);
     }
 
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setVariant(Variant.getRandom());
-        return super.initialize(world, difficulty, spawnReason, entityData);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
     // ANIMATION THINGS
@@ -223,8 +222,8 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     }
 
     @Override
-    protected EntityDimensions getBaseDimensions(EntityPose pose) {
-        return isBaby() ? BABY_BASE_DIMENSIONS : super.getBaseDimensions(pose);
+    public EntityDimensions getDimensions(EntityPose pose) {
+        return isBaby() ? BABY_BASE_DIMENSIONS : super.getDimensions(pose);
     }
 
     @Override

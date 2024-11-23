@@ -23,17 +23,17 @@ public class ModEntities {
     public static final EntityType<StrowEntity> STROW = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "strow"),
             EntityType.Builder.create(StrowEntity::new, SpawnGroup.MONSTER)
-                    .dimensions(.4f,.6f).build());
+                    .setDimensions(.4f,.6f).build());
 
     public static final EntityType<DeepStrowEntity> DEEP_STROW = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "deep_strow"),
             EntityType.Builder.create(DeepStrowEntity::new, SpawnGroup.MONSTER)
-                    .dimensions(.4f,.6f).build());
+                    .setDimensions(.4f,.6f).build());
 
     public static final EntityType<CoppiceEntity> COPPICE = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(Caligo.MOD_ID, "coppice"),
             EntityType.Builder.create(CoppiceEntity::new, CustomEnum.UNDERGROUND_CREATURE)
-                    .dimensions(.6f,1.1f).eyeHeight(.62f).build());
+                    .setDimensions(.6f,1.1f).build());
 
     public static void register() {
         FabricDefaultAttributeRegistry.register(ModEntities.STROW, StrowEntity.createStrowAttributes());

@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
@@ -17,6 +17,7 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.util.Identifier;
 import one.oth3r.caligo.generation.data.providers.ModModelProvider;
 import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.loot_table.ModLootTables;
@@ -36,7 +37,7 @@ public class CoppiceProviders {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
             getOrCreateTagBuilder(ModItemTags.COPPICE_LOW_TIER)
-                    .addOptionalTag(ConventionalItemTags.RAW_MATERIALS)
+                    .addOptionalTag(ConventionalItemTags.RAW_ORES)
                     .addOptionalTag(ItemTags.COALS);
 
             getOrCreateTagBuilder(ModItemTags.COPPICE_HIGH_TIER)
@@ -74,28 +75,30 @@ public class CoppiceProviders {
 
     public static class EntityLootTable extends SimpleFabricLootTableProvider {
         public EntityLootTable(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(output, registryLookup, LootContextTypes.ENTITY);
+            super(output, LootContextTypes.ENTITY);
         }
 
         @Override
-        public void accept(RegistryWrapper.WrapperLookup registryLookup, BiConsumer<RegistryKey<LootTable>, LootTable.Builder> lootTableBiConsumer) {
+        public void accept(BiConsumer<Identifier, LootTable.Builder> lootTableBiConsumer) {
             lootTableBiConsumer.accept(ModLootTables.COPPICE_RAW_REMAINS, LootTable.builder()
                     .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(1,2))
                             .with(ItemEntry.builder(ModItems.SMALL_ORE_REMAINS).weight(2))
                             .with(ItemEntry.builder(ModItems.ORE_REMAINS)))
-                    .randomSequenceId(ModLootTables.COPPICE_RAW_REMAINS.getRegistry()));
+                    .randomSequenceId(ModLootTables.COPPICE_RAW_REMAINS));
 
             lootTableBiConsumer.accept(ModLootTables.COPPICE_GEM_REMAINS, LootTable.builder()
                     .pool(LootPool.builder().rolls(UniformLootNumberProvider.create(1,2))
                             .with(ItemEntry.builder(ModItems.ORE_REMAINS).weight(2))
                             .with(ItemEntry.builder(ModItems.LARGE_ORE_REMAINS)))
-                    .randomSequenceId(ModLootTables.COPPICE_GEM_REMAINS.getRegistry()));
+                    .randomSequenceId(ModLootTables.COPPICE_GEM_REMAINS));
         }
 
         @Override
         public String getName() {
             return "Coppice "+super.getName();
         }
+
+
     }
 
     public static class Model extends FabricModelProvider {
