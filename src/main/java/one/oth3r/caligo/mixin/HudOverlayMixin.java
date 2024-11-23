@@ -67,6 +67,8 @@ public abstract class HudOverlayMixin {
             if (playerSpeed(player) == 0) {
                 if (notMovingTimer < MAX) notMovingTimer += 0.2;
             } else if (notMovingTimer > 0) notMovingTimer -= 0.4;
+            // make sure the timer doesn't go below 0
+            if (notMovingTimer < 0) notMovingTimer = 0.0;
 
             // render the overlay
             if (player.getStatusEffect(ModEffects.getEffect(ModEffects.PETRIFIED)).getAmplifier() > 0) {

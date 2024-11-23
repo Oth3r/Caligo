@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "E": {
+      "item": "caligo:strow_essence"
+    },
+    "S": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    " A ",
+    "SES",
+    "SAS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "caligo:lumin_crystal"
+  }
+}

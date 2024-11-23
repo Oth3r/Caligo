@@ -1,40 +1,22 @@
-# The Lush Update
-It's been a while, but we're back with another content update!
-* added the Caligo creative tab
-* added the coppice
-* added an underground creatures spawngroup
-* added the lush marigold
-* added the petunia
-* added dripleaf vines
-* added ore remains item (small, normal, large)
-  * used to craft ores when enough are put together in the crafting table
-* added waterlogging support to statue blocks
-* fixed deepslate statue block not showing the correct breaking textures
-* fixed strow being effected by the petrified effect
-* petrified effect rework (more damage at higher levels)
-## The Coppice
-![coppice](https://oth3r.github.io/images/mods/caligo/0.2.0/coppice.png)
-\
-*nom nom nom...* 
-\
-Play to find out more about the coppice!
+# Lush Addons Patch
 
-## The Lush Marigold
-![lush marigold](https://oth3r.github.io/images/mods/caligo/0.2.0/lush_marigold.png)
-\
-Found in the lush caves, the lush marigold can be seen growing in patches. They can be placed on clay and water, along with the normal flower placements.
+## Coppice Changes
+### Breeding
+* added coppice babies and breeding!
+* baby coppices can still cause their mischief, but they can only drop small / normal ore remains
+* coppices are tempted and bread by anything dripleaf, including the new dripleaf vines from the last update
 
-## The Petunia
-![petunia](https://oth3r.github.io/images/mods/caligo/0.2.0/petunia.png)
-\
-Another flower found in the lush caves, they can be placed on top of each other or bone mealed to grow taller. 
+### Variants
+* added different coppice variants
+* each variant has its own rarity
 
-## Dripleaf Vines
-![dripleaf vines](https://oth3r.github.io/images/mods/caligo/0.2.0/dripleaf_vines.png)
-\
-A variant of the Dripleaf, they grow from the ceiling and add variation to the lush caves! They can also be crafted into green dye.
+### Other
+* rewrote the idle animation code to be more fluid and consistent
+* increased the speed of the coppice when going to a dropped ore
+* tweaked coppice despawning, they should now stay in the world longer
+* tweaked coppice animations
 
-## Ore Remains
-![ore remains](https://oth3r.github.io/images/mods/caligo/0.2.0/ore_remains.gif)\
-\
-A new set of items! It is used to craft different ores when combined.
+## Other Changes
+* added potted variants to the **Petunia** and the **Lush Marigold**
+* added lush flower dye crafting recipes to the correct crafting group for the recipe book
+* added a failsafe to the hud overlay code
