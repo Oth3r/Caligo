@@ -107,6 +107,18 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Variant", this.getVariant().getId());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setVariant(Variant.byId(nbt.getInt("Variant")));
+    }
+
     // ANIMATION THINGS
     private void setupAnimationStates() {
         // loop the idle animation
