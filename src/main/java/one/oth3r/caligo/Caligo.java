@@ -9,6 +9,7 @@ import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.effect.ModEffects;
 import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.generation.ModGeneration;
+import one.oth3r.caligo.generation.world.features.ModFeatures;
 import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.itemgroup.ModItemGroups;
 import one.oth3r.caligo.potion.ModPotions;
@@ -32,6 +33,7 @@ public class Caligo implements ModInitializer {
         ModPotions.register();
         ModGeneration.registerAll();
         ModItemGroups.register();
+        ModFeatures.register();
 
         // load the FabricASM changes to crash the game if something is wrong (mod compatibility ect)
         DamageEffects dmgEffect = ClassTinkerers.getEnum(DamageEffects.class, "PETRIFICATION");

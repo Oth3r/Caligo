@@ -28,6 +28,9 @@
     ],
     "mm:early_risers": [
       "one.oth3r.caligo.mixin.EarlyRiser"
+    ],
+    "terrablender": [
+      "one.oth3r.caligo.generation.world.biome.ModTerrablenderAPI"
     ]
   },
   "depends": {

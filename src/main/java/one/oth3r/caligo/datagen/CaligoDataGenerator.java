@@ -4,9 +4,11 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
+import one.oth3r.caligo.generation.world.biome.ModBiomes;
 import one.oth3r.caligo.datagen.custom.*;
-import one.oth3r.caligo.generation.ModConfiguredFeatures;
-import one.oth3r.caligo.generation.ModPlacedFeatures;
+import one.oth3r.caligo.generation.world.ModCarvers;
+import one.oth3r.caligo.generation.world.features.ModConfiguredFeatures;
+import one.oth3r.caligo.generation.world.features.ModPlacedFeatures;
 
 public class CaligoDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -51,12 +53,18 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
         // ORE REMAINS
         pack.addProvider(OreRemainsProvider.Recipe::new);
         pack.addProvider(OreRemainsProvider.Model::new);
+
+        // ICE CAVES
+        pack.addProvider(IceCavesProviders.Model::new);
+        pack.addProvider(IceCavesProviders.BlockTag::new);
     }
 
     @Override
     public void buildRegistry(RegistryBuilder registryBuilder) {
         registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModConfiguredFeatures::boostrap);
         registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModPlacedFeatures::boostrap);
+        registryBuilder.addRegistry(RegistryKeys.BIOME, ModBiomes::boostrap);
+        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_CARVER, ModCarvers::bootstrap);
     }
 }
 

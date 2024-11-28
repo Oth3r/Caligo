@@ -1,4 +1,4 @@
-package one.oth3r.caligo.generation;
+package one.oth3r.caligo.generation.world.features;
 
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
@@ -23,7 +23,17 @@ public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> LUSH_MARIGOLD_PLACED_KEY = registerKey("lush_marigold");
     public static final RegistryKey<PlacedFeature> PETUNIA_PLACED_KEY = registerKey("petunia");
 
+    public static final RegistryKey<PlacedFeature> ICE_CAVES_SNOW_FLOOR = registerKey("ice_caves_snow_floor");
+    public static final RegistryKey<PlacedFeature> ICE_CAVES_COMPACTED_SNOW_FLOOR = registerKey("ice_caves_compacted_snow_floor");
+    public static final RegistryKey<PlacedFeature> ICE_CAVES_LAVA_PLACED_KEY = registerKey("ice_caves_lava");
+    public static final RegistryKey<PlacedFeature> ICE_CAVES_WATER_PLACED_KEY = registerKey("ice_caves_water");
+
     public static void boostrap(Registerable<PlacedFeature> context) {
+        lush_caves(context);
+        ice_caves(context);
+    }
+
+    public static void lush_caves(Registerable<PlacedFeature> context) {
         var configuredFeatureRegistryEntryLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
 
         register(context, DRIPLEAF_VINES_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.DRIPLEAF_VINES_KEY),
@@ -67,6 +77,44 @@ public class ModPlacedFeatures {
                         RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(1)),
                         BiomePlacementModifier.of()
                 ));
+    }
+
+    public static void ice_caves(Registerable<PlacedFeature> context) {
+        var configuredFeatureRegistryEntryLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
+
+        register(context, ICE_CAVES_SNOW_FLOOR, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.ICE_CAVES_SNOW_FLOOR),
+                Arrays.asList(
+                        CountPlacementModifier.of(64),
+                        SquarePlacementModifier.of(),
+                        HeightRangePlacementModifier.of(
+                                UniformHeightProvider.create(YOffset.aboveBottom(0),YOffset.getTop())
+                        ),
+                        EnvironmentScanPlacementModifier.of(
+                                Direction.DOWN, BlockPredicate.solid(), BlockPredicate.IS_AIR, 12
+                        ),
+                        RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
+                        BiomePlacementModifier.of()
+                ));
+
+        register(context, ICE_CAVES_COMPACTED_SNOW_FLOOR, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.ICE_CAVES_COMPACTED_SNOW_FLOOR),
+                Arrays.asList(
+                        CountPlacementModifier.of(16),
+                        SquarePlacementModifier.of(),
+                        HeightRangePlacementModifier.of(
+                                UniformHeightProvider.create(YOffset.aboveBottom(0),YOffset.getTop())
+                        ),
+                        EnvironmentScanPlacementModifier.of(
+                                Direction.DOWN, BlockPredicate.solid(), BlockPredicate.IS_AIR, 12
+                        ),
+                        RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
+                        BiomePlacementModifier.of()
+                ));
+
+        register(context, ICE_CAVES_LAVA_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.ICE_CAVES_LAVA),
+                List.of());
+
+        register(context, ICE_CAVES_WATER_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.ICE_CAVES_WATER),
+                List.of());
     }
 
     public static RegistryKey<PlacedFeature> registerKey(String name) {

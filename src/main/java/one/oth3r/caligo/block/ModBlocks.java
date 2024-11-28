@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -87,6 +88,33 @@ public class ModBlocks {
                     .mapColor(MapColor.YELLOW).breakInstantly().noCollision()
                     .pistonBehavior(PistonBehavior.DESTROY)
                     .offset(AbstractBlock.OffsetType.XZ).sounds(BlockSoundGroup.GRASS)));
+
+
+    /// ICE CAVES
+    public static final Block FROSTED_STONE = registerBlock("frosted_stone",
+            new Block(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresTool().strength(1.5F, 6.0F)));
+
+    public static final Block FROSTED_DEEPSLATE = registerBlock("frosted_deepslate",
+            new PillarBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.DEEPSLATE_GRAY)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresTool().strength(3.0F, 6.0F)
+                    .sounds(BlockSoundGroup.DEEPSLATE)));
+
+    public static final Block SNOW_PATH = registerBlock("snow_path",
+            new SnowPathBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.LIGHT_BLUE_GRAY)
+                    .requiresTool()
+                    .sounds(BlockSoundGroup.SNOW))); //todo sound
+
+    public static final Block COMPACTED_SNOW = registerBlock("compacted_snow",
+            new Block(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.LIGHT_BLUE_GRAY)
+                    .requiresTool()
+                    .sounds(BlockSoundGroup.SNOW))); //todo sound
 
     private static Block registerBlock(String name, Block block) {
         return Registry.register(Registries.BLOCK,Identifier.of(Caligo.MOD_ID,name),block);

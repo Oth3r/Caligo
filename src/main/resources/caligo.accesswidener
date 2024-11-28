@@ -3,3 +3,5 @@ accessWidener v2 named
 accessible class net/minecraft/client/gui/hud/InGameHud$HeartType
 
 accessible field net/minecraft/block/BigDripleafBlock TILT Lnet/minecraft/state/property/EnumProperty;
+
+accessible method net/minecraft/world/gen/surfacebuilder/VanillaSurfaceRules surfaceNoiseThreshold (D)Lnet/minecraft/world/gen/surfacebuilder/MaterialRules$MaterialCondition;

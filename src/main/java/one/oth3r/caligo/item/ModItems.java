@@ -49,6 +49,19 @@ public class ModItems {
     public static final Item LUSH_MARIGOLD = registerItem("lush_marigold",
             new PlaceableOnWaterItem(ModBlocks.LUSH_MARIGOLD, new Item.Settings()));
 
+    /// ICE CAVES ITEMS
+    public static final Item FROSTED_STONE = registerItem("frosted_stone",
+            new BlockItem(ModBlocks.FROSTED_STONE, new Item.Settings()));
+
+    public static final Item FROSTED_DEEPSLATE = registerItem("frosted_deepslate",
+            new BlockItem(ModBlocks.FROSTED_DEEPSLATE, new Item.Settings()));
+
+    public static final Item SNOW_PATH = registerItem("snow_path",
+            new BlockItem(ModBlocks.SNOW_PATH, new Item.Settings()));
+
+    public static final Item COMPACTED_SNOW = registerItem("compacted_snow",
+            new BlockItem(ModBlocks.COMPACTED_SNOW, new Item.Settings()));
+
     public static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(Caligo.MOD_ID,name),item);
     }

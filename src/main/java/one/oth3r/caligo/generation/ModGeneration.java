@@ -13,6 +13,7 @@ import one.oth3r.caligo.entity.ModEntities;
 import one.oth3r.caligo.entity.coppice.CoppiceEntity;
 import one.oth3r.caligo.entity.strow.deep.DeepStrowEntity;
 import one.oth3r.caligo.entity.strow.StrowEntity;
+import one.oth3r.caligo.generation.world.features.ModPlacedFeatures;
 
 public class ModGeneration {
 
@@ -20,7 +21,6 @@ public class ModGeneration {
         addEntitySpawns();
         addLushChanges();
     }
-
 
     public static void addEntitySpawns() {
         BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), SpawnGroup.MONSTER,

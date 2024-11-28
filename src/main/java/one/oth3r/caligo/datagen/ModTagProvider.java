@@ -7,6 +7,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import one.oth3r.caligo.block.ModBlocks;
+import one.oth3r.caligo.datagen.custom.IceCavesProviders;
 import one.oth3r.caligo.datagen.custom.LuminCrystalProviders;
 import one.oth3r.caligo.datagen.custom.LushBiomeProviders;
 import one.oth3r.caligo.datagen.custom.StatueProviders;
@@ -71,6 +72,12 @@ public class ModTagProvider {
                     .add(ModBlocks.PETUNIA).add(ModBlocks.PETUNIA_FLOWER);
             getOrCreateTagBuilder(BlockTags.TALL_FLOWERS)
                     .add(ModBlocks.PETUNIA).add(ModBlocks.PETUNIA_FLOWER);
+
+            // add all overworld carver
+            ArrayList<Block> overworld_carver_replaceable = new ArrayList<>();
+            overworld_carver_replaceable.addAll(IceCavesProviders.OVERWORLD_CARVER);
+
+            overworld_carver_replaceable.forEach(block -> getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(block));
         }
     }
 }

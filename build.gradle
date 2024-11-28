@@ -16,6 +16,7 @@ base {
 repositories {
     maven { url 'https://jitpack.io' }
     maven { url "https://maven.terraformersmc.com/releases/" }
+    maven { url = 'https://maven.minecraftforge.net/' }
     exclusiveContent {
         forRepository {
             maven {
@@ -46,6 +47,9 @@ dependencies {
 
     // FABRIC ASM
     include modImplementation("com.github.Chocohead:Fabric-ASM:2.3")
+    // TERRABLENDER
+    modImplementation "com.github.glitchfiend:TerraBlender-fabric:${project.terrablender}"
+
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     modImplementation "maven.modrinth:carpet:${carpet_version}"
 }

@@ -10,4 +10,6 @@ public class ModBlockTags {
     public static final TagKey<Block> STATUES = TagKey.of(RegistryKeys.BLOCK, Identifier.of(Caligo.MOD_ID, "statues"));
 
     public static final TagKey<Block> COPPICE_INTERESTS = TagKey.of(RegistryKeys.BLOCK, Identifier.of(Caligo.MOD_ID, "coppice/interests"));
+
+    public static final TagKey<Block> ICE_CAVES_REPLACEABLE = TagKey.of(RegistryKeys.BLOCK, Identifier.of(Caligo.MOD_ID, "ice_caves/replaceable"));
 }
