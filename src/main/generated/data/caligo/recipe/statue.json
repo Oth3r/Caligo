@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "E": "caligo:strow_essence",
+    "S": "minecraft:stone"
+  },
+  "pattern": [
+    " E ",
+    "SSS",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "caligo:statue"
+  }
+}

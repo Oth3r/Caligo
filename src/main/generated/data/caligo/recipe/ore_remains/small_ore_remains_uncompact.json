@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "caligo:ore_remains"
+  ],
+  "result": {
+    "count": 9,
+    "id": "caligo:small_ore_remains"
+  }
+}

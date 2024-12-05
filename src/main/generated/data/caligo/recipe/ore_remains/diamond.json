@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "caligo:large_ore_remains",
+    "caligo:large_ore_remains",
+    "caligo:large_ore_remains",
+    "caligo:large_ore_remains",
+    "caligo:large_ore_remains",
+    "caligo:large_ore_remains",
+    "caligo:large_ore_remains",
+    "caligo:large_ore_remains",
+    "caligo:large_ore_remains"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:diamond"
+  }
+}

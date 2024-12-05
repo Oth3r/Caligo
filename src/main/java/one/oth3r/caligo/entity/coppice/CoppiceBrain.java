@@ -9,14 +9,16 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.FuzzyTargeting;
 import net.minecraft.entity.ai.brain.*;
+import net.minecraft.entity.ai.brain.sensor.Sensor;
+import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.entity.ai.brain.task.*;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -24,6 +26,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import one.oth3r.caligo.entity.ModEntities;
+import one.oth3r.caligo.entity.ai.ModSensorTypes;
 import one.oth3r.caligo.loot_table.ModLootTables;
 import one.oth3r.caligo.sound.ModSounds;
 import one.oth3r.caligo.tag.ModItemTags;
@@ -36,8 +40,12 @@ public class CoppiceBrain {
     private static final int ADMIRING_DISABLED_EXPIRY = 300;
     private static final int ADMIRE_TIME = 300;
     private static final float WALKING_SPEED;
+    private static final float ADMIRE_SPEED;
     private static final float RUNNING_SPEED;
     private static final UniformIntProvider AVOID_MEMORY_DURATION;
+
+    protected static final ImmutableList<SensorType<? extends Sensor<? super CoppiceEntity>>> SENSOR_TYPES;
+    protected static final ImmutableList<MemoryModuleType<?>> MEMORY_MODULE_TYPES;
 
     public CoppiceBrain() {}
 
@@ -58,16 +66,16 @@ public class CoppiceBrain {
 
     private static void addCoreActivities(Brain<CoppiceEntity> brain) {
         brain.setTaskList(Activity.CORE, 0, ImmutableList.of(
-                new StayAboveWaterTask(.8f),
-                new LookAroundTask(45, 90),
-                new MoveToTargetTask(200,500), AdmireTask.create(ADMIRE_TIME), new TemptationCooldownTask(MemoryModuleType.TEMPTATION_COOLDOWN_TICKS),
+                new StayAboveWaterTask<>(.8f),
+                new LookAroundTask(UniformIntProvider.create(40,50),90,0,0),
+                new MoveToTargetTask(200,500), AdmireTask.create(ADMIRE_TIME), new TickCooldownTask(MemoryModuleType.TEMPTATION_COOLDOWN_TICKS),
                 RemoveHandItemTask.create()));
     }
 
     private static void addIdleActivities(Brain<CoppiceEntity> brain) {
         brain.setTaskList(Activity.IDLE, ImmutableList.of(
-//                Pair.of(0, new BreedTask(ModEntities.COPPICE)),
-//                Pair.of(1, new TemptTask((coppice) -> WALKING_SPEED, (entity) -> entity.isBaby() ? 1 : 1.5)), // todo speeds
+                Pair.of(0, new BreedTask(ModEntities.COPPICE,WALKING_SPEED,0)),
+                Pair.of(1, new TemptTask((coppice) -> WALKING_SPEED, (entity) -> entity.isBaby() ? 0.5 : 1)),
                 Pair.of(2, WalkToNearestPlayerHoldingWantedItemTask.create(CoppiceBrain::hasPlayerHoldingWantedItemNearby, WALKING_SPEED, true, 14)),
                 Pair.of(3, makeRandomLookTask()), Pair.of(4, makeRandomWanderTask())
 //                FindInteractionTargetTask.create(EntityType.PLAYER, 4)
@@ -76,7 +84,7 @@ public class CoppiceBrain {
 
     private static void addAdmireItemActivities(Brain<CoppiceEntity> brain) {
         brain.setTaskList(Activity.ADMIRE_ITEM, 10, ImmutableList.of(
-                WalkToNearestVisibleWantedItemTask.create(CoppiceEntity::doesNotHaveItemInHand, WALKING_SPEED, true, 9),
+                WalkTowardsNearestVisibleWantedItemTask.create(CoppiceEntity::doesNotHaveItemInHand, ADMIRE_SPEED, true, 9),
                 GoToRememberedPositionTask.createEntityBased(MemoryModuleType.AVOID_TARGET, RUNNING_SPEED, 5, true),
                 WantMoreItemTask.create(9),
                 AdmireTimeLimitTask.create(200, 200), makeRandomWanderTask()), MemoryModuleType.ADMIRING_ITEM);
@@ -98,7 +106,7 @@ public class CoppiceBrain {
     private static RandomTask<CoppiceEntity> makeRandomWanderTask() {
         return new RandomTask<>(ImmutableList.of(
                 Pair.of(StrollTask.create(WALKING_SPEED), 2),
-                Pair.of(TaskTriggerer.runIf(CoppiceBrain::canWander,GoTowardsLookTargetTask.create(WALKING_SPEED, 3)), 2),
+                Pair.of(TaskTriggerer.runIf(CoppiceBrain::canWander,GoToLookTargetTask.create(WALKING_SPEED, 3)), 2),
                 Pair.of(makeGoToDripleafTask(), 1),
                 Pair.of(new WaitTask(80, 120), 1)));
     }
@@ -112,6 +120,8 @@ public class CoppiceBrain {
         Brain<CoppiceEntity> brain = entity.getBrain();
 
         Activity activity = brain.getFirstPossibleNonCoreActivity().orElse(null);
+
+        entity.setPanicking(brain.hasMemoryModule(MemoryModuleType.IS_PANICKING));
 
         // if admiring
         if (brain.hasMemoryModule(MemoryModuleType.ADMIRING_ITEM) && !entity.doesNotHaveItemInHand()) {
@@ -197,11 +207,8 @@ public class CoppiceBrain {
         // empty the hand stack
         entity.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
 
-        // if the entity isnt a baby, start the drop code
-        if (!entity.isBaby()) {
-            dropItems(entity, generateDropItem(entity, handStack));
-        }
-
+        // start the drop code
+        dropItems(entity, generateDropItem(entity, handStack));
     }
 
     /**
@@ -216,7 +223,7 @@ public class CoppiceBrain {
             // iterate through the items
             while (item.hasNext()) {
                 // drop the item
-                LookTargetUtil.give(entity, item.next(), findGround(entity).add(0.0, 1.0, 0.0));
+                TargetUtil.give(entity, item.next(), findGround(entity).add(0.0, 1.0, 0.0));
             }
         }
     }
@@ -231,7 +238,7 @@ public class CoppiceBrain {
         if (admiringItem.isIn(ModItemTags.COPPICE_HIGH_TIER) && !entity.isBaby()) lootTable = entity.getWorld().getServer().getReloadableRegistries().getLootTable(ModLootTables.COPPICE_GEM_REMAINS);
 
         // generate the item from the loottable and return it
-        return lootTable.generateLoot((new LootContextParameterSet.Builder((ServerWorld)entity.getWorld())).add(LootContextParameters.THIS_ENTITY, entity).build(LootContextTypes.BARTER));
+        return lootTable.generateLoot((new LootWorldContext.Builder((ServerWorld)entity.getWorld())).add(LootContextParameters.THIS_ENTITY, entity).build(LootContextTypes.BARTER));
     }
 
     /**
@@ -302,8 +309,12 @@ public class CoppiceBrain {
     }
 
     protected static void runAwayFrom(CoppiceEntity entity, LivingEntity target) {
-        entity.getBrain().forget(MemoryModuleType.WALK_TARGET);
-        entity.getBrain().remember(MemoryModuleType.AVOID_TARGET, target, AVOID_MEMORY_DURATION.get(entity.getWorld().random));
+        Brain<CoppiceEntity> brain = entity.getBrain();
+        brain.forget(MemoryModuleType.WALK_TARGET);
+
+        long time = AVOID_MEMORY_DURATION.get(entity.getWorld().random);
+        brain.remember(MemoryModuleType.IS_PANICKING, true, time);
+        brain.remember(MemoryModuleType.AVOID_TARGET, target, time);
     }
 
     private static Vec3d findGround(CoppiceEntity entity) {
@@ -343,14 +354,31 @@ public class CoppiceBrain {
         return target.getType() == EntityType.PLAYER && target.isHolding(CoppiceBrain::isWantedItem);
     }
 
-    protected static boolean isPanicking(CoppiceEntity entity) {
-        return entity.getBrain().hasMemoryModule(MemoryModuleType.AVOID_TARGET);
+    public static Brain.Profile<CoppiceEntity> createBrainProfile() {
+        return Brain.createProfile(MEMORY_MODULE_TYPES, SENSOR_TYPES);
     }
 
     static {
         AVOID_MEMORY_DURATION = TimeHelper.betweenSeconds(10, 20);
         WALKING_SPEED = CoppiceEntity.WALKING_SPEED;
         RUNNING_SPEED = CoppiceEntity.RUNNING_SPEED;
+        ADMIRE_SPEED = CoppiceEntity.ADMIRE_SPEED;
+
+        SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS,
+                SensorType.NEAREST_ITEMS, SensorType.HURT_BY, ModSensorTypes.COPPICE_SPECIFIC_SENSOR, ModSensorTypes.COPPICE_TEMPTATIONS);
+
+        MEMORY_MODULE_TYPES = ImmutableList.of(MemoryModuleType.LOOK_TARGET, MemoryModuleType.WALK_TARGET,
+                MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, MemoryModuleType.PATH, MemoryModuleType.IS_PANICKING,
+                MemoryModuleType.VISIBLE_MOBS, MemoryModuleType.NEAREST_VISIBLE_PLAYER, MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM,
+
+                MemoryModuleType.BREED_TARGET,
+                MemoryModuleType.TEMPTING_PLAYER, MemoryModuleType.TEMPTATION_COOLDOWN_TICKS, MemoryModuleType.IS_TEMPTED,
+
+                MemoryModuleType.HURT_BY, MemoryModuleType.HURT_BY_ENTITY, MemoryModuleType.AVOID_TARGET, MemoryModuleType.NEAREST_REPELLENT,
+
+                MemoryModuleType.NEAREST_VISIBLE_WANTED_ITEM, MemoryModuleType.ITEM_PICKUP_COOLDOWN_TICKS,
+                MemoryModuleType.ADMIRING_ITEM, MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM, MemoryModuleType.ADMIRING_DISABLED,
+                MemoryModuleType.DISABLE_WALK_TO_ADMIRE_ITEM);
     }
 
 

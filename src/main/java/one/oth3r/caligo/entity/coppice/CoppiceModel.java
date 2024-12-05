@@ -5,24 +5,28 @@
 package one.oth3r.caligo.entity.coppice;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.ModelWithArms;
-import net.minecraft.client.render.entity.model.SinglePartEntityModel;
+import net.minecraft.client.render.entity.model.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
+import one.oth3r.caligo.entity.AnimatedBabyModelTransformer;
 
-public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel<T> implements ModelWithArms {
+import java.util.Set;
+
+public class CoppiceModel extends EntityModel<CoppiceEntityRenderState> implements ModelWithArms {
+	public static final ModelTransformer BABY_TRANSFORMER = new AnimatedBabyModelTransformer(true,
+			2.289F, 0F, .7f,.5f,0f, Set.of("head"));
+
 	private final ModelPart root;
 	private final ModelPart body;
 	private final ModelPart head;
 	private final ModelPart leftArm;
 
 	public CoppiceModel(ModelPart root) {
+		super(root);
 		this.root = root.getChild("root");
 		this.body = this.root.getChild("body");
-		this.head = this.body.getChild("head");
+		this.head = this.root.getChild("head");
 		this.leftArm = this.body.getChild("left_arm");
 	}
 
@@ -31,66 +35,75 @@ public class CoppiceModel<T extends CoppiceEntity> extends SinglePartEntityModel
 		ModelPartData modelPartData = modelData.getRoot();
 		ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.of(0.0F, 24.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
+		ModelPartData head = root.addChild("head", ModelPartBuilder.create().uv(0, 22).cuboid(-3.0F, -6.0F, -3.0F, 6.0F, 6.0F, 6.0F, new Dilation(0.0F))
+				.uv(4, 2).cuboid(-5.0F, -9.0F, -5.0F, 10.0F, 10.0F, 9.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -8.0F, 0.0F));
+
+		ModelPartData stem = head.addChild("stem", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -9.0F, 0.0F));
+
+		ModelPartData cube_r1 = stem.addChild("cube_r1", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, -3.1416F, -0.7854F, 3.1416F));
+
+		ModelPartData cube_r2 = stem.addChild("cube_r2", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
+
+		ModelPartData stem1 = stem.addChild("stem1", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -3.0F, 0.0F));
+
+		ModelPartData cube_r3 = stem1.addChild("cube_r3", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
+
+		ModelPartData cube_r4 = stem1.addChild("cube_r4", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, -3.1416F, -0.7854F, 3.1416F));
+
+		ModelPartData stem2 = stem1.addChild("stem2", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -3.0F, 0.0F));
+
+		ModelPartData cube_r5 = stem2.addChild("cube_r5", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, -3.1416F, -0.7854F, 3.1416F));
+
+		ModelPartData cube_r6 = stem2.addChild("cube_r6", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
+
+		ModelPartData leaf0 = stem2.addChild("leaf0", ModelPartBuilder.create().uv(9, 35).cuboid(-3.5F, -4.0F, 0.0F, 4.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -3.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
+
+		ModelPartData leaf1 = stem2.addChild("leaf1", ModelPartBuilder.create().uv(7, 39).cuboid(0.0F, 0.0F, 0.0F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.35F, -3.0F, 0.35F, 0.6155F, -0.5236F, -0.9553F));
+
+		ModelPartData leaf2 = stem2.addChild("leaf2", ModelPartBuilder.create().uv(9, 35).cuboid(-3.5F, -4.0F, 0.0F, 4.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -3.0F, 0.0F, 0.0F, -2.3562F, 0.0F));
+
+		ModelPartData leaf3 = stem2.addChild("leaf3", ModelPartBuilder.create().uv(7, 39).cuboid(0.0F, 0.0F, -0.025F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-0.375F, -3.0F, 0.325F, 2.5586F, -0.5032F, -2.2023F));
+
 		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(18, 22).cuboid(-2.0F, -4.0F, -1.0F, 4.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -4.0F, 0.0F));
 
 		ModelPartData left_arm = body.addChild("left_arm", ModelPartBuilder.create().uv(30, 22).cuboid(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(-2.5F, -4.0F, 0.0F));
 
 		ModelPartData right_arm = body.addChild("right_arm", ModelPartBuilder.create().uv(0, 22).cuboid(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(2.5F, -4.0F, 0.0F));
 
-		ModelPartData head = body.addChild("head", ModelPartBuilder.create().uv(0, 22).cuboid(-3.0F, -6.0F, -3.0F, 6.0F, 6.0F, 6.0F, new Dilation(0.0F))
-				.uv(4, 2).cuboid(-5.0F, -9.0F, -5.0F, 10.0F, 10.0F, 9.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -4.0F, 0.0F));
-
-		ModelPartData leaf = head.addChild("leaf", ModelPartBuilder.create().uv(9, 35).cuboid(-3.5F, -13.0F, 0.0F, 4.0F, 4.0F, 0.0F, new Dilation(0.0F))
-				.uv(45, 13).cuboid(-0.5F, -9.0F, 0.0F, 1.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -9.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
-
-		ModelPartData cube_r1 = leaf.addChild("cube_r1", ModelPartBuilder.create().uv(7, 39).cuboid(0.0F, 0.0F, 1.0F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -9.0F, -1.0F, 0.021F, -0.0454F, -0.9139F));
-
-		ModelPartData leaf2 = head.addChild("leaf2", ModelPartBuilder.create().uv(9, 35).cuboid(-3.5F, -13.0F, 0.0F, 4.0F, 4.0F, 0.0F, new Dilation(0.0F))
-				.uv(45, 13).cuboid(-0.5F, -9.0F, 0.0F, 1.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -9.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
-
-		ModelPartData cube_r2 = leaf2.addChild("cube_r2", ModelPartBuilder.create().uv(7, 39).cuboid(0.0F, 0.0F, 1.0F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.5F, -9.0F, -1.0F, 0.021F, -0.0454F, -0.9139F));
-
 		ModelPartData left_leg = root.addChild("left_leg", ModelPartBuilder.create().uv(24, 28).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(-1.0F, -4.0F, 0.0F));
 
 		ModelPartData right_leg = root.addChild("right_leg", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(1.0F, -4.0F, 0.0F));
 		return TexturedModelData.of(modelData, 64, 64);
 	}
+	public static TexturedModelData getBabyTexturedModelData() {
+		return getTexturedModelData().transform(CoppiceModel.BABY_TRANSFORMER);
+	}
 
 	@Override
-	public void setAngles(CoppiceEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.getPart().traverse().forEach(ModelPart::resetTransform);
-		this.setHeadAngles(netHeadYaw,headPitch);
+	public void setAngles(CoppiceEntityRenderState state) {
+		super.setAngles(state);
 
-		if (CoppiceBrain.isPanicking(entity)) {
-			this.animateMovement(CoppiceAnimations.RUN_SCARED, limbSwing, limbSwingAmount,3f,3f);
-		} else if (!entity.getMainHandStack().isEmpty()) {
-			this.animateMovement(CoppiceAnimations.RUN_ORE, limbSwing, limbSwingAmount,3f,3f);
-		} else {
-			this.animateMovement(CoppiceAnimations.WALK, limbSwing, limbSwingAmount, 3f, 3f);
+		this.head.pitch = state.pitch * (float) (Math.PI / 180.0);
+		this.head.yaw = state.yawDegrees * (float) (Math.PI / 180.0);
+
+
+		// if holding
+		if (state.hasItem) {
+			animateWalking(CoppiceAnimations.WALK_HOLDING, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
+		}
+		// else if panicking
+		else if (state.isPanicking) {
+			animateWalking(CoppiceAnimations.PANIC, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
+		}
+		// else normal
+		else {
+			animateWalking(CoppiceAnimations.WALK, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
 		}
 
-		this.updateAnimation(entity.eatingAnimationState, CoppiceAnimations.EATING, ageInTicks, 1f);
+		animate(state.eatingAnimationState, CoppiceAnimations.EATING, state.age, 1f);
 
-		this.updateAnimation(entity.idleAnimationState, CoppiceAnimations.IDLE, ageInTicks, 1f);
-		this.updateAnimation(entity.holdAnimationState, CoppiceAnimations.HOLD, ageInTicks, 1f);
-	}
-
-	private void setHeadAngles(float headYaw, float headPitch) {
-		headYaw = MathHelper.clamp(headYaw, -30.0f, 30.0f);
-		headPitch = MathHelper.clamp(headPitch, -25.0f, 45.0f);
-
-		this.head.yaw = headYaw * ((float)Math.PI / 180) ;
-		this.head.pitch = headPitch * ((float)Math.PI / 180) * -1;
-	}
-
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
-		root.render(matrices, vertices, light, overlay, color);
-	}
-
-	@Override
-	public ModelPart getPart() {
-		return root;
+		animate(state.idleAnimationState, CoppiceAnimations.IDLE, state.age, 1f);
+		animate(state.holdAnimationState, CoppiceAnimations.HOLD, state.age, 1f);
 	}
 
 	@Override

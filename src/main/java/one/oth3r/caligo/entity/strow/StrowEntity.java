@@ -64,11 +64,11 @@ public class StrowEntity extends HostileEntity implements Angerable {
 
     public static DefaultAttributeContainer.Builder createStrowAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, .3)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 4)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,.7);
+                .add(EntityAttributes.MAX_HEALTH, 6)
+                .add(EntityAttributes.MOVEMENT_SPEED, .3)
+                .add(EntityAttributes.ATTACK_DAMAGE, 1)
+                .add(EntityAttributes.ATTACK_SPEED, 4)
+                .add(EntityAttributes.KNOCKBACK_RESISTANCE,.7);
     }
 
     public static boolean canSpawn(EntityType<? extends HostileEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
@@ -95,7 +95,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
     @Override
     protected void updateLimbs(float posDelta) {
         float f = this.getPose() == EntityPose.STANDING ? Math.min(posDelta * 6.0f, 1.0f) : 0.0f;
-        this.limbAnimator.updateLimbs(f, 0.2f);
+        this.limbAnimator.updateLimbs(f, 0.2f, 1f);
     }
 
 
@@ -115,9 +115,9 @@ public class StrowEntity extends HostileEntity implements Angerable {
         }
         if (!this.isAngry() && this.cawTime > 0) this.cawTime--;
     }
+
     @Override
-    protected void mobTick() {
-        ServerWorld serverWorld = (ServerWorld)this.getWorld();
+    protected void mobTick(ServerWorld serverWorld) {
         if (this.age % 2 == 0) {
             // get all players in a 25 block radius and check if they are staring
             List<ServerPlayerEntity> list = serverWorld.getPlayers(player ->
@@ -136,19 +136,23 @@ public class StrowEntity extends HostileEntity implements Angerable {
      * the custom player damage system, only allow pickaxes
      */
     @Override
-    public boolean damage(DamageSource source, float amount) {
-        if (this.isInvulnerableTo(source) || source.isIn(DamageTypeTags.IS_PROJECTILE)) {
-            return false;
+    public boolean damage(ServerWorld world, DamageSource source, float amount) {
+        if (this.isInvulnerableTo(world, source) || source.isIn(DamageTypeTags.IS_PROJECTILE)) {
+            return false; //todo this when blocking attack
         }
+
         if (isFullDamage(source)) {
             Entity attacker = source.getAttacker();
+
             if (attacker instanceof PlayerEntity player) {
                 this.takeKnockback(1.8F, player.getX() - this.getX(), player.getZ() - this.getZ());
             }
-            return super.damage(source,amount);
+
+            return super.damage(world,source,amount);
         }
+
         // only do *.1 of the original damage if not a pickaxe
-        return super.damage(source, (float) (amount*.1));
+        return super.damage(world, source, (float) (amount*.1));
     }
 
     /**
@@ -370,7 +374,7 @@ public class StrowEntity extends HostileEntity implements Angerable {
                     this.ticksToNextAttack = 6;
                     this.bird.getLookControl().lookAt(pEnemy);
                     this.bird.setAttacking(true);
-                    this.bird.tryAttack(pEnemy);
+                    this.bird.tryAttack(getServerWorld(this.bird), pEnemy);
                 } else this.bird.setAttacking(false);
                 // set attack to false to update the animation (it doesnt work if u get rid of it)
             }
