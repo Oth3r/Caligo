@@ -1,0 +1,62 @@
+{
+  "variants": {
+    "axis=x": [
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "x": 90,
+        "y": 90
+      }
+    ],
+    "axis=y": [
+      {
+        "model": "caligo:block/frosted_deepslate"
+      },
+      {
+        "model": "caligo:block/frosted_deepslate"
+      },
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "y": 180
+      },
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "y": 180
+      }
+    ],
+    "axis=z": [
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "x": 90
+      },
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "x": 90
+      },
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "caligo:block/frosted_deepslate",
+        "x": 90,
+        "y": 180
+      }
+    ]
+  }
+}
