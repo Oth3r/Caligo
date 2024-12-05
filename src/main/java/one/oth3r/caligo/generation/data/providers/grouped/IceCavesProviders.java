@@ -1,4 +1,4 @@
-package one.oth3r.caligo.datagen.custom;
+package one.oth3r.caligo.generation.data.providers.grouped;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.client.*;
 import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.data.server.recipe.RecipeGenerator;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.block.ModBlocks;
@@ -86,12 +87,13 @@ public class IceCavesProviders {
         }
 
         @Override
-        public void generate(RecipeExporter exporter) {
+        protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup wrapperLookup, RecipeExporter recipeExporter) {
+            return null;
         }
 
         @Override
         public String getName() {
-            return "Ice Caves "+super.getName();
+            return "Ice Caves Recipes";
         }
     }
 }

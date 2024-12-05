@@ -31,7 +31,7 @@ public class IceCavesWaterFeature extends Feature<DefaultFeatureConfig> {
     public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
         StructureWorldAccess structureWorldAccess = context.getWorld();
         DynamicRegistryManager drm = structureWorldAccess.getRegistryManager();
-        Registry<Biome> biomeReg = drm.get(RegistryKeys.BIOME);
+        Registry<Biome> biomeReg = drm.getOrThrow(RegistryKeys.BIOME);
 
         BlockPos originPos = context.getOrigin();
         BlockPos.Mutable scanTarget = new BlockPos.Mutable();

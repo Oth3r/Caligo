@@ -7,6 +7,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import one.oth3r.caligo.block.ModBlocks;
+import one.oth3r.caligo.generation.data.providers.grouped.IceCavesProviders;
 import one.oth3r.caligo.generation.data.providers.grouped.LuminCrystalProviders;
 import one.oth3r.caligo.generation.data.providers.grouped.LushBiomeProviders;
 import one.oth3r.caligo.generation.data.providers.grouped.StatueProviders;

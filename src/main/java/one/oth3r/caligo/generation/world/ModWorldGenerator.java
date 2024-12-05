@@ -1,4 +1,4 @@
-package one.oth3r.caligo.generation.data.providers;
+package one.oth3r.caligo.generation.world;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;

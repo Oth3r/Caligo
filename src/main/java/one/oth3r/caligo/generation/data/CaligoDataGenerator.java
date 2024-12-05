@@ -5,12 +5,14 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import one.oth3r.caligo.generation.data.providers.grouped.*;
-import one.oth3r.caligo.generation.ModConfiguredFeatures;
-import one.oth3r.caligo.generation.ModPlacedFeatures;
 import one.oth3r.caligo.generation.data.providers.ModEntityLootTableProvider;
 import one.oth3r.caligo.generation.data.providers.ModModelProvider;
 import one.oth3r.caligo.generation.data.providers.ModTagProvider;
-import one.oth3r.caligo.generation.data.providers.ModWorldProvider;
+import one.oth3r.caligo.generation.world.ModCarvers;
+import one.oth3r.caligo.generation.world.ModWorldGenerator;
+import one.oth3r.caligo.generation.world.biome.ModBiomes;
+import one.oth3r.caligo.generation.world.features.ModConfiguredFeatures;
+import one.oth3r.caligo.generation.world.features.ModPlacedFeatures;
 
 public class CaligoDataGenerator implements DataGeneratorEntrypoint {
     @Override

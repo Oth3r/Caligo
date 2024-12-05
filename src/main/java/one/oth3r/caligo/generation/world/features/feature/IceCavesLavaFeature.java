@@ -37,7 +37,7 @@ public class IceCavesLavaFeature extends Feature<DefaultFeatureConfig> {
                 int targetZ = originPos.getZ() + j;
 
                 DynamicRegistryManager drm = structureWorldAccess.getRegistryManager();
-                Registry<Biome> reg = drm.get(RegistryKeys.BIOME);
+                Registry<Biome> reg = drm.getOrThrow(RegistryKeys.BIOME);
 
                 // loop through the whole column
                 for (int targetY = 0; targetY > structureWorldAccess.getBottomY(); targetY--) {

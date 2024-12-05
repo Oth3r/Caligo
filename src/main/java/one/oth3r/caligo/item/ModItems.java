@@ -47,26 +47,26 @@ public class ModItems {
     public static final Item LUSH_MARIGOLD = registerBlockItem("lush_marigold",
             settings -> new PlaceableOnWaterItem(ModBlocks.LUSH_MARIGOLD, settings));
 
-    private static Item registerItem(String name) {
-        return registerItem(name, Item::new, new Item.Settings());
-    }
-
     /// ICE CAVES ITEMS
-    public static final Item FROSTED_STONE = registerItem("frosted_stone",
-            new BlockItem(ModBlocks.FROSTED_STONE, new Item.Settings()));
+    public static final Item FROSTED_STONE = registerBlockItem("frosted_stone",
+            settings -> new BlockItem(ModBlocks.FROSTED_STONE, settings));
 
-    public static final Item FROSTED_DEEPSLATE = registerItem("frosted_deepslate",
-            new BlockItem(ModBlocks.FROSTED_DEEPSLATE, new Item.Settings()));
+    public static final Item FROSTED_DEEPSLATE = registerBlockItem("frosted_deepslate",
+            settings -> new BlockItem(ModBlocks.FROSTED_DEEPSLATE, settings));
 
-    public static final Item SNOW_PATH = registerItem("snow_path",
-            new BlockItem(ModBlocks.SNOW_PATH, new Item.Settings()));
+    public static final Item SNOW_PATH = registerBlockItem("snow_path",
+            settings -> new BlockItem(ModBlocks.SNOW_PATH, settings));
 
-    public static final Item COMPACTED_SNOW = registerItem("compacted_snow",
-            new BlockItem(ModBlocks.COMPACTED_SNOW, new Item.Settings()));
+    public static final Item COMPACTED_SNOW = registerBlockItem("compacted_snow",
+            settings -> new BlockItem(ModBlocks.COMPACTED_SNOW, settings));
 
 
     private static Item registerBlockItem(String name, Function<Item.Settings, Item> factory) {
         return registerItem(name, factory, new Item.Settings().useBlockPrefixedTranslationKey());
+    }
+
+    private static Item registerItem(String name) {
+        return registerItem(name, Item::new, new Item.Settings());
     }
 
     private static Item registerItem(String name, Function<Item.Settings, Item> factory, Item.Settings settings) {

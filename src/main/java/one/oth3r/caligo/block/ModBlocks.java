@@ -103,29 +103,29 @@ public class ModBlocks {
 
     /// ICE CAVES
     public static final Block FROSTED_STONE = registerBlock("frosted_stone",
-            new Block(AbstractBlock.Settings.create()
+            Block::new, AbstractBlock.Settings.create()
                     .mapColor(MapColor.STONE_GRAY)
                     .instrument(NoteBlockInstrument.BASEDRUM)
-                    .requiresTool().strength(1.5F, 6.0F)));
+                    .requiresTool().strength(1.5F, 6.0F));
 
     public static final Block FROSTED_DEEPSLATE = registerBlock("frosted_deepslate",
-            new PillarBlock(AbstractBlock.Settings.create()
+            PillarBlock::new, AbstractBlock.Settings.create()
                     .mapColor(MapColor.DEEPSLATE_GRAY)
                     .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresTool().strength(3.0F, 6.0F)
-                    .sounds(BlockSoundGroup.DEEPSLATE)));
+                    .sounds(BlockSoundGroup.DEEPSLATE));
 
     public static final Block SNOW_PATH = registerBlock("snow_path",
-            new SnowPathBlock(AbstractBlock.Settings.create()
+            SnowPathBlock::new, AbstractBlock.Settings.create()
                     .mapColor(MapColor.LIGHT_BLUE_GRAY)
                     .requiresTool()
-                    .sounds(BlockSoundGroup.SNOW))); //todo sound
+                    .sounds(BlockSoundGroup.SNOW)); //todo sound
 
     public static final Block COMPACTED_SNOW = registerBlock("compacted_snow",
-            new Block(AbstractBlock.Settings.create()
+            Block::new, AbstractBlock.Settings.create()
                     .mapColor(MapColor.LIGHT_BLUE_GRAY)
                     .requiresTool()
-                    .sounds(BlockSoundGroup.SNOW))); //todo sound
+                    .sounds(BlockSoundGroup.SNOW)); //todo sound
 
 
     private static Block registerBlock(String name, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {
