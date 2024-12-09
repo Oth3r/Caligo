@@ -6,10 +6,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeEffects;
-import net.minecraft.world.biome.GenerationSettings;
-import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
@@ -35,6 +32,7 @@ public class ModBiomes {
     public static Biome iceCaveBiome(RegistryEntryLookup<PlacedFeature> featureLookup, RegistryEntryLookup<ConfiguredCarver<?>> carverLookup) {
         SpawnSettings.Builder spawnBuilder = new SpawnSettings.Builder();
 
+        DefaultBiomeFeatures.addSnowyMobs(spawnBuilder);
 
         GenerationSettings.LookupBackedBuilder biomeBuilder =
                 new GenerationSettings.LookupBackedBuilder(featureLookup,carverLookup);
@@ -49,7 +47,7 @@ public class ModBiomes {
         DefaultBiomeFeatures.addPlainsTallGrass(biomeBuilder);
         DefaultBiomeFeatures.addDefaultOres(biomeBuilder);
         DefaultBiomeFeatures.addDefaultDisks(biomeBuilder);
-        DefaultBiomeFeatures.addPlainsFeatures(biomeBuilder);
+
         DefaultBiomeFeatures.addDefaultMushrooms(biomeBuilder);
         DefaultBiomeFeatures.addDefaultVegetation(biomeBuilder);
 
@@ -59,17 +57,19 @@ public class ModBiomes {
 //        biomeBuilder.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.ICE_CAVES_LAVA_PLACED_KEY);
         biomeBuilder.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.ICE_CAVES_WATER_PLACED_KEY);
 
+        float temp = -0.7f;
+
         return new Biome.Builder()
                 .precipitation(true)
                 .downfall(0.4f)
-                .temperature(-.5f)
+                .temperature(temp)
                 .generationSettings(biomeBuilder.build())
                 .spawnSettings(spawnBuilder.build())
                 .effects((new BiomeEffects.Builder())
-                        .waterColor(4020182) // todo fix colors lol
+                        .waterColor(4020182)
                         .waterFogColor(329011)
-                        .skyColor(0x30c918)
-                        .fogColor(0x22a1e6)
+                        .fogColor(12638463)
+                        .skyColor(OverworldBiomeCreator.getSkyColor(temp))
                         .moodSound(BiomeMoodSound.CAVE)
 //                        .music(MusicType.createIngameMusic(RegistryEntry.of(ModSounds.MUSIC_OVERWORLD_ICE_CAVES)))
                         .build())
