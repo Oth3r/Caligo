@@ -76,5 +76,9 @@
 
   "block.caligo.dripleaf_vines": "Dripleaf Vines",
   "block.caligo.lush_marigold": "Lush Marigold",
-  "block.caligo.petunia": "Petunia"
+  "block.caligo.petunia": "Petunia",
+
+  "block.caligo.frosted_stone": "Frosted Stone",
+  "block.caligo.frosted_deepslate": "Frosted Deepslate",
+  "block.caligo.compacted_snow": "Compacted Snow"
 }

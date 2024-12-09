@@ -1,6 +1,7 @@
 package one.oth3r.caligo.generation.data.providers.grouped;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -24,6 +25,8 @@ import java.util.concurrent.CompletableFuture;
 public class IceCavesProviders {
     public static final ArrayList<Block> OVERWORLD_CARVER = new ArrayList<>(Arrays.asList(
             ModBlocks.FROSTED_STONE, ModBlocks.FROSTED_DEEPSLATE));
+    public static final ArrayList<Block> PICKAXE_MINEABLE = new ArrayList<>(Arrays.asList(ModBlocks.FROSTED_STONE,ModBlocks.FROSTED_DEEPSLATE));
+    public static final ArrayList<Block> SHOVEL_MINEABLE = new ArrayList<>(Arrays.asList(ModBlocks.COMPACTED_SNOW));
 
     public static class Model extends FabricModelProvider {
 
@@ -94,6 +97,26 @@ public class IceCavesProviders {
         @Override
         public String getName() {
             return "Ice Caves Recipes";
+        }
+    }
+
+    public static class LootTable extends FabricBlockLootTableProvider {
+
+        public LootTable(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(dataOutput, registryLookup);
+        }
+
+        @Override
+        public void generate() {
+            addDrop(ModBlocks.FROSTED_STONE, block -> this.drops(block,Blocks.COBBLESTONE));
+            addDrop(ModBlocks.FROSTED_DEEPSLATE, block -> this.drops(block,Blocks.COBBLED_DEEPSLATE));
+            addDrop(ModBlocks.COMPACTED_SNOW); // todo compracted snowball drop w/o silk touch
+
+        }
+
+        @Override
+        public String getName() {
+            return "Ice Caves Loot Tables";
         }
     }
 }

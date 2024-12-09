@@ -2,6 +2,8 @@
   "values": [
     "caligo:lumin_crystal",
     "caligo:statue",
-    "caligo:deepslate_statue"
+    "caligo:deepslate_statue",
+    "caligo:frosted_stone",
+    "caligo:frosted_deepslate"
   ]
 }
