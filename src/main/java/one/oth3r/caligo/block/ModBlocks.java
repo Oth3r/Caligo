@@ -124,7 +124,7 @@ public class ModBlocks {
     public static final Block COMPACTED_SNOW = registerBlock("compacted_snow",
             Block::new, AbstractBlock.Settings.create()
                     .mapColor(MapColor.LIGHT_BLUE_GRAY)
-                    .requiresTool()
+                    .requiresTool().strength(0.8F,.8F)
                     .sounds(BlockSoundGroup.SNOW)); //todo sound
 
 
