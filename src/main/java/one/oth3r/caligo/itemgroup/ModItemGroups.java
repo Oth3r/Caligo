@@ -44,6 +44,10 @@ public class ModItemGroups {
             itemGroup.add(ModItems.LUSH_MARIGOLD);
             itemGroup.add(ModItems.PETUNIA);
             itemGroup.add(ModItems.COPPICE_SPAWN_EGG);
+
+            itemGroup.add(ModItems.FROSTED_STONE);
+            itemGroup.add(ModItems.FROSTED_DEEPSLATE);
+            itemGroup.add(ModItems.COMPACTED_SNOW);
         });
 
         // add the spawn eggs to the spawn eggs tab, make it alphabetical
