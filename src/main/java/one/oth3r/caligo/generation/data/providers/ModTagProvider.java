@@ -44,18 +44,25 @@ public class ModTagProvider {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            // add all pickaxe mineable tags
+            /// add all pickaxe mineable tags
             ArrayList<Block> pickaxe_mineable = new ArrayList<>();
             pickaxe_mineable.addAll(LuminCrystalProviders.PICKAXE_MINEABLE);
             pickaxe_mineable.addAll(StatueProviders.PICKAXE_MINEABLE);
+            pickaxe_mineable.addAll(IceCavesProviders.PICKAXE_MINEABLE);
 
             pickaxe_mineable.forEach(block -> getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block));
 
-            // add all hoe mineable tags
+            /// add all hoe mineable tags
             ArrayList<Block> hoe_mineable = new ArrayList<>();
             hoe_mineable.addAll(LushBiomeProviders.HOE_MINEABLE);
 
             hoe_mineable.forEach(block -> getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(block));
+
+            /// add all shovel mineable tags
+            ArrayList<Block> shovel_mineable = new ArrayList<>();
+            shovel_mineable.addAll(IceCavesProviders.SHOVEL_MINEABLE);
+
+            shovel_mineable.forEach(block -> getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(block));
 
 
             // add all needs iron tag
