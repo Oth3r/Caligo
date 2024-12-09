@@ -61,6 +61,7 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
         // ICE CAVES
         pack.addProvider(IceCavesProviders.Model::new);
         pack.addProvider(IceCavesProviders.BlockTag::new);
+        pack.addProvider(IceCavesProviders.LootTable::new);
     }
 
     @Override
