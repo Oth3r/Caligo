@@ -36,19 +36,34 @@ public class IceCavesProviders {
 
         @Override
         public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-            blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.FROSTED_STONE);
+//            blockStateModelGenerator.registerRandomHorizontalRotations(TexturedModel.CUBE_ALL, ModBlocks.FROSTED_STONE);
 
-            Identifier modelId = ModelIds.getBlockModelId(ModBlocks.FROSTED_DEEPSLATE);
-            Identifier identifier = Models.CUBE_COLUMN.upload(ModBlocks.FROSTED_DEEPSLATE, TextureMap.sideAndEndForTop(ModBlocks.FROSTED_DEEPSLATE), blockStateModelGenerator.modelCollector);
-            blockStateModelGenerator.blockStateCollector
-                    .accept(BlockStateModelGenerator.createBlockStateWithTwoModelAndRandomInversion(ModBlocks.FROSTED_DEEPSLATE, modelId, identifier)
-                            .coordinate(BlockStateModelGenerator.createAxisRotatedVariantMap()));
-
-            blockStateModelGenerator.registerParentedItemModel(ModBlocks.FROSTED_DEEPSLATE, identifier);
+            registerDeepslate(blockStateModelGenerator);
+            registerStone(blockStateModelGenerator);
 
             blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SNOW_PATH);
 
             blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.COMPACTED_SNOW);
+        }
+
+        public static void registerDeepslate(BlockStateModelGenerator blockStateModelGenerator) {
+            Block block = ModBlocks.FROSTED_DEEPSLATE;
+            Identifier modelId = ModelIds.getBlockModelId(block);
+            Identifier identifier = Models.CUBE_COLUMN.upload(block, TextureMap.sideAndEndForTop(block), blockStateModelGenerator.modelCollector);
+            Identifier identifier2 = Models.CUBE_COLUMN_MIRRORED.upload(block, TextureMap.sideAndEndForTop(block), blockStateModelGenerator.modelCollector);
+
+            blockStateModelGenerator.blockStateCollector
+                    .accept(BlockStateModelGenerator.createBlockStateWithTwoModelAndRandomInversion(block, identifier, identifier2)
+                            .coordinate(BlockStateModelGenerator.createAxisRotatedVariantMap()));
+        }
+
+        public static void registerStone(BlockStateModelGenerator blockStateModelGenerator) {
+            Block block = ModBlocks.FROSTED_STONE;
+            Identifier identifier = Models.CUBE_ALL.upload(block, TextureMap.all(block), blockStateModelGenerator.modelCollector);
+            Identifier identifier2 = Models.CUBE_MIRRORED_ALL.upload(block, TextureMap.all(block), blockStateModelGenerator.modelCollector);
+
+            blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator
+                    .createBlockStateWithTwoModelAndRandomInversion(block, identifier, identifier2));
         }
 
         @Override

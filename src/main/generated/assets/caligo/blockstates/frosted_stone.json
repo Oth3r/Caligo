@@ -1,7 +1,20 @@
 {
   "variants": {
-    "": {
-      "model": "caligo:block/frosted_stone"
-    }
+    "": [
+      {
+        "model": "caligo:block/frosted_stone"
+      },
+      {
+        "model": "caligo:block/frosted_stone_mirrored"
+      },
+      {
+        "model": "caligo:block/frosted_stone",
+        "y": 180
+      },
+      {
+        "model": "caligo:block/frosted_stone_mirrored",
+        "y": 180
+      }
+    ]
   }
 }
