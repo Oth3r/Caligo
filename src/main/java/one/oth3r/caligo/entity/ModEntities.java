@@ -21,6 +21,9 @@ import one.oth3r.caligo.entity.coppice.CoppiceRenderer;
 import one.oth3r.caligo.entity.strow.StrowEntity;
 import one.oth3r.caligo.entity.strow.StrowModel;
 import one.oth3r.caligo.entity.strow.StrowRenderer;
+import one.oth3r.caligo.entity.stulter.StulterEntity;
+import one.oth3r.caligo.entity.stulter.StulterModel;
+import one.oth3r.caligo.entity.stulter.StulterRenderer;
 
 public class ModEntities {
     public static final EntityType<StrowEntity> STROW = registerEntity("strow",
@@ -33,6 +36,10 @@ public class ModEntities {
 
     public static final EntityType<CoppiceEntity> COPPICE = registerEntity("coppice",
             EntityType.Builder.create(CoppiceEntity::new, CustomEnum.UNDERGROUND_CREATURE)
+                    .dimensions(.6f,1.1f).eyeHeight(.62f));
+
+    public static final EntityType<StulterEntity> STULTER = registerEntity("stulter",
+            EntityType.Builder.create(StulterEntity::new, CustomEnum.UNDERGROUND_CREATURE)
                     .dimensions(.6f,1.1f).eyeHeight(.62f));
 
     private static <T extends Entity> EntityType<T> registerEntity(String id, EntityType.Builder<T> type) {
@@ -51,6 +58,7 @@ public class ModEntities {
         FabricDefaultAttributeRegistry.register(ModEntities.STROW, StrowEntity.createStrowAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.DEEP_STROW, DeepStrowEntity.createDeepStrowAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.COPPICE, CoppiceEntity.createLushAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.STULTER, StulterEntity.createStulterAttributes());
     }
 
     public static void registerClient() {
@@ -64,5 +72,8 @@ public class ModEntities {
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.COPPICE, CoppiceModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.COPPICE_BABY,
                 CoppiceModel::getBabyTexturedModelData);
+
+        EntityRendererRegistry.register(ModEntities.STULTER, StulterRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.STULTER, StulterModel::getTexturedModelData);
     }
 }
