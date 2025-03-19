@@ -22,4 +22,7 @@ public class ModModelLayers {
 
     public static final EntityModelLayer STULTER =
             new EntityModelLayer(Identifier.of(Caligo.MOD_ID, "stulter"), "main");
+
+    public static final EntityModelLayer CRYONIX =
+            new EntityModelLayer(Identifier.of(Caligo.MOD_ID, "cryonix"), "main");
 }

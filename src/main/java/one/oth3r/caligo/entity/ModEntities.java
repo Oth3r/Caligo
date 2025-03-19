@@ -3,9 +3,14 @@ package one.oth3r.caligo.entity;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.minecraft.client.render.entity.DrownedEntityRenderer;
+import net.minecraft.client.render.entity.ZombieBaseEntityRenderer;
+import net.minecraft.client.render.entity.model.DrownedEntityModel;
+import net.minecraft.client.render.entity.model.ZombieEntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.mob.ZombieEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -13,6 +18,9 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
 import one.oth3r.caligo.CustomEnum;
+import one.oth3r.caligo.entity.cryonix.CryonixEntity;
+import one.oth3r.caligo.entity.cryonix.CryonixModel;
+import one.oth3r.caligo.entity.cryonix.CryonixRenderer;
 import one.oth3r.caligo.entity.strow.deep.DeepStrowEntity;
 import one.oth3r.caligo.entity.strow.deep.DeepStrowRenderer;
 import one.oth3r.caligo.entity.coppice.CoppiceEntity;
@@ -42,6 +50,13 @@ public class ModEntities {
             EntityType.Builder.create(StulterEntity::new, CustomEnum.UNDERGROUND_CREATURE)
                     .dimensions(.6f,1.1f).eyeHeight(.62f));
 
+    public static final EntityType<CryonixEntity> CRYONIX = registerEntity("cryonix",
+            EntityType.Builder.create(CryonixEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.95F).eyeHeight(1.74F)
+                    .passengerAttachments(2.0125F)
+                    .vehicleAttachment(-0.7F)
+                    .maxTrackingRange(8));
+
     private static <T extends Entity> EntityType<T> registerEntity(String id, EntityType.Builder<T> type) {
         return registerEntity(keyOf(id), type);
     }
@@ -59,6 +74,7 @@ public class ModEntities {
         FabricDefaultAttributeRegistry.register(ModEntities.DEEP_STROW, DeepStrowEntity.createDeepStrowAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.COPPICE, CoppiceEntity.createLushAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.STULTER, StulterEntity.createStulterAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.CRYONIX, CryonixEntity.createCryonixAttributes());
     }
 
     public static void registerClient() {
@@ -75,5 +91,8 @@ public class ModEntities {
 
         EntityRendererRegistry.register(ModEntities.STULTER, StulterRenderer::new);
         EntityModelLayerRegistry.registerModelLayer(ModModelLayers.STULTER, StulterModel::getTexturedModelData);
+
+        EntityRendererRegistry.register(ModEntities.CRYONIX, CryonixRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.CRYONIX, CryonixModel::getTexturedModelData);
     }
 }
