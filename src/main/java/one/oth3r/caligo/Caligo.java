@@ -10,6 +10,7 @@ import one.oth3r.caligo.generation.ModGeneration;
 import one.oth3r.caligo.generation.world.features.ModFeatures;
 import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.itemgroup.ModItemGroups;
+import one.oth3r.caligo.particle.ModParticles;
 import one.oth3r.caligo.potion.ModPotions;
 import one.oth3r.caligo.sound.ModSounds;
 import org.apache.logging.log4j.LogManager;
@@ -30,6 +31,7 @@ public class Caligo implements ModInitializer {
         ModBlocks.registerModBlocks();
         ModItems.register();
         ModPotions.register();
+        ModParticles.register();
         ModGeneration.registerAll();
         ModItemGroups.register();
         ModFeatures.register();
