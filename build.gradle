@@ -74,6 +74,7 @@ processResources {
             version                : project.version,
             minecraft_version      : minecraft_version,
             min_minecraft_version  : min_minecraft_version,
+            max_minecraft_version  : max_minecraft_version,
             loader_version         : loader_version,
             mod_id                 : mod_id
     ]
@@ -139,7 +140,7 @@ modrinth {
     versionName = "a${project.mod_version}"
     versionType = "alpha"
     uploadFile = remapJar
-    gameVersions = [project.minecraft_version]
+    gameVersions = project.minecraft_versions.toList()
     loaders = ['fabric']
     dependencies = [
             new ModDependency('P7dR8mSH', 'required'),
