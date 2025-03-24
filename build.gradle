@@ -140,7 +140,7 @@ modrinth {
     versionName = "a${project.mod_version}"
     versionType = "alpha"
     uploadFile = remapJar
-    gameVersions = project.minecraft_versions.toList()
+    gameVersions = project.minecraft_versions.split(",").toList()
     loaders = ['fabric']
     dependencies = [
             new ModDependency('P7dR8mSH', 'required'),
