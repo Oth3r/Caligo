@@ -54,8 +54,7 @@ public class ModBiomes {
         biomeBuilder.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, UndergroundPlacedFeatures.POINTED_DRIPSTONE);
         biomeBuilder.feature(GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.ICE_CAVES_SNOW_FLOOR);
         biomeBuilder.feature(GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.ICE_CAVES_COMPACTED_SNOW_FLOOR);
-//        biomeBuilder.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.ICE_CAVES_LAVA_PLACED_KEY);
-        biomeBuilder.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.ICE_CAVES_WATER_PLACED_KEY);
+        biomeBuilder.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, ModPlacedFeatures.ICE_CAVES_FLUID_PLACED_KEY);
 
         float temp = -0.7f;
 

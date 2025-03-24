@@ -16,14 +16,17 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.generation.world.biome.ModBiomes;
 
 /**
- * freezes all top uncovered water, searching the whole chunk. ONLY FOR ICE CAVES
+ * ONLY FOR ICE CAVES
+ * freezes all top uncovered water, below a certain light level, and replacing all lave below 0 with frozen magma, searches the whole chunk.
+ *
  */
-public class IceCavesWaterFeature extends Feature<DefaultFeatureConfig> {
+public class IceCavesFluidFeature extends Feature<DefaultFeatureConfig> {
 
-    public IceCavesWaterFeature(Codec<DefaultFeatureConfig> configCodec) {
+    public IceCavesFluidFeature(Codec<DefaultFeatureConfig> configCodec) {
         super(configCodec);
     }
 
@@ -61,6 +64,10 @@ public class IceCavesWaterFeature extends Feature<DefaultFeatureConfig> {
                         structureWorldAccess.setBlockState(scanTarget, Blocks.ICE.getDefaultState(), Block.FORCE_STATE);
                     }
 
+                    if (isLava(structureWorldAccess, scanTarget)) {
+                        structureWorldAccess.setBlockState(scanTarget, ModBlocks.FROZEN_MAGMA_BLOCK.getDefaultState(), Block.FORCE_STATE);
+                    }
+
                     // todo maybe set snow layers as well
                 }
             }
@@ -87,5 +94,12 @@ public class IceCavesWaterFeature extends Feature<DefaultFeatureConfig> {
         }
 
         return false;
+    }
+
+    private boolean isLava(WorldView world, BlockPos pos) {
+        BlockState blockState = world.getBlockState(pos);
+        FluidState fluidState = world.getFluidState(pos);
+
+        return fluidState.getFluid().matchesType(Fluids.LAVA) && blockState.getBlock() instanceof FluidBlock; // target is lava
     }
 }

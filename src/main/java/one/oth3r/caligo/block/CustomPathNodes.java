@@ -13,6 +13,8 @@ public class CustomPathNodes {
             if (state.isOf(Blocks.BIG_DRIPLEAF) && state.get(BigDripleafBlock.TILT).equals(Tilt.NONE)) return PathNodeType.BLOCKED;
             else return null;
         };
+
         LandPathNodeTypesRegistry.register(Blocks.BIG_DRIPLEAF, provider);
+        LandPathNodeTypesRegistry.register(ModBlocks.FROZEN_MAGMA_BLOCK, PathNodeType.DAMAGE_FIRE, PathNodeType.DANGER_FIRE);
     }
 }

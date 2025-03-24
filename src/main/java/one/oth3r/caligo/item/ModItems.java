@@ -60,6 +60,9 @@ public class ModItems {
     public static final Item COMPACTED_SNOW = registerBlockItem("compacted_snow",
             settings -> new BlockItem(ModBlocks.COMPACTED_SNOW, settings));
 
+    public static final Item FROZEN_MAGMA_BLOCK = registerBlockItem("frozen_magma_block",
+            settings -> new BlockItem(ModBlocks.FROZEN_MAGMA_BLOCK, settings));
+
 
     private static Item registerBlockItem(String name, Function<Item.Settings, Item> factory) {
         return registerItem(name, factory, new Item.Settings().useBlockPrefixedTranslationKey());

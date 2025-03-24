@@ -44,6 +44,8 @@ public class IceCavesProviders {
             blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SNOW_PATH);
 
             blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.COMPACTED_SNOW);
+
+            blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.FROZEN_MAGMA_BLOCK);
         }
 
         public static void registerDeepslate(BlockStateModelGenerator blockStateModelGenerator) {

@@ -125,7 +125,19 @@ public class ModBlocks {
             Block::new, AbstractBlock.Settings.create()
                     .mapColor(MapColor.LIGHT_BLUE_GRAY)
                     .requiresTool().strength(0.8F,.8F)
-                    .sounds(BlockSoundGroup.SNOW)); //todo sound
+                    .sounds(BlockSoundGroup.SNOW)
+    ); //todo sound
+
+    public static final Block FROZEN_MAGMA_BLOCK = registerBlock("frozen_magma_block",
+            MagmaBlock::new, AbstractBlock.Settings.create()
+                    .mapColor(MapColor.ORANGE)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresTool().strength(0.5F)
+                    .luminance(state -> 3)
+                    .allowsSpawning((state, world, pos, entityType) -> entityType.isFireImmune())
+                    .postProcess(Blocks::always)
+                    .emissiveLighting(Blocks::always)
+    );
 
 
     private static Block registerBlock(String name, Function<AbstractBlock.Settings, Block> factory, AbstractBlock.Settings settings) {

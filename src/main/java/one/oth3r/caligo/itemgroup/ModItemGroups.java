@@ -48,6 +48,7 @@ public class ModItemGroups {
             itemGroup.add(ModItems.FROSTED_STONE);
             itemGroup.add(ModItems.FROSTED_DEEPSLATE);
             itemGroup.add(ModItems.COMPACTED_SNOW);
+            itemGroup.add(ModItems.FROZEN_MAGMA_BLOCK);
         });
 
         // add the spawn eggs to the spawn eggs tab, make it alphabetical
