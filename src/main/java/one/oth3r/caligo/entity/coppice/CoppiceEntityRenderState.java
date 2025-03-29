@@ -2,11 +2,12 @@ package one.oth3r.caligo.entity.coppice;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.render.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.entity.AnimationState;
 
 @Environment(EnvType.CLIENT)
-public class CoppiceEntityRenderState extends LivingEntityRenderState {
+public class CoppiceEntityRenderState extends ArmedEntityRenderState {
     public CoppiceEntity.Variant variant;
     public boolean isPanicking;
     public boolean hasItem;

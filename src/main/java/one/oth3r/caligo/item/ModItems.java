@@ -12,13 +12,13 @@ import java.util.function.Function;
 
 public class ModItems {
     public static final Item STROW_SPAWN_EGG = registerItem("strow_spawn_egg",
-            settings -> new SpawnEggItem(ModEntities.STROW, 0x808080, 0xa0a0a0, settings), new Item.Settings());
+            settings -> new SpawnEggItem(ModEntities.STROW, settings), new Item.Settings());
 
     public static final Item DEEP_STROW_SPAWN_EGG = registerItem("deep_strow_spawn_egg",
-            settings -> new SpawnEggItem(ModEntities.DEEP_STROW, 0x33333b, 0x797979, settings), new Item.Settings());
+            settings -> new SpawnEggItem(ModEntities.DEEP_STROW, settings), new Item.Settings());
 
     public static final Item COPPICE_SPAWN_EGG = registerItem("coppice_spawn_egg",
-            settings -> new SpawnEggItem(ModEntities.COPPICE, 0x60772b,0xa0a0a0, settings), new Item.Settings());
+            settings -> new SpawnEggItem(ModEntities.COPPICE, settings), new Item.Settings());
 
 
     public static final Item STROW_ESSENCE = registerItem("strow_essence");

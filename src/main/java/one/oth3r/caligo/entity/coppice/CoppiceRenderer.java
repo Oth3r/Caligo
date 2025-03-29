@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import net.minecraft.client.render.entity.AgeableMobEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
+import net.minecraft.client.render.entity.state.ArmedEntityRenderState;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import one.oth3r.caligo.Caligo;
@@ -21,7 +22,7 @@ public class CoppiceRenderer extends AgeableMobEntityRenderer<CoppiceEntity, Cop
 
     public CoppiceRenderer(EntityRendererFactory.Context context) {
         super(context, new CoppiceModel(context.getPart(ModModelLayers.COPPICE)), new CoppiceModel(context.getPart(ModModelLayers.COPPICE_BABY)), .3f);
-        this.addFeature(new HeldItemFeatureRenderer<>(this,context.getItemRenderer()));
+        this.addFeature(new HeldItemFeatureRenderer<>(this));
     }
 
     @Override
@@ -37,6 +38,7 @@ public class CoppiceRenderer extends AgeableMobEntityRenderer<CoppiceEntity, Cop
     @Override
     public void updateRenderState(CoppiceEntity coppiceEntity, CoppiceEntityRenderState coppiceEntityRenderState, float f) {
         super.updateRenderState(coppiceEntity, coppiceEntityRenderState, f);
+        ArmedEntityRenderState.updateRenderState(coppiceEntity, coppiceEntityRenderState, this.itemModelResolver);
 
         coppiceEntityRenderState.variant = coppiceEntity.getVariant();
         coppiceEntityRenderState.hasItem = !coppiceEntity.getMainHandStack().isEmpty();

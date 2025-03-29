@@ -27,39 +27,24 @@ public class CaligoDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(ModWorldGenerator::new);
 
-        // STATUES
-        pack.addProvider(StatueProviders.ItemTag::new);
-        pack.addProvider(StatueProviders.BlockTag::new);
-        pack.addProvider(StatueProviders.Model::new);
-        pack.addProvider(StatueProviders.Recipe::new);
-        pack.addProvider(StatueProviders.BlockLootTable::new);
-
-        // LUMIN CRYSTAL
-        pack.addProvider(LuminCrystalProviders.Model::new);
-        pack.addProvider(LuminCrystalProviders.Recipe::new);
-        pack.addProvider(LuminCrystalProviders.LootTable::new);
-
         // STROW
         pack.addProvider(StrowProviders.EntityLootTable::new);
-        pack.addProvider(StrowProviders.Model::new);
+        pack.addProvider(StrowProviders.ItemTag::new);
+        pack.addProvider(StrowProviders.BlockTag::new);
+        pack.addProvider(StrowProviders.Recipe::new);
+        pack.addProvider(StrowProviders.BlockLootTable::new);
 
         // COPPICE
         pack.addProvider(CoppiceProviders.ItemTag::new);
         pack.addProvider(CoppiceProviders.BlockTag::new);
-        pack.addProvider(CoppiceProviders.Model::new);
         pack.addProvider(CoppiceProviders.EntityLootTable::new);
+        pack.addProvider(CoppiceProviders.Recipe::new);
 
         // LUSH
-        pack.addProvider(LushBiomeProviders.Model::new);
         pack.addProvider(LushBiomeProviders.LootTable::new);
         pack.addProvider(LushBiomeProviders.Recipe::new);
 
-        // ORE REMAINS
-        pack.addProvider(OreRemainsProvider.Recipe::new);
-        pack.addProvider(OreRemainsProvider.Model::new);
-
         // ICE CAVES
-        pack.addProvider(IceCavesProviders.Model::new);
         pack.addProvider(IceCavesProviders.BlockTag::new);
         pack.addProvider(IceCavesProviders.LootTable::new);
     }

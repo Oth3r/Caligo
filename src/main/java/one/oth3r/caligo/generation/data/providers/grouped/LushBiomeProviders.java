@@ -1,13 +1,13 @@
 package one.oth3r.caligo.generation.data.providers.grouped;
 
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
-import net.minecraft.data.client.*;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.RecipeGenerator;
+import net.minecraft.client.data.*;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
@@ -28,16 +28,10 @@ public class LushBiomeProviders {
             ModBlocks.PETUNIA, ModBlocks.PETUNIA_FLOWER, ModBlocks.DRIPLEAF_VINES, ModBlocks.DRIPLEAF_VINES_PLANT,
             ModBlocks.LUSH_MARIGOLD));
 
-    public static class Model extends FabricModelProvider {
-
-        public Model(FabricDataOutput output) {
-            super(output);
-        }
-
-        @Override
-        public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-            blockStateModelGenerator.registerPlantPart(ModBlocks.DRIPLEAF_VINES_PLANT, ModBlocks.DRIPLEAF_VINES, BlockStateModelGenerator.TintType.NOT_TINTED);
-            blockStateModelGenerator.registerPlantPart(ModBlocks.PETUNIA_FLOWER, ModBlocks.PETUNIA, BlockStateModelGenerator.TintType.NOT_TINTED);
+    public static class Model {
+        public static void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+            blockStateModelGenerator.registerPlantPart(ModBlocks.DRIPLEAF_VINES_PLANT, ModBlocks.DRIPLEAF_VINES, BlockStateModelGenerator.CrossType.NOT_TINTED);
+            blockStateModelGenerator.registerPlantPart(ModBlocks.PETUNIA_FLOWER, ModBlocks.PETUNIA, BlockStateModelGenerator.CrossType.NOT_TINTED);
             blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.POTTED_PETUNIA);
 
             // marigold
@@ -52,15 +46,10 @@ public class LushBiomeProviders {
             blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.POTTED_LUSH_MARIGOLD);
         }
 
-        @Override
-        public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-            itemModelGenerator.register(ModItems.DRIPLEAF_VINES, Models.GENERATED);
-            itemModelGenerator.register(ModItems.LUSH_MARIGOLD, Models.GENERATED);
-        }
+        public static void generateItemModels(ItemModelGenerator itemModelGenerator) {
+            itemModelGenerator.register(ModItems.DRIPLEAF_VINES,Models.GENERATED);
 
-        @Override
-        public String getName() {
-            return "Lush Biome "+super.getName();
+            itemModelGenerator.register(ModItems.LUSH_MARIGOLD,Models.GENERATED);
         }
     }
 

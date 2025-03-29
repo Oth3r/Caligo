@@ -2,15 +2,14 @@ package one.oth3r.caligo.generation.data.providers;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import one.oth3r.caligo.block.ModBlocks;
-import one.oth3r.caligo.generation.data.providers.grouped.IceCavesProviders;
-import one.oth3r.caligo.generation.data.providers.grouped.LuminCrystalProviders;
-import one.oth3r.caligo.generation.data.providers.grouped.LushBiomeProviders;
-import one.oth3r.caligo.generation.data.providers.grouped.StatueProviders;
+import one.oth3r.caligo.generation.data.providers.grouped.*;
 import one.oth3r.caligo.item.ModItems;
 
 import java.util.ArrayList;
@@ -29,10 +28,13 @@ public class ModTagProvider {
             // flowers
             getOrCreateTagBuilder(ItemTags.SMALL_FLOWERS)
                     .add(ModItems.LUSH_MARIGOLD);
-            getOrCreateTagBuilder(ItemTags.FLOWERS)
+
+            getOrCreateTagBuilder(ConventionalItemTags.SMALL_FLOWERS)
+                    .add(ModItems.LUSH_MARIGOLD);
+            getOrCreateTagBuilder(ConventionalItemTags.FLOWERS)
                     .add(ModItems.LUSH_MARIGOLD)
                     .add(ModItems.PETUNIA);
-            getOrCreateTagBuilder(ItemTags.TALL_FLOWERS)
+            getOrCreateTagBuilder(ConventionalItemTags.TALL_FLOWERS)
                     .add(ModItems.PETUNIA);
         }
     }
@@ -46,8 +48,7 @@ public class ModTagProvider {
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             /// add all pickaxe mineable tags
             ArrayList<Block> pickaxe_mineable = new ArrayList<>();
-            pickaxe_mineable.addAll(LuminCrystalProviders.PICKAXE_MINEABLE);
-            pickaxe_mineable.addAll(StatueProviders.PICKAXE_MINEABLE);
+            pickaxe_mineable.addAll(StrowProviders.PICKAXE_MINEABLE);
             pickaxe_mineable.addAll(IceCavesProviders.PICKAXE_MINEABLE);
 
             pickaxe_mineable.forEach(block -> getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(block));
@@ -67,7 +68,7 @@ public class ModTagProvider {
 
             // add all needs iron tag
             ArrayList<Block> needs_iron_tool = new ArrayList<>();
-            needs_iron_tool.addAll(StatueProviders.NEEDS_IRON_TOOL);
+            needs_iron_tool.addAll(StrowProviders.NEEDS_IRON_TOOL);
 
             needs_iron_tool.forEach(block -> getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL).add(block));
 
@@ -77,7 +78,7 @@ public class ModTagProvider {
             getOrCreateTagBuilder(BlockTags.FLOWERS)
                     .add(ModBlocks.LUSH_MARIGOLD)
                     .add(ModBlocks.PETUNIA).add(ModBlocks.PETUNIA_FLOWER);
-            getOrCreateTagBuilder(BlockTags.TALL_FLOWERS)
+            getOrCreateTagBuilder(ConventionalBlockTags.TALL_FLOWERS)
                     .add(ModBlocks.PETUNIA).add(ModBlocks.PETUNIA_FLOWER);
 
             // add all overworld carver

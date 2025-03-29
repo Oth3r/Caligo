@@ -6,6 +6,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -27,7 +28,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
 import one.oth3r.caligo.Utl;
@@ -73,6 +73,7 @@ public class StatueBlock extends BlockWithEntity implements BlockEntityProvider,
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+//        if (state.get(HALF) == DoubleBlockHalf.UPPER) return null;
         return new StatueBlockEntity(pos, state);
     }
 
@@ -165,32 +166,52 @@ public class StatueBlock extends BlockWithEntity implements BlockEntityProvider,
         world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER).with(WATERLOGGED, world.getFluidState(pos.up()).getFluid() == Fluids.WATER), Block.NOTIFY_ALL);
     }
 
+    @Override
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+
+
+        return super.onBreak(world, pos, state, player);
+    }
+
     /**
      * drops statue items
      */
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        // if the block is still there, stop
-        if (state.isOf(newState.getBlock())) {
-            return;
-        }
-        // get the block entity
-        StatueBlockEntity statueBlockEntity = (StatueBlockEntity) world.getBlockEntity(pos);
-        // if upper then get the block entity one block down
-        if (state.get(HALF) == DoubleBlockHalf.UPPER) {
-            statueBlockEntity = (StatueBlockEntity) world.getBlockEntity(pos.down());
-        }
-        // if null continue
-        if (statueBlockEntity == null) return;
+        BlockPos bottom, top;
 
-        ItemScatterer.spawn(world, pos, statueBlockEntity.getInv());
+        // if the block is still there, stop
+        if (state.isOf(newState.getBlock())) return;
+        // get the poses
+        if (state.get(HALF) == DoubleBlockHalf.LOWER) {
+            bottom = pos;
+            top = pos.up();
+        } else {
+            bottom = pos.down();
+            top = pos;
+        }
+
+        if (state.isOf(world.getBlockState(bottom).getBlock())) return;
+        if (state.isOf(world.getBlockState(top).getBlock())) return;
+
+        // get the block entity
+        StatueBlockEntity bottomBlockEntity = (StatueBlockEntity) world.getBlockEntity(bottom), topBlockEntity = (StatueBlockEntity) world.getBlockEntity(top);
+
+        // if bottom null continue
+        if (bottomBlockEntity == null) return;
+        ItemScatterer.spawn(world, pos, bottomBlockEntity.getInv());
         world.updateComparators(pos, state.getBlock());
         // drop the xp
-        if (statueBlockEntity.getXp() != 0) {
-            this.dropExperience(world.getServer().getWorld(world.getRegistryKey()), pos, statueBlockEntity.getXp());
+        if (bottomBlockEntity.getXp() != 0) {
+            this.dropExperience(world.getServer().getWorld(world.getRegistryKey()), pos, bottomBlockEntity.getXp());
         }
 
-        super.onStateReplaced(state, world, pos, newState, moved);
+        // remove the top entity
+        if (topBlockEntity != null) world.removeBlockEntity(topBlockEntity.getPos());
+        // remove the bottom entity
+        world.removeBlockEntity(bottomBlockEntity.getPos());
+
+
     }
 
     /**

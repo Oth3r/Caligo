@@ -1,15 +1,15 @@
 package one.oth3r.caligo.generation.data.providers.grouped;
 
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.client.*;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.RecipeGenerator;
+import net.minecraft.client.data.*;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.block.ModBlocks;
@@ -28,14 +28,9 @@ public class IceCavesProviders {
     public static final ArrayList<Block> PICKAXE_MINEABLE = new ArrayList<>(Arrays.asList(ModBlocks.FROSTED_STONE,ModBlocks.FROSTED_DEEPSLATE));
     public static final ArrayList<Block> SHOVEL_MINEABLE = new ArrayList<>(Arrays.asList(ModBlocks.COMPACTED_SNOW));
 
-    public static class Model extends FabricModelProvider {
+    public static class Model {
 
-        public Model(FabricDataOutput output) {
-            super(output);
-        }
-
-        @Override
-        public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+        public static void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
 //            blockStateModelGenerator.registerRandomHorizontalRotations(TexturedModel.CUBE_ALL, ModBlocks.FROSTED_STONE);
 
             registerDeepslate(blockStateModelGenerator);
@@ -68,14 +63,8 @@ public class IceCavesProviders {
                     .createBlockStateWithTwoModelAndRandomInversion(block, identifier, identifier2));
         }
 
-        @Override
-        public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        public static void generateItemModels(ItemModelGenerator itemModelGenerator) {
 //            itemModelGenerator.register(ModItems.F, ModModelProvider.getBlockItem("frosted_deepslate"));
-        }
-
-        @Override
-        public String getName() {
-            return "Ice Caves "+super.getName();
         }
     }
 
