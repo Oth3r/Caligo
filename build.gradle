@@ -34,6 +34,7 @@ repositories {
         }
         filter {includeGroup "curse.maven"}
     }
+    maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
 }
 
 loom {
@@ -63,6 +64,9 @@ dependencies {
 
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
     modImplementation "curse.maven:carpet-349239:${project.carpet_version}"
+
+    // devauth
+    modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:${project.devauth_version}")
 }
 
 tasks.withType(Jar).configureEach {
