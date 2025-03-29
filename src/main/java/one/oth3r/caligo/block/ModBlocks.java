@@ -132,7 +132,7 @@ public class ModBlocks {
             MagmaBlock::new, AbstractBlock.Settings.create()
                     .mapColor(MapColor.ORANGE)
                     .instrument(NoteBlockInstrument.BASEDRUM)
-                    .requiresTool().strength(0.5F)
+                    .requiresTool().strength(4.0F, 10.0F)
                     .luminance(state -> 3)
                     .allowsSpawning((state, world, pos, entityType) -> entityType.isFireImmune())
                     .postProcess(Blocks::always)

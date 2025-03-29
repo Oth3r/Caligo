@@ -1,6 +1,5 @@
 package one.oth3r.caligo.generation.data.providers.grouped;
 
-import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -25,7 +24,8 @@ import java.util.concurrent.CompletableFuture;
 public class IceCavesProviders {
     public static final ArrayList<Block> OVERWORLD_CARVER = new ArrayList<>(Arrays.asList(
             ModBlocks.FROSTED_STONE, ModBlocks.FROSTED_DEEPSLATE));
-    public static final ArrayList<Block> PICKAXE_MINEABLE = new ArrayList<>(Arrays.asList(ModBlocks.FROSTED_STONE,ModBlocks.FROSTED_DEEPSLATE));
+    public static final ArrayList<Block> PICKAXE_MINEABLE = new ArrayList<>(Arrays.asList(ModBlocks.FROSTED_STONE,ModBlocks.FROSTED_DEEPSLATE,
+            ModBlocks.FROZEN_MAGMA_BLOCK));
     public static final ArrayList<Block> SHOVEL_MINEABLE = new ArrayList<>(Arrays.asList(ModBlocks.COMPACTED_SNOW));
 
     public static class Model {
@@ -114,8 +114,11 @@ public class IceCavesProviders {
 
         @Override
         public void generate() {
+            // new stone types
             addDrop(ModBlocks.FROSTED_STONE, block -> this.drops(block,Blocks.COBBLESTONE));
             addDrop(ModBlocks.FROSTED_DEEPSLATE, block -> this.drops(block,Blocks.COBBLED_DEEPSLATE));
+
+            addDrop(ModBlocks.FROZEN_MAGMA_BLOCK);
             addDrop(ModBlocks.COMPACTED_SNOW); // todo compracted snowball drop w/o silk touch
 
         }
