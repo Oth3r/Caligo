@@ -41,7 +41,7 @@ public class ModBlocks {
 
     public static final Block DEEPSLATE_STATUE_BLOCK = registerBlock("deepslate_statue",
             DeepslateStatueBlock::new, AbstractBlock.Settings.create()
-                    .mapColor(MapColor.DEEPSLATE_GRAY).requiresTool().strength(1.5f, 6.0f));
+                    .mapColor(MapColor.DEEPSLATE_GRAY).requiresTool().strength(3f, 6.0f));
 
     public static final BlockEntityType<StatueBlockEntity> STATUE_BLOCK_ENTITY = registerBlockEntity(
             "statue_block_entity", StatueBlockEntity::new, STATUE_BLOCK, DEEPSLATE_STATUE_BLOCK);
