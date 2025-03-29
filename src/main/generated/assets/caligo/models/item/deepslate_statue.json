@@ -1,0 +1,6 @@
+{
+  "parent": "caligo:item/statue_item",
+  "textures": {
+    "layer0": "caligo:item/deepslate_statue"
+  }
+}

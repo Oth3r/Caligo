@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
@@ -38,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
+
+import static net.minecraft.client.data.BlockStateModelGenerator.createSingletonBlockState;
 
 /**
  * providers for the strow, and everything to do with it;
@@ -88,8 +91,12 @@ public class StrowProviders {
     public static class Model {
         public static void generateBlockStateModels(BlockStateModelGenerator bGenerator) {
             // statue
-            bGenerator.registerSingleton(ModBlocks.STATUE_BLOCK, ModModels.Textured.STATUE_BLOCK);
-            bGenerator.registerSingleton(ModBlocks.DEEPSLATE_STATUE_BLOCK, ModModels.Textured.STATUE_BLOCK);
+            bGenerator.blockStateCollector.accept(createSingletonBlockState(ModBlocks.STATUE_BLOCK,
+                    ModModels.STATUE_BLOCK.upload(ModBlocks.STATUE_BLOCK,
+                            new TextureMap().put(TextureKey.ALL, TextureMap.getId(Blocks.STONE)), bGenerator.modelCollector)));
+            bGenerator.blockStateCollector.accept(createSingletonBlockState(ModBlocks.DEEPSLATE_STATUE_BLOCK,
+                    ModModels.STATUE_BLOCK.upload(ModBlocks.DEEPSLATE_STATUE_BLOCK,
+                            new TextureMap().put(TextureKey.ALL, TextureMap.getId(Blocks.DEEPSLATE)), bGenerator.modelCollector)));
 
             // lumin crystal
             bGenerator.blockStateCollector
@@ -100,8 +107,8 @@ public class StrowProviders {
 
         public static void generateItemModels(ItemModelGenerator iGenerator) {
             // statue
-            iGenerator.register(ModItems.STATUE);
-            iGenerator.register(ModItems.DEEPSLATE_STATUE);
+            iGenerator.register(ModItems.STATUE, ModModels.STATUE_ITEM);
+            iGenerator.register(ModItems.DEEPSLATE_STATUE, ModModels.STATUE_ITEM);
 
             // strow essence
             iGenerator.register(ModItems.STROW_ESSENCE, Models.GENERATED);

@@ -1,6 +1,6 @@
 {
   "parent": "caligo:block/statue_block",
   "textures": {
-    "all": "caligo:block/deepslate_statue"
+    "all": "minecraft:block/deepslate"
   }
 }

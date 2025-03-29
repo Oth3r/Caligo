@@ -9,6 +9,8 @@ import java.util.Optional;
 public class ModModels {
     public static final Model STATUE_BLOCK = block("statue_block", TextureKey.ALL);
 
+    public static final Model STATUE_ITEM = item("statue_item", TextureKey.LAYER0);
+
     // helper method for creating Models
     private static Model block(String parent, TextureKey... requiredTextureKeys) {
         return new Model(Optional.of(Identifier.of(Caligo.MOD_ID, "block/" + parent)), Optional.empty(), requiredTextureKeys);
@@ -19,7 +21,7 @@ public class ModModels {
         return new Model(Optional.of(Identifier.of(Caligo.MOD_ID, "block/" + parent)), Optional.of(variant), requiredTextureKeys);
     }
 
-    public static class Textured {
-        public static final TexturedModel.Factory STATUE_BLOCK = TexturedModel.makeFactory(TextureMap::all, ModModels.STATUE_BLOCK);
+    private static Model item(String parent, TextureKey... requiredTextureKeys) {
+        return new Model(Optional.of(Identifier.of(Caligo.MOD_ID, "item/" + parent)), Optional.empty(), requiredTextureKeys);
     }
 }

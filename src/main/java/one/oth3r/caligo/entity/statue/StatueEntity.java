@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 import one.oth3r.caligo.Caligo;
 
 public class StatueEntity extends PathAwareEntity {
-    public static final Identifier TEXTURE_NORMAL = Identifier.of(Caligo.MOD_ID, "textures/block/statue.png");
-    public static final Identifier TEXTURE_DEEP = Identifier.of(Caligo.MOD_ID, "textures/block/deepslate_statue.png");
+    public static final Identifier TEXTURE_NORMAL = Identifier.of(Caligo.MOD_ID, "textures/item/statue.png");
+    public static final Identifier TEXTURE_DEEP = Identifier.of(Caligo.MOD_ID, "textures/item/deepslate_statue.png");
     public StatueEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
     }
