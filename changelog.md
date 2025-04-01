@@ -1,4 +1,5 @@
-# a0.3.0.0.3
-finally updating to 1.21.4, the update to 1.21.5 should be faster!
-* port to 1.21.4
-* fix console missing block error for breaking the statue and reloading the world
+# a0.3.0.0.4
+* statue item model refactor
+* increased deepslate statue hardness to match deepslate block
+* added frozen magma block drop
+* adjusted frozen magma mining speed
