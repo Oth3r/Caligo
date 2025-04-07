@@ -7,7 +7,7 @@ import net.minecraft.client.render.entity.animation.Transformation;
 
 public class CoppiceAnimations {
         public static final Animation IDLE = Animation.Builder.create(1.5833F).looping()
-                .addBoneAnimation("body", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("body", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.75F, AnimationHelper.createTranslationalVector(0.0F, -0.1F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(1.5F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR)
@@ -46,7 +46,7 @@ public class CoppiceAnimations {
                 .build();
 
         public static final Animation WALK = Animation.Builder.create(0.5F).looping()
-                .addBoneAnimation("root", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("root", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.125F, AnimationHelper.createTranslationalVector(0.0F, -0.2F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.25F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
@@ -80,7 +80,7 @@ public class CoppiceAnimations {
                         new Keyframe(0.375F, AnimationHelper.createRotationalVector(-1.25F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.5F, AnimationHelper.createRotationalVector(-27.5F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("left_leg", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("left_leg", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.125F, AnimationHelper.createTranslationalVector(0.0F, 0.5F, 1.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.25F, AnimationHelper.createTranslationalVector(0.0F, -0.025F, 0.0F), Transformation.Interpolations.CUBIC),
@@ -92,7 +92,7 @@ public class CoppiceAnimations {
                         new Keyframe(0.375F, AnimationHelper.createRotationalVector(-7.5F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.5F, AnimationHelper.createRotationalVector(27.5F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("right_leg", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("right_leg", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.125F, AnimationHelper.createTranslationalVector(0.0F, 0.17F, 0.17F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.25F, AnimationHelper.createTranslationalVector(0.0F, -0.07F, 0.33F), Transformation.Interpolations.CUBIC),
@@ -137,7 +137,7 @@ public class CoppiceAnimations {
                         new Keyframe(0.1667F, AnimationHelper.createRotationalVector(-10.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.3333F, AnimationHelper.createRotationalVector(-10.0F, -6.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("head", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("head", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 1.0F), Transformation.Interpolations.LINEAR)
                 ))
                 .addBoneAnimation("left_leg", new Transformation(Transformation.Targets.ROTATE,
@@ -147,7 +147,7 @@ public class CoppiceAnimations {
                         new Keyframe(0.25F, AnimationHelper.createRotationalVector(-32.25F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
                         new Keyframe(0.3333F, AnimationHelper.createRotationalVector(40.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR)
                 ))
-                .addBoneAnimation("left_leg", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("left_leg", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0833F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
                         new Keyframe(0.1667F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
                         new Keyframe(0.25F, AnimationHelper.createTranslationalVector(0.0F, 0.5F, 1.7F), Transformation.Interpolations.LINEAR),
@@ -160,12 +160,12 @@ public class CoppiceAnimations {
                         new Keyframe(0.25F, AnimationHelper.createRotationalVector(0.75F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.3333F, AnimationHelper.createRotationalVector(-52.5F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("right_leg", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("right_leg", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.0833F, AnimationHelper.createTranslationalVector(0.0F, 0.5F, 1.6F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.1667F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("root", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("root", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.3F, 0.0F), Transformation.Interpolations.LINEAR),
                         new Keyframe(0.0833F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.LINEAR),
                         new Keyframe(0.1667F, AnimationHelper.createTranslationalVector(0.0F, 0.3F, 0.0F), Transformation.Interpolations.LINEAR),
@@ -234,7 +234,7 @@ public class CoppiceAnimations {
                         new Keyframe(0.25F, AnimationHelper.createRotationalVector(0.0502F, 0.9046F, 0.7232F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.3333F, AnimationHelper.createRotationalVector(-45.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("left_leg", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("left_leg", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.0833F, AnimationHelper.createTranslationalVector(0.0F, 0.7F, 0.6F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.1667F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
@@ -246,12 +246,12 @@ public class CoppiceAnimations {
                         new Keyframe(0.25F, AnimationHelper.createRotationalVector(-15.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.3333F, AnimationHelper.createRotationalVector(65.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("right_leg", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("right_leg", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.1667F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.25F, AnimationHelper.createTranslationalVector(0.0F, 0.5F, 0.6F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.3333F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("root", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("root", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.4F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.0833F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.1667F, AnimationHelper.createTranslationalVector(0.0F, 0.4F, 0.0F), Transformation.Interpolations.CUBIC),
@@ -265,7 +265,7 @@ public class CoppiceAnimations {
                         new Keyframe(0.25F, AnimationHelper.createRotationalVector(12.5F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(0.3333F, AnimationHelper.createRotationalVector(15.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("head", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("head", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.0F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, -2.0F), Transformation.Interpolations.LINEAR)
                 ))
                 .addBoneAnimation("stem", new Transformation(Transformation.Targets.ROTATE,
@@ -342,7 +342,7 @@ public class CoppiceAnimations {
                         new Keyframe(1.5F, AnimationHelper.createRotationalVector(-27.5F, 27.5F, -47.5F), Transformation.Interpolations.CUBIC),
                         new Keyframe(1.7917F, AnimationHelper.createRotationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC)
                 ))
-                .addBoneAnimation("right_arm", new Transformation(Transformation.Targets.TRANSLATE,
+                .addBoneAnimation("right_arm", new Transformation(Transformation.Targets.MOVE_ORIGIN,
                         new Keyframe(0.9167F, AnimationHelper.createTranslationalVector(0.0F, 0.0F, 0.0F), Transformation.Interpolations.CUBIC),
                         new Keyframe(1.0417F, AnimationHelper.createTranslationalVector(-0.5F, 0.0F, 2.33F), Transformation.Interpolations.CUBIC),
                         new Keyframe(1.1667F, AnimationHelper.createTranslationalVector(-1.0F, 0.0F, 2.25F), Transformation.Interpolations.CUBIC),

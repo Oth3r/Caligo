@@ -11,6 +11,7 @@ import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import one.oth3r.caligo.block.statue.deepslate.DeepslateStatueBlock;
 import one.oth3r.caligo.entity.statue.StatueEntity;
 import one.oth3r.caligo.entity.statue.states.StatueCrouchModel;
@@ -23,7 +24,7 @@ public class StatueBlockEntityRenderer implements BlockEntityRenderer<StatueBloc
     public StatueBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {}
 
     @Override
-    public void render(StatueBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(StatueBlockEntity entity, float tickProgress, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, Vec3d cameraPos) {
         BlockState blockState = entity.getCachedState();
         matrices.push();
         matrices.translate(0.5, 1.5, 0.5);

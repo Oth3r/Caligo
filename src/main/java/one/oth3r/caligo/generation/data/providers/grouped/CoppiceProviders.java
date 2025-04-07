@@ -114,7 +114,7 @@ public class CoppiceProviders {
 
         public static void generateItemModels(ItemModelGenerator itemModelGenerator) {
             // SPAWN EGGS
-            itemModelGenerator.registerSpawnEgg(ModItems.COPPICE_SPAWN_EGG, 0x60772b,0xa0a0a0);
+            itemModelGenerator.register(ModItems.COPPICE_SPAWN_EGG, Models.GENERATED);
             // ore remains
             itemModelGenerator.register(ModItems.SMALL_ORE_REMAINS, Models.GENERATED);
             itemModelGenerator.register(ModItems.ORE_REMAINS, Models.GENERATED);

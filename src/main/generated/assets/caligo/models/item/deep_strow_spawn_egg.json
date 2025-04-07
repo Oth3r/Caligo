@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "caligo:item/deep_strow_spawn_egg"
+  }
+}

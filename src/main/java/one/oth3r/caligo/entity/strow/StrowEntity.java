@@ -1,5 +1,9 @@
 package one.oth3r.caligo.entity.strow;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.component.ComponentMap;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ToolComponent;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.Goal;
@@ -16,7 +20,6 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -165,7 +168,11 @@ public class StrowEntity extends HostileEntity implements Angerable {
         if (attacker instanceof PlayerEntity player) {
             ItemStack heldItem = player.getMainHandStack();
             // full damage if pickaxe, else not
-            return heldItem.getItem() instanceof PickaxeItem;
+            ComponentMap itemComponents = heldItem.getItem().getComponents();
+            if (itemComponents.contains(DataComponentTypes.TOOL)) {
+                ToolComponent component = itemComponents.get(DataComponentTypes.TOOL);
+                if (component != null) return component.isCorrectForDrops(Blocks.STONE.getDefaultState());
+            }
         }
         return false;
     }

@@ -177,11 +177,11 @@ public class StatueBlock extends BlockWithEntity implements BlockEntityProvider,
      * drops statue items
      */
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+    public void onStateReplaced(BlockState state, ServerWorld world, BlockPos pos, boolean moved) {
         BlockPos bottom, top;
 
         // if the block is still there, stop
-        if (state.isOf(newState.getBlock())) return;
+        if (state.isOf(world.getBlockState(pos).getBlock())) return;
         // get the poses
         if (state.get(HALF) == DoubleBlockHalf.LOWER) {
             bottom = pos;

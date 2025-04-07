@@ -1,6 +1,8 @@
 package one.oth3r.caligo.entity.coppice;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -14,6 +16,8 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.StringIdentifiable;
@@ -31,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.IntFunction;
 
-public class CoppiceEntity extends AnimalEntity implements InventoryOwner, VariantHolder<CoppiceEntity.Variant> {
+public class CoppiceEntity extends AnimalEntity implements InventoryOwner {
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
@@ -121,7 +125,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setVariant(Variant.byId(nbt.getInt("Variant")));
+        this.setVariant(Variant.byId(nbt.getInt("Variant").orElse(Variant.DEFAULT.getId())));
     }
 
     // ANIMATION THINGS
@@ -304,12 +308,10 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
         return ModSounds.COPPICE_DEATH;
     }
 
-    @Override
     public void setVariant(Variant variant) {
         this.dataTracker.set(VARIANT, variant.getId());
     }
 
-    @Override
     public Variant getVariant() {
         return Variant.byId(this.dataTracker.get(VARIANT));
     }
@@ -322,9 +324,12 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
         PETUNIA(4, "petunia"),
         CHERRY(5, "cherry");
 
-        private static final IntFunction<CoppiceEntity.Variant> BY_ID = ValueLists.createIdToValueFunction(
-                CoppiceEntity.Variant::getId, values(), ValueLists.OutOfBoundsHandling.ZERO
+        public static final Variant DEFAULT = LUSH;
+        private static final IntFunction<Variant> ID_MAPPER = ValueLists.createIndexToValueFunction(
+                Variant::getId, values(), ValueLists.OutOfBoundsHandling.ZERO
         );
+        public static final PacketCodec<ByteBuf, Variant> PACKET_CODEC = PacketCodecs.indexed(ID_MAPPER, Variant::getId);
+        public static final Codec<Variant> CODEC = StringIdentifiable.createCodec(Variant::values);
 
         private final int id;
         private final String name;
@@ -348,7 +353,7 @@ public class CoppiceEntity extends AnimalEntity implements InventoryOwner, Varia
         }
 
         public static CoppiceEntity.Variant byId(int id) {
-            return BY_ID.apply(id);
+            return ID_MAPPER.apply(id);
         }
 
         public static Variant getRandom() {

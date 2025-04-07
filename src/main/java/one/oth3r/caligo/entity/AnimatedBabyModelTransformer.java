@@ -16,8 +16,8 @@ public record AnimatedBabyModelTransformer(
     public ModelData apply(ModelData modelData) {
         float headScale = this.scaleHead ? this.babyHeadScale : 1.0F;
         float bodyScale = this.babyBodyScale;
-        UnaryOperator<ModelTransform> headScaling = modelTransform -> modelTransform.addPivot(0.0F, this.babyYHeadOffset, this.babyZHeadOffset).scaled(headScale);
-        UnaryOperator<ModelTransform> bodyScaling = modelTransform -> modelTransform.addPivot(0.0F, this.bodyYOffset, 0.0F).scaled(bodyScale);
+        UnaryOperator<ModelTransform> headScaling = modelTransform -> modelTransform.moveOrigin(0.0F, this.babyYHeadOffset, this.babyZHeadOffset).scaled(headScale);
+        UnaryOperator<ModelTransform> bodyScaling = modelTransform -> modelTransform.moveOrigin(0.0F, this.bodyYOffset, 0.0F).scaled(bodyScale);
 
         for (Map.Entry<String, ModelPartData> entry : modelData.getRoot().getChild("root").getChildren()) {
             String entryName = entry.getKey();

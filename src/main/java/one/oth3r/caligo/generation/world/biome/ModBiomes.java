@@ -49,7 +49,7 @@ public class ModBiomes {
         DefaultBiomeFeatures.addDefaultDisks(biomeBuilder);
 
         DefaultBiomeFeatures.addDefaultMushrooms(biomeBuilder);
-        DefaultBiomeFeatures.addDefaultVegetation(biomeBuilder);
+        DefaultBiomeFeatures.addDefaultVegetation(biomeBuilder, false);
 
         biomeBuilder.feature(GenerationStep.Feature.UNDERGROUND_DECORATION, UndergroundPlacedFeatures.POINTED_DRIPSTONE);
         biomeBuilder.feature(GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.ICE_CAVES_SNOW_FLOOR);

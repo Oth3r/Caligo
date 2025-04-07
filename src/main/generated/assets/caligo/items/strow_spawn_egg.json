@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -8355712
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -6250336
-      }
-    ]
+    "model": "caligo:item/strow_spawn_egg"
   }
 }

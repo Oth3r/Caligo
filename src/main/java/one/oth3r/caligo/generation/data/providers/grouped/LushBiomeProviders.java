@@ -1,6 +1,5 @@
 package one.oth3r.caligo.generation.data.providers.grouped;
 
-import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -43,7 +42,6 @@ public class LushBiomeProviders {
             };
 
             blockStateModelGenerator.blockStateCollector.accept(ModModelProvider.createFlowerBlockState(ModBlocks.LUSH_MARIGOLD, marigold));
-            blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.POTTED_LUSH_MARIGOLD);
         }
 
         public static void generateItemModels(ItemModelGenerator itemModelGenerator) {

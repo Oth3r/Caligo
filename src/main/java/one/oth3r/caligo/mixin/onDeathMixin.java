@@ -6,6 +6,7 @@ import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -82,10 +83,14 @@ public abstract class onDeathMixin extends PlayerEntity {
             DefaultedList<ItemStack> items = DefaultedList.of();
             int xp = this.totalExperience;
             this.vanishCursedItems();
-            items.addAll(this.getInventory().main);
-            items.addAll(this.getInventory().armor);
-            items.addAll(this.getInventory().offHand);
-            this.getInventory().clear();
+            PlayerInventory inventory = this.getInventory();
+            items.addAll(inventory.getMainStacks());
+            // get equipment and off hand
+            for (int i = PlayerInventory.MAIN_SIZE; i < PlayerInventory.OFF_HAND_SLOT; i++) {
+                items.add(inventory.getStack(i));
+            }
+
+            inventory.clear();
             this.experienceLevel = 0;
             
             StatueBlockEntity statueBlockEntity = (StatueBlockEntity) world.getBlockEntity(pos);

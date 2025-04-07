@@ -86,17 +86,17 @@ public class CryonixEntity extends ZombieEntity {
                         velZ = this.random.nextInt(1) / 100.;
                 if (this.isCracked()) {
                     if (this.random.nextBoolean()) {
-                        word.addParticle(
+                        word.addParticleClient(
                                 ParticleTypes.FALLING_WATER,
                                 x, y, z, velX, velY, velZ);
                     } else {
-                        word.addParticle(
+                        word.addParticleClient(
                                 ParticleTypes.FALLING_DRIPSTONE_WATER,
                                 x, y, z, velX, velY, velZ);
                     }
 
                 } else {
-                    word.addParticle(
+                    word.addParticleClient(
                             ModParticles.SNOWFLAKE_PARTICLE,
                             x, y, z, velX, velY, velZ);
                 }

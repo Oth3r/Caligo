@@ -8,7 +8,7 @@ import net.minecraft.client.render.entity.animation.Transformation;
 public class StrowAnimations {
     public static final Animation IDLE_ACTIVE = Animation.Builder.create(2f).looping()
             .addBoneAnimation("body",
-                    new Transformation(Transformation.Targets.TRANSLATE,
+                    new Transformation(Transformation.Targets.MOVE_ORIGIN,
                             new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.CUBIC),
                             new Keyframe(1f, AnimationHelper.createTranslationalVector(0f, -0.15f, 0f),
@@ -107,7 +107,7 @@ public class StrowAnimations {
                                     Transformation.Interpolations.LINEAR))).build();
     public static final Animation PECK = Animation.Builder.create(0.375f)
             .addBoneAnimation("head",
-                    new Transformation(Transformation.Targets.TRANSLATE,
+                    new Transformation(Transformation.Targets.MOVE_ORIGIN,
                             new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(0.041676664f, AnimationHelper.createTranslationalVector(-0.5f, 0.4f, 0f),
@@ -131,7 +131,7 @@ public class StrowAnimations {
                             new Keyframe(0.3433333f, AnimationHelper.createScalingVector(1f, 1f, 1f),
                                     Transformation.Interpolations.LINEAR)))
             .addBoneAnimation("body",
-                    new Transformation(Transformation.Targets.TRANSLATE,
+                    new Transformation(Transformation.Targets.MOVE_ORIGIN,
                             new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(0.041676664f, AnimationHelper.createTranslationalVector(-0.3f, 0.2f, 0f),

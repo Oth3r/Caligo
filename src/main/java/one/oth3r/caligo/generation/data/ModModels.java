@@ -7,6 +7,8 @@ import one.oth3r.caligo.Caligo;
 import java.util.Optional;
 
 public class ModModels {
+    public static final Model FROSTED_STONE = block("frosted_stone", TextureKey.ALL);
+    public static final Model FROSTED_DEEPSLATE = block("frosted_deepslate", TextureKey.TOP);
     public static final Model STATUE_BLOCK = block("statue_block", TextureKey.ALL);
 
     public static final Model STATUE_ITEM = item("statue_item", TextureKey.LAYER0);

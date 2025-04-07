@@ -36,21 +36,21 @@ public class CoppiceModel extends EntityModel<CoppiceEntityRenderState> implemen
 		ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.of(0.0F, 24.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
 		ModelPartData head = root.addChild("head", ModelPartBuilder.create().uv(0, 22).cuboid(-3.0F, -6.0F, -3.0F, 6.0F, 6.0F, 6.0F, new Dilation(0.0F))
-				.uv(4, 2).cuboid(-5.0F, -9.0F, -5.0F, 10.0F, 10.0F, 9.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -8.0F, 0.0F));
+				.uv(4, 2).cuboid(-5.0F, -9.0F, -5.0F, 10.0F, 10.0F, 9.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, -8.0F, 0.0F));
 
-		ModelPartData stem = head.addChild("stem", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -9.0F, 0.0F));
+		ModelPartData stem = head.addChild("stem", ModelPartBuilder.create(), ModelTransform.origin(0.0F, -9.0F, 0.0F));
 
 		ModelPartData cube_r1 = stem.addChild("cube_r1", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, -3.1416F, -0.7854F, 3.1416F));
 
 		ModelPartData cube_r2 = stem.addChild("cube_r2", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
 
-		ModelPartData stem1 = stem.addChild("stem1", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -3.0F, 0.0F));
+		ModelPartData stem1 = stem.addChild("stem1", ModelPartBuilder.create(), ModelTransform.origin(0.0F, -3.0F, 0.0F));
 
 		ModelPartData cube_r3 = stem1.addChild("cube_r3", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
 
 		ModelPartData cube_r4 = stem1.addChild("cube_r4", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, -3.1416F, -0.7854F, 3.1416F));
 
-		ModelPartData stem2 = stem1.addChild("stem2", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -3.0F, 0.0F));
+		ModelPartData stem2 = stem1.addChild("stem2", ModelPartBuilder.create(), ModelTransform.origin(0.0F, -3.0F, 0.0F));
 
 		ModelPartData cube_r5 = stem2.addChild("cube_r5", ModelPartBuilder.create().uv(45, 13).cuboid(-0.5F, -3.0F, 0.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, -3.1416F, -0.7854F, 3.1416F));
 
@@ -64,15 +64,15 @@ public class CoppiceModel extends EntityModel<CoppiceEntityRenderState> implemen
 
 		ModelPartData leaf3 = stem2.addChild("leaf3", ModelPartBuilder.create().uv(7, 39).cuboid(0.0F, 0.0F, -0.025F, 3.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-0.375F, -3.0F, 0.325F, 2.5586F, -0.5032F, -2.2023F));
 
-		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(18, 22).cuboid(-2.0F, -4.0F, -1.0F, 4.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -4.0F, 0.0F));
+		ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(18, 22).cuboid(-2.0F, -4.0F, -1.0F, 4.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.origin(0.0F, -4.0F, 0.0F));
 
-		ModelPartData left_arm = body.addChild("left_arm", ModelPartBuilder.create().uv(30, 22).cuboid(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(-2.5F, -4.0F, 0.0F));
+		ModelPartData left_arm = body.addChild("left_arm", ModelPartBuilder.create().uv(30, 22).cuboid(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.origin(-2.5F, -4.0F, 0.0F));
 
-		ModelPartData right_arm = body.addChild("right_arm", ModelPartBuilder.create().uv(0, 22).cuboid(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(2.5F, -4.0F, 0.0F));
+		ModelPartData right_arm = body.addChild("right_arm", ModelPartBuilder.create().uv(0, 22).cuboid(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.origin(2.5F, -4.0F, 0.0F));
 
-		ModelPartData left_leg = root.addChild("left_leg", ModelPartBuilder.create().uv(24, 28).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(-1.0F, -4.0F, 0.0F));
+		ModelPartData left_leg = root.addChild("left_leg", ModelPartBuilder.create().uv(24, 28).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.origin(-1.0F, -4.0F, 0.0F));
 
-		ModelPartData right_leg = root.addChild("right_leg", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(1.0F, -4.0F, 0.0F));
+		ModelPartData right_leg = root.addChild("right_leg", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.origin(1.0F, -4.0F, 0.0F));
 		return TexturedModelData.of(modelData, 64, 64);
 	}
 	public static TexturedModelData getBabyTexturedModelData() {
@@ -84,20 +84,20 @@ public class CoppiceModel extends EntityModel<CoppiceEntityRenderState> implemen
 		super.setAngles(state);
 
 		this.head.pitch = state.pitch * (float) (Math.PI / 180.0);
-		this.head.yaw = state.yawDegrees * (float) (Math.PI / 180.0);
+		this.head.yaw = state.relativeHeadYaw * (float) (Math.PI / 180.0);
 
 
 		// if holding
 		if (state.hasItem) {
-			animateWalking(CoppiceAnimations.WALK_HOLDING, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
+			animateWalking(CoppiceAnimations.WALK_HOLDING, state.limbSwingAnimationProgress, state.limbSwingAmplitude, 3f, 3f);
 		}
 		// else if panicking
 		else if (state.isPanicking) {
-			animateWalking(CoppiceAnimations.PANIC, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
+			animateWalking(CoppiceAnimations.PANIC, state.limbSwingAnimationProgress, state.limbSwingAmplitude, 3f, 3f);
 		}
 		// else normal
 		else {
-			animateWalking(CoppiceAnimations.WALK, state.limbFrequency, state.limbAmplitudeMultiplier, 3f, 3f);
+			animateWalking(CoppiceAnimations.WALK, state.limbSwingAnimationProgress, state.limbSwingAmplitude, 3f, 3f);
 		}
 
 		animate(state.eatingAnimationState, CoppiceAnimations.EATING, state.age, 1f);
@@ -108,8 +108,8 @@ public class CoppiceModel extends EntityModel<CoppiceEntityRenderState> implemen
 
 	@Override
 	public void setArmAngle(Arm arm, MatrixStack matrices) {
-		this.root.rotate(matrices);
-		this.body.rotate(matrices);
+//		this.root.rotate(matrices);
+//		this.body.rotate(matrices);
 
 		matrices.translate(0f,-.16f,0);
 		matrices.multiply(RotationAxis.POSITIVE_X.rotation(this.leftArm.pitch));

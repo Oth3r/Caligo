@@ -9,7 +9,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DataPool;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.VerticalSurfaceType;
@@ -53,7 +53,7 @@ public class ModConfiguredFeatures {
                 new BlockColumnFeatureConfig(
                         Arrays.asList(
                                 new BlockColumnFeatureConfig.Layer(
-                                        new WeightedListIntProvider(new DataPool.Builder<IntProvider>()
+                                        new WeightedListIntProvider(new Pool.Builder<IntProvider>()
                                                 .add(UniformIntProvider.create(0,23),2)
                                                 .add(UniformIntProvider.create(0,2),3)
                                                 .add(UniformIntProvider.create(0,6),10)
@@ -83,7 +83,7 @@ public class ModConfiguredFeatures {
                         new BlockColumnFeatureConfig(
                                 Arrays.asList(
                                         new BlockColumnFeatureConfig.Layer(
-                                                new WeightedListIntProvider(new DataPool.Builder<IntProvider>()
+                                                new WeightedListIntProvider(new Pool.Builder<IntProvider>()
                                                         .add(UniformIntProvider.create(0,3),1)
                                                         .add(UniformIntProvider.create(0,1),10)
                                                         .build()

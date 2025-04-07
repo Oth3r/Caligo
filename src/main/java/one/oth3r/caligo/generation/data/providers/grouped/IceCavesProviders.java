@@ -7,16 +7,18 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.data.*;
+import net.minecraft.client.render.model.json.ModelVariant;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.util.Identifier;
 import one.oth3r.caligo.block.ModBlocks;
 import one.oth3r.caligo.tag.ModBlockTags;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
+
+import static net.minecraft.client.data.BlockStateModelGenerator.createModelVariant;
 
 /**
  * everything added to the ice caves biome
@@ -33,8 +35,8 @@ public class IceCavesProviders {
         public static void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
 //            blockStateModelGenerator.registerRandomHorizontalRotations(TexturedModel.CUBE_ALL, ModBlocks.FROSTED_STONE);
 
-            registerDeepslate(blockStateModelGenerator);
-            registerStone(blockStateModelGenerator);
+            registerFrostedDeepslate(blockStateModelGenerator);
+            registerFrostedStone(blockStateModelGenerator);
 
             blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.SNOW_PATH);
 
@@ -43,29 +45,26 @@ public class IceCavesProviders {
             blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.FROZEN_MAGMA_BLOCK);
         }
 
-        public static void registerDeepslate(BlockStateModelGenerator blockStateModelGenerator) {
+        public static void registerFrostedDeepslate(BlockStateModelGenerator blockStateModelGenerator) {
             Block block = ModBlocks.FROSTED_DEEPSLATE;
-            Identifier modelId = ModelIds.getBlockModelId(block);
-            Identifier identifier = Models.CUBE_COLUMN.upload(block, TextureMap.sideAndEndForTop(block), blockStateModelGenerator.modelCollector);
-            Identifier identifier2 = Models.CUBE_COLUMN_MIRRORED.upload(block, TextureMap.sideAndEndForTop(block), blockStateModelGenerator.modelCollector);
-
+            TextureMap map = TextureMap.sideAndEndForTop(block);
+            ModelVariant modelVariant = createModelVariant(Models.CUBE_COLUMN.upload(block, map, blockStateModelGenerator.modelCollector));
             blockStateModelGenerator.blockStateCollector
-                    .accept(BlockStateModelGenerator.createBlockStateWithTwoModelAndRandomInversion(block, identifier, identifier2)
-                            .coordinate(BlockStateModelGenerator.createAxisRotatedVariantMap()));
+                    .accept(BlockStateModelGenerator.createDeepslateState(block,
+                            modelVariant,TextureMap.sideAndEndForTop(block),blockStateModelGenerator.modelCollector));
+
         }
 
-        public static void registerStone(BlockStateModelGenerator blockStateModelGenerator) {
+        public static void registerFrostedStone(BlockStateModelGenerator blockStateModelGenerator) {
             Block block = ModBlocks.FROSTED_STONE;
-            Identifier identifier = Models.CUBE_ALL.upload(block, TextureMap.all(block), blockStateModelGenerator.modelCollector);
-            Identifier identifier2 = Models.CUBE_MIRRORED_ALL.upload(block, TextureMap.all(block), blockStateModelGenerator.modelCollector);
-
-            blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator
-                    .createBlockStateWithTwoModelAndRandomInversion(block, identifier, identifier2));
+            TextureMap map = TextureMap.all(block);
+            ModelVariant modelVariant = createModelVariant(Models.CUBE_ALL.upload(block, map, blockStateModelGenerator.modelCollector));
+            blockStateModelGenerator.blockStateCollector
+                    .accept(BlockStateModelGenerator.createStoneState(block,
+                            modelVariant,map,blockStateModelGenerator.modelCollector));
         }
 
-        public static void generateItemModels(ItemModelGenerator itemModelGenerator) {
-//            itemModelGenerator.register(ModItems.F, ModModelProvider.getBlockItem("frosted_deepslate"));
-        }
+        public static void generateItemModels(ItemModelGenerator itemModelGenerator) {}
     }
 
     public static class BlockTag extends FabricTagProvider.BlockTagProvider {

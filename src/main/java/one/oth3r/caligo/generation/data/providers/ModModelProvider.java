@@ -5,16 +5,20 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.*;
+import net.minecraft.client.render.model.json.ModelVariant;
 import net.minecraft.util.Identifier;
 import one.oth3r.caligo.Caligo;
 import one.oth3r.caligo.generation.data.providers.grouped.CoppiceProviders;
 import one.oth3r.caligo.generation.data.providers.grouped.IceCavesProviders;
 import one.oth3r.caligo.generation.data.providers.grouped.LushBiomeProviders;
 import one.oth3r.caligo.generation.data.providers.grouped.StrowProviders;
-import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
+
+import static net.minecraft.client.data.BlockStateModelGenerator.*;
 
 public class ModModelProvider extends FabricModelProvider {
     public ModModelProvider(FabricDataOutput output) {
@@ -37,16 +41,16 @@ public class ModModelProvider extends FabricModelProvider {
         IceCavesProviders.Model.generateItemModels(itemModelGenerator);
     }
 
-    public static VariantsBlockStateSupplier createFlowerBlockState(Block block, @NotNull Identifier... modelIds) {
-        BlockStateVariant[] variants = new BlockStateVariant[]{};
-        // create random rotations for every model id
-        for (Identifier modelID : modelIds) {
-            BlockStateVariant[] random = BlockStateModelGenerator.createModelVariantWithRandomHorizontalRotations(modelID);
-
-            variants = ArrayUtils.addAll(variants,random);
+    public static BlockModelDefinitionCreator createFlowerBlockState(Block block, @NotNull Identifier... modelIds) {
+        ModelVariant[] variants = Arrays.stream(modelIds).map(ModelVariant::new).toArray(ModelVariant[]::new);
+        ArrayList<ModelVariant> variantList = new ArrayList<>();
+        for (ModelVariant variant : variants) {
+            variantList.add(variant);
+            variantList.add(variant.with(ROTATE_Y_90));
+            variantList.add(variant.with(ROTATE_Y_180));
+            variantList.add(variant.with(ROTATE_Y_270));
         }
-
-        return VariantsBlockStateSupplier.create(block, variants);
+        return VariantsBlockModelDefinitionCreator.of(block, BlockStateModelGenerator.createWeightedVariant(variantList.toArray(ModelVariant[]::new)));
     }
 
     public static final Model SPAWN_EGG = new Model(Optional.of(Identifier.ofVanilla("item/template_spawn_egg")), Optional.empty());

@@ -92,17 +92,16 @@ public class StrowProviders {
         public static void generateBlockStateModels(BlockStateModelGenerator bGenerator) {
             // statue
             bGenerator.blockStateCollector.accept(createSingletonBlockState(ModBlocks.STATUE_BLOCK,
+                    BlockStateModelGenerator.createWeightedVariant(
                     ModModels.STATUE_BLOCK.upload(ModBlocks.STATUE_BLOCK,
-                            new TextureMap().put(TextureKey.ALL, TextureMap.getId(Blocks.STONE)), bGenerator.modelCollector)));
+                            new TextureMap().put(TextureKey.ALL, TextureMap.getId(Blocks.STONE)), bGenerator.modelCollector))));
             bGenerator.blockStateCollector.accept(createSingletonBlockState(ModBlocks.DEEPSLATE_STATUE_BLOCK,
+                    BlockStateModelGenerator.createWeightedVariant(
                     ModModels.STATUE_BLOCK.upload(ModBlocks.DEEPSLATE_STATUE_BLOCK,
-                            new TextureMap().put(TextureKey.ALL, TextureMap.getId(Blocks.DEEPSLATE)), bGenerator.modelCollector)));
+                            new TextureMap().put(TextureKey.ALL, TextureMap.getId(Blocks.DEEPSLATE)), bGenerator.modelCollector))));
 
             // lumin crystal
-            bGenerator.blockStateCollector
-                    .accept(VariantsBlockStateSupplier.create(ModBlocks.LUMIN_CRYSTAL_BLOCK,
-                                    BlockStateVariant.create().put(VariantSettings.MODEL, Identifier.of(Caligo.MOD_ID,"block/lumin_crystal")))
-                            .coordinate(bGenerator.createUpDefaultFacingVariantMap()));
+            bGenerator.registerAmethyst(ModBlocks.LUMIN_CRYSTAL_BLOCK);
         }
 
         public static void generateItemModels(ItemModelGenerator iGenerator) {
@@ -114,8 +113,8 @@ public class StrowProviders {
             iGenerator.register(ModItems.STROW_ESSENCE, Models.GENERATED);
 
             // SPAWN EGGS
-            iGenerator.registerSpawnEgg(ModItems.STROW_SPAWN_EGG, 0x808080, 0xa0a0a0);
-            iGenerator.registerSpawnEgg(ModItems.DEEP_STROW_SPAWN_EGG, 0x33333b, 0x797979);
+            iGenerator.register(ModItems.STROW_SPAWN_EGG, Models.GENERATED);
+            iGenerator.register(ModItems.DEEP_STROW_SPAWN_EGG, Models.GENERATED);
 
             // lumin crystal
             iGenerator.register(ModItems.LUMIN_CRYSTAL, ModModelProvider.getBlockItem("lumin_crystal"));
