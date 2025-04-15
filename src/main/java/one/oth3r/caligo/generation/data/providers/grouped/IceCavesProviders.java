@@ -12,6 +12,7 @@ import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.registry.RegistryWrapper;
 import one.oth3r.caligo.block.ModBlocks;
+import one.oth3r.caligo.item.ModItems;
 import one.oth3r.caligo.tag.ModBlockTags;
 
 import java.util.ArrayList;
@@ -64,7 +65,9 @@ public class IceCavesProviders {
                             modelVariant,map,blockStateModelGenerator.modelCollector));
         }
 
-        public static void generateItemModels(ItemModelGenerator itemModelGenerator) {}
+        public static void generateItemModels(ItemModelGenerator itemModelGenerator) {
+            itemModelGenerator.register(ModItems.CRYONIX_SPAWN_EGG, Models.GENERATED);
+        }
     }
 
     public static class BlockTag extends FabricTagProvider.BlockTagProvider {

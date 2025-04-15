@@ -20,6 +20,9 @@ public class ModItems {
     public static final Item COPPICE_SPAWN_EGG = registerItem("coppice_spawn_egg",
             settings -> new SpawnEggItem(ModEntities.COPPICE, settings), new Item.Settings());
 
+    public static final Item CRYONIX_SPAWN_EGG = registerItem("cryonix_spawn_egg",
+            settings -> new SpawnEggItem(ModEntities.CRYONIX, settings), new Item.Settings());
+
 
     public static final Item STROW_ESSENCE = registerItem("strow_essence");
 
