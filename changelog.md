@@ -1,5 +1,3 @@
-# a0.3.0.0.4
-* statue item model refactor
-* increased deepslate statue hardness to match deepslate block
-* added frozen magma block drop
-* adjusted frozen magma mining speed
+# a0.3.0.0.5
+* added the Cryonix spawn egg and texture
+* added the Coppice spawn egg texture
