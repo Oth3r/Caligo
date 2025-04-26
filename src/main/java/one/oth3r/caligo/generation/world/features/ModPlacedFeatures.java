@@ -25,7 +25,7 @@ public class ModPlacedFeatures {
 
     public static final RegistryKey<PlacedFeature> ICE_CAVES_SNOW_FLOOR = registerKey("ice_caves_snow_floor");
     public static final RegistryKey<PlacedFeature> ICE_CAVES_COMPACTED_SNOW_FLOOR = registerKey("ice_caves_compacted_snow_floor");
-    public static final RegistryKey<PlacedFeature> ICE_CAVES_FLUID_PLACED_KEY = registerKey("ice_caves_water");
+    public static final RegistryKey<PlacedFeature> ICE_CAVES_FLUID_PLACED_KEY = registerKey("ice_caves_fluid");
 
     public static void boostrap(Registerable<PlacedFeature> context) {
         lush_caves(context);
