@@ -66,7 +66,7 @@ public class ModTagProvider {
             shovel_mineable.forEach(block -> getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(block));
 
 
-            // add all needs iron tag
+            /// add all needs iron tag
             ArrayList<Block> needs_iron_tool = new ArrayList<>();
             needs_iron_tool.addAll(StrowProviders.NEEDS_IRON_TOOL);
 
@@ -86,6 +86,7 @@ public class ModTagProvider {
             overworld_carver_replaceable.addAll(IceCavesProviders.OVERWORLD_CARVER);
 
             overworld_carver_replaceable.forEach(block -> getOrCreateTagBuilder(BlockTags.OVERWORLD_CARVER_REPLACEABLES).add(block));
+
         }
     }
 }
