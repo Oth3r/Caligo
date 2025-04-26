@@ -59,7 +59,8 @@
     ],
     [
       "minecraft:pointed_dripstone",
-      "caligo:ice_caves_water"
+      "caligo:ice_caves_fluid",
+      "caligo:ice_caves_spike"
     ],
     [],
     [
