@@ -14,6 +14,7 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.heightprovider.UniformHeightProvider;
 import net.minecraft.world.gen.placementmodifier.*;
 import one.oth3r.caligo.Caligo;
+import one.oth3r.caligo.tag.ModBlockTags;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +27,7 @@ public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> ICE_CAVES_SNOW_FLOOR = registerKey("ice_caves_snow_floor");
     public static final RegistryKey<PlacedFeature> ICE_CAVES_COMPACTED_SNOW_FLOOR = registerKey("ice_caves_compacted_snow_floor");
     public static final RegistryKey<PlacedFeature> ICE_CAVES_FLUID_PLACED_KEY = registerKey("ice_caves_fluid");
+    public static final RegistryKey<PlacedFeature> ICE_CAVES_SPIKE_PLACED_KEY = registerKey("ice_caves_spike");
 
     public static void boostrap(Registerable<PlacedFeature> context) {
         lush_caves(context);
@@ -111,6 +113,21 @@ public class ModPlacedFeatures {
 
         register(context, ICE_CAVES_FLUID_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.ICE_CAVES_FLUID),
                 List.of());
+
+        register(context, ICE_CAVES_SPIKE_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModConfiguredFeatures.ICE_CAVES_SPIKE),
+                Arrays.asList(
+                        CountPlacementModifier.of(20),
+                        SquarePlacementModifier.of(),
+                        HeightRangePlacementModifier.of(
+                                UniformHeightProvider.create(YOffset.aboveBottom(0),YOffset.getTop())
+                        ),
+                        EnvironmentScanPlacementModifier.of(
+                                Direction.UP, BlockPredicate.hasSturdyFace(Direction.DOWN),
+                                BlockPredicate.matchingBlockTag(ModBlockTags.ICE_CAVES_FLOOR), 20
+                        ),
+                        RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
+                        BiomePlacementModifier.of()
+                ));
     }
 
     public static RegistryKey<PlacedFeature> registerKey(String name) {

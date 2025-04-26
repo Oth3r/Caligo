@@ -40,6 +40,7 @@ public class ModConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?,?>> ICE_CAVES_SNOW_FLOOR = registerKey("ice_caves_snow_floor");
     public static final RegistryKey<ConfiguredFeature<?,?>> ICE_CAVES_COMPACTED_SNOW_FLOOR = registerKey("ice_caves_compacted_snow_floor");
     public static final RegistryKey<ConfiguredFeature<?,?>> ICE_CAVES_FLUID = registerKey("ice_caves_fluid");
+    public static final RegistryKey<ConfiguredFeature<?,?>> ICE_CAVES_SPIKE = registerKey("ice_caves_spike");
 
     public static void boostrap(Registerable<ConfiguredFeature<?, ?>> context) {
         lush_caves(context);
@@ -131,6 +132,7 @@ public class ModConfiguredFeatures {
 
         // replaces water and lava with something else
         register(context, ICE_CAVES_FLUID, ModFeatures.ICE_CAVES_FLUID, new DefaultFeatureConfig());
+        register(context, ICE_CAVES_SPIKE, ModFeatures.ICE_CAVES_SPIKE, new DefaultFeatureConfig());
     }
 
 
