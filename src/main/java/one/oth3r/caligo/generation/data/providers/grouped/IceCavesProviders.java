@@ -78,11 +78,20 @@ public class IceCavesProviders {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+            ArrayList<Block> ice_caves_floor = new ArrayList<>(Arrays.asList(
+                    ModBlocks.FROSTED_DEEPSLATE,
+                    ModBlocks.FROSTED_STONE,
+                    Blocks.SNOW_BLOCK,
+                    ModBlocks.COMPACTED_SNOW
+            ));
+
+            ArrayList<Block> ice_caves_replaceable = new ArrayList<>(ice_caves_floor);
+
             getOrCreateTagBuilder(ModBlockTags.ICE_CAVES_REPLACEABLE)
-                    .add(ModBlocks.FROSTED_DEEPSLATE)
-                    .add(ModBlocks.FROSTED_STONE)
-                    .add(Blocks.SNOW_BLOCK)
-                    .add(ModBlocks.COMPACTED_SNOW);
+                    .add(ice_caves_replaceable.toArray(Block[]::new));
+
+            getOrCreateTagBuilder(ModBlockTags.ICE_CAVES_FLOOR)
+                    .add(ice_caves_floor.toArray(Block[]::new));
         }
 
         @Override
